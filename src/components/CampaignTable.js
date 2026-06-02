@@ -1,191 +1,390 @@
-import { Box, Checkbox, Typography } from "@mui/material";
-import { ChevronsUpDown, ChevronUp, ChevronDown, Info, Search } from "lucide-react";
+import { useState } from "react";
+import { Box, Checkbox, Switch, Typography } from "@mui/material";
+import { ChevronsUpDown, ChevronDown, Info } from "lucide-react";
 
-const FONT     = '-apple-system, "system-ui", Arial, sans-serif';
-const BORDER   = "1px solid rgba(28,43,51,0.15)";
-const TEXT     = "#1c2b33";
-const TEXT_MUTED = "rgba(28,43,51,0.6)";
-const BLUE     = "#0a78be";   /* exact Delivery-column active-sort blue */
+const FONT = '-apple-system, "system-ui", Arial, sans-serif';
+const BORDER_COLOR = "#DADDE1";
+const BORDER = `1px solid ${BORDER_COLOR}`;
+const HEADER_BG = "#F2F3F5";
+const TEXT = "#1C1E21";
+const MUTED = "#65676B";
+const BLUE = "#1877F2";
+const BLUE_LIGHT = "#E7F0FF";
+const GREEN = "#31A24C";
+const ROW_HIGHLIGHT = "#EFF4FF";   /* exact Meta blue tint for highlighted row */
+const ROW_HOVER = "#E7F0FF";
 
-function HeaderCell({ label, sortState = "none", info = false, minWidth, flex, right = false }) {
-  /* sortState: "none" | "asc" | "desc" | "active-asc" */
-  const isActive = sortState === "active-asc";
-  const color = isActive ? BLUE : TEXT_MUTED;
+/* ── Reusable text ── */
+function T({ children, sx = {} }) {
+  return (
+    <Typography sx={{ fontFamily: FONT, fontSize: "13px", color: TEXT, lineHeight: 1.4, ...sx }}>
+      {children}
+    </Typography>
+  );
+}
 
-  const SortIcon = sortState === "none"
-    ? ChevronsUpDown
-    : sortState === "asc" || sortState === "active-asc"
-      ? ChevronUp
-      : ChevronDown;
-
+/* ── Sortable header cell ── */
+function HeaderCell({ label, sortActive = false, info = false, right = false, wrap = false }) {
   return (
     <Box
       sx={{
-        display: "flex", alignItems: "center", gap: "4px",
-        minWidth, flex, px: "10px",
+        display: "flex", alignItems: "center", gap: "3px",
+        px: "10px", height: "100%", cursor: "pointer", userSelect: "none",
         justifyContent: right ? "flex-end" : "flex-start",
-        cursor: "pointer", userSelect: "none", height: "100%",
-        "&:hover .sort-icon": { opacity: 1 },
+        "&:hover .sortIcon": { opacity: 1 },
       }}
     >
-      {info && <Info size={12} color={TEXT_MUTED} style={{ flexShrink: 0 }} />}
-      <Typography sx={{
-        fontSize: "12px", fontWeight: 600, fontFamily: FONT,
-        color, whiteSpace: "nowrap",
-      }}>
-        {label}
-      </Typography>
-      <Box
-        className="sort-icon"
-        sx={{ opacity: sortState === "none" ? 0.4 : 1, display: "flex", alignItems: "center" }}
-      >
-        <SortIcon size={12} color={color} />
+      {info && <Info size={11} color={MUTED} style={{ flexShrink: 0 }} />}
+      {wrap ? (
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "1px" }}>
+          <Typography sx={{ fontFamily: FONT, fontSize: "11px", fontWeight: 600, color: sortActive ? BLUE : MUTED, lineHeight: 1.2 }}>
+            {label.split(" ")[0]}
+          </Typography>
+          <Typography sx={{ fontFamily: FONT, fontSize: "11px", fontWeight: 600, color: sortActive ? BLUE : MUTED, lineHeight: 1.2 }}>
+            {label.split(" ").slice(1).join(" ")}
+          </Typography>
+        </Box>
+      ) : (
+        <Typography
+          sx={{ fontFamily: FONT, fontSize: "12px", fontWeight: 600, color: sortActive ? BLUE : MUTED, whiteSpace: "nowrap" }}
+        >
+          {label}
+        </Typography>
+      )}
+      <Box className="sortIcon" sx={{ display: "flex", alignItems: "center", opacity: sortActive ? 1 : 0.4 }}>
+        <ChevronsUpDown size={11} color={sortActive ? BLUE : MUTED} />
       </Box>
-      {/* Column resize dropdown */}
-      <Box sx={{
-        ml: "2px", display: "flex", alignItems: "center",
-        opacity: 0.5, "&:hover": { opacity: 1 },
-      }}>
-        <ChevronDown size={11} color={TEXT_MUTED} />
+      <Box sx={{ display: "flex", alignItems: "center", opacity: 0.5 }}>
+        <ChevronDown size={10} color={MUTED} />
       </Box>
     </Box>
   );
 }
 
-export default function CampaignTable() {
+/* ── Campaign row toggle switch ── */
+function CampaignToggle({ checked }) {
+  const [on, setOn] = useState(checked);
   return (
-    <Box sx={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <Switch
+      checked={on}
+      onChange={(e) => setOn(e.target.checked)}
+      size="small"
+      sx={{
+        "& .MuiSwitch-switchBase.Mui-checked": { color: BLUE },
+        "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": { backgroundColor: BLUE },
+      }}
+    />
+  );
+}
 
-      {/* ── Table header ── */}
-      <Box sx={{
-        display: "flex", alignItems: "center",
-        height: "40px", backgroundColor: "#fff",
-        borderBottom: BORDER, flexShrink: 0,
-        overflowX: "auto",
-        "&::-webkit-scrollbar": { display: "none" },
-      }}>
+/* ── Campaign data ── */
+const campaigns = [
+  {
+    id: 1,
+    name: "Leads",
+    delivery: "In draft",
+    deliveryColor: GREEN,
+    results: null,
+    costPerResult: null,
+    budget: "Using ad set budget",
+    budgetSub: "Not shared",
+    amountSpent: null,
+    actions: null,
+    on: true,
+  },
+];
 
-        {/* Checkbox col */}
-        <Box sx={{
-          width: "44px", minWidth: "44px", height: "100%",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          borderRight: BORDER, flexShrink: 0,
-        }}>
-          <Checkbox size="small" sx={{ p: "2px", color: TEXT_MUTED }} />
-        </Box>
+export default function CampaignTable() {
+  const [selected, setSelected] = useState([]);
+  const [hovered, setHovered] = useState(null);
 
-        {/* Off/On */}
-        <Box sx={{
-          width: "90px", minWidth: "90px", px: "10px", height: "100%",
-          display: "flex", alignItems: "center", borderRight: BORDER, flexShrink: 0,
-        }}>
-          <Typography sx={{ fontSize: "12px", fontWeight: 600, fontFamily: FONT, color: TEXT_MUTED }}>
-            Off/On
-          </Typography>
-          <ChevronsUpDown size={12} color={TEXT_MUTED} style={{ marginLeft: "4px", opacity: 0.5 }} />
-        </Box>
+  const toggleSelect = (id) => {
+    setSelected((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]);
+  };
 
-        {/* Campaign */}
-        <Box sx={{
-          flex: 2, minWidth: "160px", height: "100%", borderRight: BORDER,
-        }}>
-          <HeaderCell label="Campaign" sortState="asc" />
-        </Box>
+  const allChecked = campaigns.length > 0 && selected.length === campaigns.length;
+  const indeterminate = selected.length > 0 && selected.length < campaigns.length;
 
-        {/* Delivery — active sort blue */}
-        <Box sx={{ width: "130px", minWidth: "130px", height: "100%", borderRight: BORDER }}>
-          <HeaderCell label="Delivery" sortState="active-asc" />
-        </Box>
+  return (
+    <Box
+      sx={{
+        flex: 1, display: "flex", flexDirection: "column",
+        overflow: "hidden", backgroundColor: "#F5F6F7",
+      }}
+    >
+      {/* ── Table wrapper ── */}
+      <Box
+        sx={{
+          backgroundColor: "#fff",
+          borderTop: BORDER,
+          overflow: "hidden",
+          display: "flex", flexDirection: "column",
+          flex: 1,
+        }}
+      >
+        {/* ── Table header ── */}
+        <Box
+          sx={{
+            display: "flex", alignItems: "stretch",
+            height: "40px",
+            backgroundColor: HEADER_BG,
+            borderBottom: BORDER,
+            flexShrink: 0,
+            overflowX: "auto",
+            "&::-webkit-scrollbar": { display: "none" },
+          }}
+        >
+          {/* Checkbox col */}
+          <Box
+            sx={{
+              width: 44, minWidth: 44, height: "100%",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              borderRight: BORDER, flexShrink: 0,
+            }}
+          >
+            <Checkbox
+              size="small"
+              checked={allChecked}
+              indeterminate={indeterminate}
+              onChange={(e) => setSelected(e.target.checked ? campaigns.map((c) => c.id) : [])}
+              sx={{ p: "2px", color: MUTED, "&.Mui-checked": { color: BLUE }, "&.MuiCheckbox-indeterminate": { color: BLUE } }}
+            />
+          </Box>
 
-        {/* Actions */}
-        <Box sx={{ flex: 1, minWidth: "110px", height: "100%", borderRight: BORDER }}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: "4px", px: "10px", height: "100%" }}>
-            <Typography sx={{ fontSize: "12px", fontWeight: 600, fontFamily: FONT, color: TEXT_MUTED }}>
-              Actions
+          {/* Off/On */}
+          <Box
+            sx={{
+              width: 88, minWidth: 88, px: "10px", height: "100%",
+              display: "flex", alignItems: "center",
+              borderRight: BORDER, flexShrink: 0, gap: "4px", cursor: "pointer",
+            }}
+          >
+            <Typography sx={{ fontFamily: FONT, fontSize: "12px", fontWeight: 600, color: MUTED }}>
+              Off/On
             </Typography>
-            <ChevronDown size={11} color={TEXT_MUTED} />
+            <ChevronsUpDown size={11} color={MUTED} style={{ opacity: 0.5 }} />
+          </Box>
+
+          {/* Campaign */}
+          <Box sx={{ flex: 2, minWidth: 200, height: "100%", borderRight: BORDER }}>
+            <HeaderCell label="Campaign" />
+          </Box>
+
+          {/* Delivery */}
+          <Box sx={{ width: 140, minWidth: 140, height: "100%", borderRight: BORDER }}>
+            <HeaderCell label="Delivery" sortActive />
+          </Box>
+
+          {/* Actions */}
+          <Box sx={{ flex: 1, minWidth: 120, height: "100%", borderRight: BORDER }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: "4px", px: "10px", height: "100%" }}>
+              <Typography sx={{ fontFamily: FONT, fontSize: "12px", fontWeight: 600, color: MUTED }}>
+                Actions
+              </Typography>
+              <ChevronDown size={10} color={MUTED} />
+            </Box>
+          </Box>
+
+          {/* Results */}
+          <Box sx={{ width: 110, minWidth: 110, height: "100%", borderRight: BORDER }}>
+            <HeaderCell label="Results" info />
+          </Box>
+
+          {/* Cost per result */}
+          <Box sx={{ width: 100, minWidth: 100, height: "100%", borderRight: BORDER }}>
+            <HeaderCell label="Cost per result" wrap />
+          </Box>
+
+          {/* Sort icon sep col */}
+          <Box
+            sx={{
+              width: 36, minWidth: 36, height: "100%",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              borderRight: BORDER, flexShrink: 0, cursor: "pointer",
+            }}
+          >
+            <ChevronsUpDown size={12} color={MUTED} style={{ opacity: 0.4 }} />
+          </Box>
+
+          {/* Budget */}
+          <Box sx={{ width: 140, minWidth: 140, height: "100%", borderRight: BORDER }}>
+            <HeaderCell label="Budget" />
+          </Box>
+
+          {/* Amount spent */}
+          <Box sx={{ width: 110, minWidth: 110, height: "100%", px: "10px", display: "flex", alignItems: "center" }}>
+            <Typography sx={{ fontFamily: FONT, fontSize: "12px", fontWeight: 600, color: MUTED }}>
+              Amount spent
+            </Typography>
           </Box>
         </Box>
 
-        {/* Results */}
-        <Box sx={{ width: "110px", minWidth: "110px", height: "100%", borderRight: BORDER }}>
-          <HeaderCell label="Results" sortState="none" info />
+        {/* ── Data rows ── */}
+        {campaigns.map((row) => {
+          const isSelected = selected.includes(row.id);
+          const isHovered = hovered === row.id;
+          const rowBg = isSelected
+            ? BLUE_LIGHT
+            : isHovered
+              ? ROW_HOVER
+              : ROW_HIGHLIGHT;
+
+          return (
+            <Box
+              key={row.id}
+              onMouseEnter={() => setHovered(row.id)}
+              onMouseLeave={() => setHovered(null)}
+              sx={{
+                display: "flex", alignItems: "stretch",
+                height: "52px",
+                backgroundColor: rowBg,
+                borderBottom: BORDER,
+                transition: "background-color 0.15s",
+                cursor: "default",
+                overflowX: "auto",
+                "&::-webkit-scrollbar": { display: "none" },
+              }}
+            >
+              {/* Checkbox */}
+              <Box
+                sx={{
+                  width: 44, minWidth: 44,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  borderRight: BORDER, flexShrink: 0,
+                }}
+              >
+                <Checkbox
+                  size="small"
+                  checked={isSelected}
+                  onChange={() => toggleSelect(row.id)}
+                  sx={{
+                    p: "2px", color: MUTED,
+                    "&.Mui-checked": { color: BLUE },
+                  }}
+                />
+              </Box>
+
+              {/* Toggle */}
+              <Box
+                sx={{
+                  width: 88, minWidth: 88,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  borderRight: BORDER, flexShrink: 0,
+                }}
+              >
+                <CampaignToggle checked={row.on} />
+              </Box>
+
+              {/* Campaign name */}
+              <Box
+                sx={{
+                  flex: 2, minWidth: 200,
+                  display: "flex", alignItems: "center",
+                  px: "10px", borderRight: BORDER,
+                }}
+              >
+                <T sx={{ color: BLUE, fontWeight: 600, fontSize: "13px", cursor: "pointer", "&:hover": { textDecoration: "underline" } }}>
+                  {row.name}
+                </T>
+              </Box>
+
+              {/* Delivery */}
+              <Box
+                sx={{
+                  width: 140, minWidth: 140,
+                  display: "flex", alignItems: "center",
+                  px: "10px", borderRight: BORDER, gap: "6px",
+                }}
+              >
+                <Box sx={{ width: 8, height: 8, borderRadius: "50%", backgroundColor: row.deliveryColor, flexShrink: 0 }} />
+                <T sx={{ fontSize: "12px", fontWeight: 500, color: TEXT }}>{row.delivery}</T>
+              </Box>
+
+              {/* Actions */}
+              <Box
+                sx={{
+                  flex: 1, minWidth: 120,
+                  display: "flex", alignItems: "center",
+                  px: "10px", borderRight: BORDER,
+                }}
+              >
+                <T sx={{ color: MUTED }}>—</T>
+              </Box>
+
+              {/* Results */}
+              <Box
+                sx={{
+                  width: 110, minWidth: 110,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  px: "10px", borderRight: BORDER,
+                }}
+              >
+                <T sx={{ color: MUTED }}>—</T>
+              </Box>
+
+              {/* Cost per result */}
+              <Box
+                sx={{
+                  width: 100, minWidth: 100,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  px: "10px", borderRight: BORDER,
+                }}
+              >
+                <T sx={{ color: MUTED }}>—</T>
+              </Box>
+
+              {/* Sort sep */}
+              <Box
+                sx={{
+                  width: 36, minWidth: 36,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  borderRight: BORDER, flexShrink: 0,
+                }}
+              />
+
+              {/* Budget */}
+              <Box
+                sx={{
+                  width: 140, minWidth: 140,
+                  display: "flex", flexDirection: "column", justifyContent: "center",
+                  px: "10px", borderRight: BORDER,
+                }}
+              >
+                <T sx={{ fontSize: "12px", fontWeight: 400 }}>{row.budget}</T>
+                {row.budgetSub && (
+                  <T sx={{ fontSize: "11px", color: MUTED, mt: "1px" }}>{row.budgetSub}</T>
+                )}
+              </Box>
+
+              {/* Amount spent */}
+              <Box
+                sx={{
+                  width: 110, minWidth: 110,
+                  display: "flex", alignItems: "center", justifyContent: "flex-end",
+                  px: "10px",
+                }}
+              >
+                <T sx={{ color: MUTED }}>—</T>
+              </Box>
+            </Box>
+          );
+        })}
+
+        {/* ── Results footer ── */}
+        <Box
+          sx={{
+            display: "flex", alignItems: "center",
+            px: "16px", height: "40px",
+            borderBottom: BORDER, backgroundColor: "#fff",
+            flexShrink: 0, gap: "6px",
+          }}
+        >
+          <T sx={{ fontSize: "12px", color: MUTED }}>Results from {campaigns.length} campaign</T>
+          <Info size={13} color={MUTED} style={{ cursor: "pointer" }} />
         </Box>
 
-        {/* Cost per result */}
-        <Box sx={{ width: "120px", minWidth: "120px", height: "100%", borderRight: BORDER }}>
-          <Box sx={{ display: "flex", flexDirection: "column", px: "10px", justifyContent: "center", height: "100%", gap: "1px" }}>
-            <Typography sx={{ fontSize: "11px", fontWeight: 600, fontFamily: FONT, color: TEXT_MUTED, lineHeight: 1.2 }}>
-              Cost per
-            </Typography>
-            <Typography sx={{ fontSize: "11px", fontWeight: 600, fontFamily: FONT, color: TEXT_MUTED, lineHeight: 1.2 }}>
-              result
-            </Typography>
-          </Box>
-        </Box>
-
-        {/* Sort icon col */}
-        <Box sx={{
-          width: "44px", minWidth: "44px", height: "100%",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          borderRight: BORDER, flexShrink: 0,
-        }}>
-          <ChevronsUpDown size={12} color={TEXT_MUTED} style={{ opacity: 0.5 }} />
-        </Box>
-
-        {/* Budget */}
-        <Box sx={{ width: "110px", minWidth: "110px", height: "100%", borderRight: BORDER }}>
-          <HeaderCell label="Budget" sortState="asc" />
-        </Box>
-
-        {/* Amount spent — no resize dropdown */}
-        <Box sx={{ width: "110px", minWidth: "110px", height: "100%", px: "10px", display: "flex", alignItems: "center" }}>
-          <Typography sx={{ fontSize: "12px", fontWeight: 600, fontFamily: FONT, color: TEXT_MUTED }}>
-            Amount spent
-          </Typography>
-        </Box>
-      </Box>
-
-      {/* ── Empty State ── */}
-      <Box sx={{
-        flex: 1, backgroundColor: "#F0F2F5",
-        display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "center",
-        py: "60px", gap: "12px",
-      }}>
-        {/* Magnifier illustration */}
-        <Box sx={{ mb: "8px" }}>
-          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="24" cy="24" r="16" stroke="#BEC3C9" strokeWidth="3" fill="none" />
-            <circle cx="24" cy="24" r="11" stroke="#D8DBDF" strokeWidth="2" fill="none" />
-            <line x1="35.5" y1="35.5" x2="48" y2="48" stroke="#BEC3C9" strokeWidth="3.5" strokeLinecap="round" />
-          </svg>
-        </Box>
-
-        <Typography sx={{
-          fontSize: "16px", fontWeight: 700, fontFamily: FONT, color: TEXT,
-        }}>
-          Get set up to run ads
-        </Typography>
-
-        <Typography sx={{
-          fontSize: "13px", fontFamily: FONT, color: TEXT_MUTED,
-          textAlign: "center", maxWidth: "440px", lineHeight: 1.5,
-        }}>
-          Confirm a few details in Account overview so that you can publish your first ad campaign.
-        </Typography>
-
-        <Box sx={{
-          mt: "8px", px: "16px", height: "36px",
-          border: "1px solid #CED0D4", borderRadius: "6px",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          backgroundColor: "#fff", cursor: "pointer",
-          "&:hover": { backgroundColor: "#F0F2F5" },
-        }}>
-          <Typography sx={{ fontSize: "13px", fontWeight: 600, fontFamily: FONT, color: TEXT }}>
-            Go to Account overview
-          </Typography>
-        </Box>
+        {/* ── Remaining space: white to match reference ── */}
+        <Box sx={{ flex: 1, backgroundColor: "#ffffff" }} />
       </Box>
     </Box>
   );

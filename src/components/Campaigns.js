@@ -11,7 +11,7 @@ export default function Campaigns() {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
-        backgroundColor: "#fff",
+        backgroundColor: "#FFFFFF",
       }}
     >
       {/* ── 1. Filter bar: All ads | search ── */}
