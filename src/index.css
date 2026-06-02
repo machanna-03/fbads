@@ -1,0 +1,69 @@
+/* ─── Meta Ads Manager — Exact Global Styles ─── */
+/* Extracted from live Meta computed CSS */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+
+  /* EXACT from Meta computed: -apple-system, system-ui, Arial */
+  font-family: -apple-system, "system-ui", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.28;
+
+  /* EXACT body text color from Meta */
+  color: #1c1e21;
+
+  /* Base bg — actual page bg is set per-page via gradient */
+  background-color: #e9ebee;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+a {
+  /* Exact link color from Meta live page */
+  color: #0a78be;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Meta-style scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+button {
+  font-family: -apple-system, "system-ui", Arial, sans-serif;
+  cursor: pointer;
+}
