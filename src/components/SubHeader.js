@@ -21,9 +21,15 @@ function Txt({ children, sx = {} }) {
   );
 }
 
+const SolidArrowDown = () => (
+  <svg width="9" height="6" viewBox="0 0 7 5" fill="#1C1E21" style={{ marginLeft: "4px" }}>
+    <path d="M0 0h7L3.5 5z" />
+  </svg>
+);
+
 function ActionBtn({ icon: Icon, label, split = false, iconSize = 14 }) {
   return (
-    <Box sx={{ display: "flex", alignItems: "center", height: "32px", flexShrink: 0 }}>
+    <Box sx={{ display: "flex", alignItems: "center", height: "36px", flexShrink: 0 }}>
       <Box
         sx={{
           display: "flex", alignItems: "center", gap: "10px",
@@ -49,7 +55,7 @@ function ActionBtn({ icon: Icon, label, split = false, iconSize = 14 }) {
             "&:hover": { backgroundColor: "#F0F2F5" },
           }}
         >
-          <ChevronDown size={12} color={MUTED} />
+          <SolidArrowDown size={12} color={MUTED} />
         </Box>
       )}
     </Box>
@@ -128,7 +134,7 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
 
   return (
     <Box>
-      <Box sx={{ backgroundColor: "#f4f8f9ff", flexShrink: 0 }}>
+      <Box sx={{ backgroundColor: "#f4f8f9ff", flexShrink: 0, pt: 1 }}>
 
         {/* ── Tab Row ── */}
         <Box
@@ -139,7 +145,7 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
             backgroundColor: "#f3f6f9ff",
             px: "24px",
             gap: "10px",
-            mt: 1
+
           }}
         >
           <TabItem
@@ -173,6 +179,7 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
               px: "10px", height: "39px", border: BORDER, borderRadius: "4px",
               backgroundColor: "transparent",
               cursor: "pointer", flexShrink: 0,
+
               "&:hover": { backgroundColor: "#F0F2F5" },
             }}
           >
@@ -186,77 +193,80 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
 
       </Box>
       {/* ── Action Toolbar Row ── */}
-      <Paper
-        elevation={1}
-        sx={{
-          display: "flex", alignItems: "center",
-          px: "16px", height: "48px", gap: "6px",
-          backgroundColor: "#fff",
-          borderRadius: 0,
-          boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
-        }}
-      >
-        {/* Create (green) */}
-        <Box
+      <Box sx={{ backgroundColor: "#f3f6f8", }}>
+        <Paper
+          elevation={1}
           sx={{
-            display: "flex", alignItems: "center", gap: "6px",
-            height: "32px", px: "14px", borderRadius: "6px",
-            backgroundColor: GREEN, cursor: "pointer", flexShrink: 0,
-            transition: "background-color 0.15s",
-            "&:hover": { backgroundColor: "#005c40" },
+            display: "flex", alignItems: "center",
+            mx: "6px", height: "48px", gap: "6px",
+            px: '10px',
+            backgroundColor: "#fff",
+            borderRadius: '4px',
+            boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
           }}
         >
-          <Plus size={14} color="#fff" strokeWidth={2.5} />
-          <Txt sx={{ color: "#fff", fontWeight: 600, fontSize: "13px" }}>Create</Txt>
-        </Box>
+          {/* Create (green) */}
+          <Box
+            sx={{
+              display: "flex", alignItems: "center", gap: "6px",
+              height: "36px", px: "14px", borderRadius: "4px",
+              backgroundColor: GREEN, cursor: "pointer", flexShrink: 0,
+              transition: "background-color 0.15s",
+              "&:hover": { backgroundColor: "#005c40" },
+            }}
+          >
+            <Plus size={14} color="#fff" strokeWidth={2.5} />
+            <Txt sx={{ color: "#fff", fontWeight: 600, fontSize: "13px" }}>Create</Txt>
+          </Box>
 
-        <ActionBtn icon={Copy} label="Duplicate" />
-        <ActionBtn icon={Pencil} label="Edit" />
+          <ActionBtn icon={Copy} label="Duplicate" />
+          <ActionBtn icon={Pencil} label="Edit" />
 
-        {/* A/B test */}
-        <Box
-          sx={{
-            display: "flex", alignItems: "center", gap: "6px",
-            height: "32px", px: "10px", border: BORDER, borderRadius: "6px",
-            backgroundColor: "#fff", cursor: "pointer", flexShrink: 0,
-            "&:hover": { backgroundColor: "#F0F2F5" },
-          }}
-        >
-          <FlaskConical size={14} color={MUTED} />
-          <Txt sx={{ color: MUTED, fontWeight: 500, fontSize: "13px" }}>A/B test</Txt>
-        </Box>
+          {/* A/B test */}
+          <Box
+            sx={{
+              display: "flex", alignItems: "center", gap: "6px",
+              height: "32px", px: "10px", border: BORDER, borderRadius: "6px",
+              backgroundColor: "#fff", cursor: "pointer", flexShrink: 0,
+              "&:hover": { backgroundColor: "#F0F2F5" },
+            }}
+          >
+            <FlaskConical size={14} color={MUTED} />
+            <Txt sx={{ color: MUTED, fontWeight: 500, fontSize: "13px" }}>A/B test</Txt>
+          </Box>
 
-        {/* More */}
-        <Box
-          sx={{
-            display: "flex", alignItems: "center", gap: "3px",
-            height: "32px", px: "10px", border: BORDER, borderRadius: "6px",
-            cursor: "pointer", flexShrink: 0,
-            "&:hover": { backgroundColor: "#F0F2F5" },
-          }}
-        >
-          <Txt sx={{ color: MUTED, fontWeight: 500, fontSize: "13px" }}>More</Txt>
-          <ChevronDown size={14} color={MUTED} />
-        </Box>
+          {/* More */}
+          <Box
+            sx={{
+              display: "flex", alignItems: "center", gap: "3px",
+              height: "32px", px: "10px", border: BORDER, borderRadius: "6px",
+              cursor: "pointer", flexShrink: 0,
+              "&:hover": { backgroundColor: "#F0F2F5" },
+            }}
+          >
+            <Txt sx={{ color: MUTED, fontWeight: 500, fontSize: "13px" }}>More</Txt>
+            <SolidArrowDown size={14} color={MUTED} />
+          </Box>
 
-        <Box sx={{ flex: 1 }} />
+          <Box sx={{ flex: 1 }} />
 
-        {/* Right Controls */}
-        <ActionBtn icon={Columns3} label="Columns: Performance" split />
-        <ActionBtn icon={AlignJustify} label="Breakdown" split />
-        <ActionBtn icon={BarChart2} split />
-        <ActionBtn icon={Download} split />
-        <Box
-          sx={{
-            display: "flex", alignItems: "center", justifyContent: "center",
-            width: "32px", height: "32px", border: BORDER, borderRadius: "6px",
-            cursor: "pointer", flexShrink: 0,
-            "&:hover": { backgroundColor: "#F0F2F5" },
-          }}
-        >
-          <Maximize2 size={14} color={MUTED} />
-        </Box>
-      </Paper>
+          {/* Right Controls */}
+          <ActionBtn icon={Columns3} label="Columns: Performance" split />
+          <ActionBtn icon={AlignJustify} label="Breakdown" split />
+          <ActionBtn icon={BarChart2} split />
+          <ActionBtn icon={Download} split />
+          <Box
+            sx={{
+              display: "flex", alignItems: "center", justifyContent: "center",
+              width: "32px", height: "36px", border: BORDER, borderRadius: "6px",
+              cursor: "pointer", flexShrink: 0,
+              "&:hover": { backgroundColor: "#F0F2F5" },
+            }}
+          >
+            <Maximize2 size={14} color={TEXT} />
+          </Box>
+        </Paper>
+      </Box>
     </Box>
   );
 }
