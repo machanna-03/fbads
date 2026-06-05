@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Checkbox, Switch, Typography } from "@mui/material";
 import { ChevronsUpDown, ChevronDown, Info } from "lucide-react";
-
+import ImportExportIcon from '@mui/icons-material/ImportExport';
 const FONT = '-apple-system, "system-ui", Arial, sans-serif';
 const BORDER_COLOR = "#DADDE1";
 const BORDER = `1px solid ${BORDER_COLOR}`;
@@ -9,10 +9,10 @@ const HEADER_BG = "#F2F3F5";
 const TEXT = "#1C1E21";
 const MUTED = "#65676B";
 const BLUE = "#1877F2";
-const BLUE_LIGHT = "#E7F0FF";
+const BLUE_LIGHT = "#f5fced";
 const GREEN = "#31A24C";
-const ROW_HIGHLIGHT = "#EFF4FF";   /* exact Meta blue tint for highlighted row */
-const ROW_HOVER = "#E7F0FF";
+const ROW_HIGHLIGHT = "#f5fced";   /* exact Meta blue tint for highlighted row */
+const ROW_HOVER = "#f5fced";
 
 /* ── Reusable text ── */
 function T({ children, sx = {} }) {
@@ -37,25 +37,23 @@ function HeaderCell({ label, sortActive = false, info = false, right = false, wr
       {info && <Info size={11} color={MUTED} style={{ flexShrink: 0 }} />}
       {wrap ? (
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1px" }}>
-          <Typography sx={{ fontFamily: FONT, fontSize: "11px", fontWeight: 600, color: sortActive ? BLUE : MUTED, lineHeight: 1.2 }}>
+          <Typography sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 700, color: TEXT, lineHeight: 1.2 }}>
             {label.split(" ")[0]}
           </Typography>
-          <Typography sx={{ fontFamily: FONT, fontSize: "11px", fontWeight: 600, color: sortActive ? BLUE : MUTED, lineHeight: 1.2 }}>
+          <Typography sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 700, color: TEXT, lineHeight: 1.2 }}>
             {label.split(" ").slice(1).join(" ")}
           </Typography>
         </Box>
       ) : (
         <Typography
-          sx={{ fontFamily: FONT, fontSize: "12px", fontWeight: 600, color: sortActive ? BLUE : MUTED, whiteSpace: "nowrap" }}
+          sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 700, color: TEXT, whiteSpace: "nowrap" }}
         >
           {label}
         </Typography>
       )}
-      <Box className="sortIcon" sx={{ display: "flex", alignItems: "center", opacity: sortActive ? 1 : 0.4 }}>
-        <ChevronsUpDown size={11} color={sortActive ? BLUE : MUTED} />
-      </Box>
+
       <Box sx={{ display: "flex", alignItems: "center", opacity: 0.5 }}>
-        <ChevronDown size={10} color={MUTED} />
+        <ChevronDown size={14} color={TEXT} />
       </Box>
     </Box>
   );
@@ -126,8 +124,8 @@ export default function CampaignTable() {
         <Box
           sx={{
             display: "flex", alignItems: "stretch",
-            height: "40px",
-            backgroundColor: HEADER_BG,
+            height: "52px",
+            backgroundColor: "#ffffff",
             borderBottom: BORDER,
             flexShrink: 0,
             overflowX: "auto",
@@ -159,10 +157,10 @@ export default function CampaignTable() {
               borderRight: BORDER, flexShrink: 0, gap: "4px", cursor: "pointer",
             }}
           >
-            <Typography sx={{ fontFamily: FONT, fontSize: "12px", fontWeight: 600, color: MUTED }}>
-              Off/On
+            <Typography sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 700, color: TEXT }}>
+              Off...
             </Typography>
-            <ChevronsUpDown size={11} color={MUTED} style={{ opacity: 0.5 }} />
+            <ImportExportIcon size={14} color={TEXT} />
           </Box>
 
           {/* Campaign */}
@@ -178,10 +176,10 @@ export default function CampaignTable() {
           {/* Actions */}
           <Box sx={{ flex: 1, minWidth: 120, height: "100%", borderRight: BORDER }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: "4px", px: "10px", height: "100%" }}>
-              <Typography sx={{ fontFamily: FONT, fontSize: "12px", fontWeight: 600, color: MUTED }}>
+              <Typography sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 700, color: TEXT }}>
                 Actions
               </Typography>
-              <ChevronDown size={10} color={MUTED} />
+              <ChevronsUpDown size={14} color={TEXT} />
             </Box>
           </Box>
 
@@ -203,7 +201,7 @@ export default function CampaignTable() {
               borderRight: BORDER, flexShrink: 0, cursor: "pointer",
             }}
           >
-            <ChevronsUpDown size={12} color={MUTED} style={{ opacity: 0.4 }} />
+            <ChevronsUpDown size={14} color={TEXT} />
           </Box>
 
           {/* Budget */}
@@ -213,7 +211,7 @@ export default function CampaignTable() {
 
           {/* Amount spent */}
           <Box sx={{ width: 110, minWidth: 110, height: "100%", px: "10px", display: "flex", alignItems: "center" }}>
-            <Typography sx={{ fontFamily: FONT, fontSize: "12px", fontWeight: 600, color: MUTED }}>
+            <Typography sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 700, color: TEXT }}>
               Amount spent
             </Typography>
           </Box>

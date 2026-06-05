@@ -97,7 +97,7 @@ export default function FilterBar() {
   const [searchVal, setSearchVal] = useState("");
 
   return (
-    <Box sx={{ backgroundColor: "#f1f4f7", borderBottom: BORDER, flexShrink: 0, py: 0.5 }}>
+    <Box sx={{ backgroundColor: "#f1f4f7", flexShrink: 0, py: 0.5 }}>
       {/* ── Row 1: Filter pills ── */}
       <Box sx={{ display: "flex", alignItems: "center", px: "16px", height: "44px", gap: "6px" }}>
 

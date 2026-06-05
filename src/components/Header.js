@@ -25,7 +25,7 @@ const ChevronDown = ({ color = TEXT, size = 13 }) => (
 );
 
 const SolidArrowDown = () => (
-  <svg width="7" height="5" viewBox="0 0 7 5" fill="#1C1E21" style={{ marginLeft: "4px" }}>
+  <svg width="9" height="6" viewBox="0 0 7 5" fill="#1C1E21" style={{ marginLeft: "4px" }}>
     <path d="M0 0h7L3.5 5z" />
   </svg>
 );
