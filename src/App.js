@@ -44,18 +44,37 @@ function App() {
             display: "flex",
             flexDirection: "column",
             "&::-webkit-scrollbar": {
-              width: "6px",
-              height: "6px",
+              width: "16px",
+              height: "16px",
             },
             "&::-webkit-scrollbar-track": {
-              background: "#f0f2f5",
+              background: "#f1f1f1",
             },
             "&::-webkit-scrollbar-thumb": {
-              background: "rgba(0,0,0,0.2)",
-              borderRadius: "3px",
+              background: "#a0a0a0",
+              borderRadius: "8px",
+              border: "2px solid #f1f1f1",
             },
             "&::-webkit-scrollbar-thumb:hover": {
-              background: "rgba(0,0,0,0.4)",
+              background: "#808080",
+            },
+            "&::-webkit-scrollbar-button:single-button": {
+              backgroundColor: "#f1f1f1",
+              display: "block",
+              height: "16px",
+              width: "16px",
+            },
+            "&::-webkit-scrollbar-button:single-button:vertical:decrement": {
+              backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2365676B'><path d='M3 16l9-9 9 9z'/></svg>")`,
+              backgroundSize: "14px 14px",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+            },
+            "&::-webkit-scrollbar-button:single-button:vertical:increment": {
+              backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2365676B'><path d='M3 8l9 9 9-9z'/></svg>")`,
+              backgroundSize: "14px 14px",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
             },
           }}
         >
