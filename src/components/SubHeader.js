@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, Typography, Paper } from "@mui/material";
 import {
   Plus, Copy, Pencil, FlaskConical, ChevronDown,
-  Columns3, AlignJustify, BarChart2, Download, Maximize2, CalendarDays,
+  Columns3, AlignJustify, BarChart2, Download, Maximize2, CalendarDays, LineChart
 } from "lucide-react";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
@@ -221,6 +221,8 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
 
           <ActionBtn icon={Copy} label="Duplicate" />
           <ActionBtn icon={Pencil} label="Edit" />
+
+          <ActionBtn icon={LineChart} label="Analyse" />
 
           {/* A/B test */}
           <Box
