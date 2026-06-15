@@ -2,11 +2,13 @@ import { useState } from "react";
 import { Box, Checkbox, Switch, Typography } from "@mui/material";
 import { ChevronsUpDown, ChevronDown, Info, ArrowDown } from "lucide-react";
 import ImportExportIcon from '@mui/icons-material/ImportExport';
-const FONT = '-apple-system, "system-ui", Arial, sans-serif';
+const FONT = '"Optimistic 95", system-ui, sans-serif';
+// eslint-disable-next-line no-unused-vars
+const FONT_ROBOTO = 'Roboto, Arial, sans-serif';
 const BORDER_COLOR = "#DADDE1";
 const BORDER = `1px solid ${BORDER_COLOR}`;
 const HEADER_BG = "#F2F3F5";
-const TEXT = "#1C1E21";
+const TEXT = "#1c2b33";
 const MUTED = "#65676B";
 const BLUE = "#1877F2";
 const BLUE_LIGHT = "#e6f5f0";

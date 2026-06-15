@@ -30,7 +30,9 @@ const budgetOptions = [
 ];
 
 /* ─── EXACT Design Tokens from live Meta computed CSS ─── */
-const FONT = '-apple-system, "system-ui", Arial, sans-serif';
+const FONT = '"Optimistic 95", system-ui, sans-serif';
+// eslint-disable-next-line no-unused-vars
+const FONT_ROBOTO = 'Roboto, Arial, sans-serif';
 const TEXT = "#1c2b33";          // rgb(28,43,51) — all body text
 const MUTED = "rgba(28,43,51,0.65)"; // subtext
 const BLUE = "#0a78be";          // rgb(10,120,190) — links & active
