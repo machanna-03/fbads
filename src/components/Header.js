@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Box, Typography, Avatar, Menu, MenuItem } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import PersonIcon from '@mui/icons-material/Person';
-const FONT = '-apple-system, "system-ui", Arial, sans-serif';
-const TEXT = "#1C1E21";
+const FONT = '"Optimistic 95", system-ui, sans-serif';
+const TEXT = "rgba(28, 43, 51, 1)";
 const MUTED = "#65676B";
 const BLUE = "#1877F2";
 const BORDER = "1px solid #a6aab0ff";
@@ -25,7 +25,7 @@ const ChevronDown = ({ color = TEXT, size = 13 }) => (
 );
 
 const SolidArrowDown = () => (
-  <svg width="9" height="6" viewBox="0 0 7 5" fill="#1C1E21" style={{ marginLeft: "4px" }}>
+  <svg width="9" height="6" viewBox="0 0 7 5" fill="#1c2b33" style={{ marginLeft: "4px" }}>
     <path d="M0 0h7L3.5 5z" />
   </svg>
 );
@@ -147,11 +147,11 @@ export default function Header() {
       <Typography
         sx={{
           fontSize: "18px", fontWeight: 700,
-          fontFamily: FONT, color: TEXT,
-          whiteSpace: "nowrap", mr: "4px", flexShrink: 0,
+          fontFamily: FONT, color: "rgb(28, 43, 51) ",
+          whiteSpace: "nowrap", mr: "4px", flexShrink: 0, lineHeight: '22px'
         }}
       >
-        Campaigns
+        Ad sets
       </Typography>
 
       {/* ── Account Selector ── */}
@@ -254,7 +254,7 @@ export default function Header() {
         }}
       >
         <OpportunityBadge score={100} />
-        <Typography sx={{ fontSize: "14px", fontWeight: 500, color: "#1C2B33", fontFamily: FONT, whiteSpace: "nowrap" }}>
+        <Typography sx={{ fontSize: "14px", fontWeight: 500, color: "#1c2b33", fontFamily: FONT, whiteSpace: "nowrap" }}>
           Opportunity score
         </Typography>
         <SolidArrowDown />

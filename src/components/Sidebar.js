@@ -244,7 +244,7 @@ function NavItem({ item, isExpanded, isActive, onClick }) {
           sx={{
             fontSize: "14px",
             fontWeight: isActive ? 600 : 400,
-            fontFamily: '-apple-system, "system-ui", Arial, sans-serif',
+            fontFamily: '"Optimistic 95", system-ui, sans-serif',
             color: isActive ? activeColor : defaultColor,
             lineHeight: "18px",
             opacity: isExpanded ? 1 : 0,
@@ -311,7 +311,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
             ml: "10px",
             fontSize: "15px",
             fontWeight: 700,
-            fontFamily: '-apple-system, "system-ui", Arial, sans-serif',
+            fontFamily: '"Optimistic 95", system-ui, sans-serif',
             color: "#1c2b33",
             whiteSpace: "nowrap",
             opacity: isExpanded ? 1 : 0,

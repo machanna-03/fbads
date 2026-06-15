@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, InputBase, Typography, Paper } from "@mui/material";
 import { ChevronDown, Plus } from "lucide-react";
 
-const FONT = '-apple-system, "system-ui", Arial, sans-serif';
+const FONT = '"Optimistic 95", system-ui, sans-serif';
 const BORDER = "1px solid #DADDE1";
 const TEXT = "#000000";
 const MUTED = "#424345";

@@ -15,7 +15,7 @@ function App() {
         height: "100vh",
         width: "100vw",
         overflow: "hidden",
-        fontFamily: '-apple-system, "system-ui", Arial, sans-serif',
+        fontFamily: '"Optimistic 95", system-ui, sans-serif',
         fontSize: "12px",
         backgroundColor: "#F0F2F5",
       }}
