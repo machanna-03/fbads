@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Box, Typography, Select, MenuItem, TextField, IconButton, Paper, Button, InputAdornment, Checkbox, Radio } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   CreditCard, Activity, Info, X, ChevronDown,
   LayoutGrid, Edit3, HelpCircle, Settings2,
@@ -30,12 +31,73 @@ const budgetOptions = [
 ];
 
 /* ─── EXACT Design Tokens from live Meta computed CSS ─── */
-const FONT = '-apple-system, "system-ui", Arial, sans-serif';
+const FONT = '"Optimistic 95", system-ui, sans-serif';
+// eslint-disable-next-line no-unused-vars
+const FONT_ROBOTO = 'Roboto, Arial, sans-serif';
 const TEXT = "#1c2b33";          // rgb(28,43,51) — all body text
 const MUTED = "rgba(28,43,51,0.65)"; // subtext
 const BLUE = "#0a78be";          // rgb(10,120,190) — links & active
 const WHITE = "#ffffff";
 const RADIUS = "4px";              // card border-radius from Meta
+
+const theme = createTheme({
+  typography: {
+    fontFamily: FONT,
+    allVariants: {
+      fontFamily: FONT,
+      color: TEXT,
+    },
+  },
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontFamily: FONT,
+          color: TEXT,
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontFamily: FONT,
+          textTransform: "none",
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          fontFamily: FONT,
+          color: TEXT,
+        },
+        input: {
+          fontFamily: FONT,
+          color: TEXT,
+          "&::placeholder": {
+            fontFamily: FONT,
+          },
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontFamily: FONT,
+          color: TEXT,
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        select: {
+          fontFamily: FONT,
+          color: TEXT,
+        },
+      },
+    },
+  },
+});
 
 /* ─── Meta exact page background gradient ─── */
 const PAGE_BG = `
@@ -51,7 +113,7 @@ const H_SEC = { fontSize: 18, fontWeight: 700, lineHeight: 1.2223, color: TEXT }
 // Banner title: 15px / 700
 const H_CARD = { fontSize: "15px", fontWeight: 700, lineHeight: "20px", color: TEXT };
 // Body text: 14px / 400
-const T_BODY = { fontSize: "15px", fontWeight: 400, lineHeight: "20px", color: "#000000ff" };
+const T_BODY = { fontSize: "15px", fontWeight: 400, lineHeight: "20px", color: TEXT };
 // Label (Business name etc): 15px / 700
 const T_LABEL = { fontSize: "15px", fontWeight: 700, lineHeight: "20px", color: TEXT };
 // Subtext / muted: 12px / 400
@@ -69,8 +131,8 @@ const T_NAV_A = { fontSize: "16px", fontWeight: 700, lineHeight: "20px", color: 
 const T_NAV = { fontSize: "14px", fontWeight: 400, lineHeight: "20px", color: TEXT };
 
 /* ─── Primitives ─── */
-function T({ children, sx = {} }) {
-  return <Typography sx={{ fontFamily: FONT, ...sx }}>{children}</Typography>;
+function T({ children, sx = {}, ...props }) {
+  return <Typography sx={{ fontFamily: FONT, color: TEXT, ...sx }} {...props}>{children}</Typography>;
 }
 
 // Card: white, 4px radius, NO border, NO shadow (exact Meta style)
@@ -201,7 +263,7 @@ function SecondaryNav({ active, setActive }) {
 
 /* ─── Notifications Panel ─── */
 function NotificationsPanel({ notifications, setNotifications }) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
 
   const activeItems = [];
   if (notifications.setup) activeItems.push("setup");
@@ -913,7 +975,7 @@ function PaymentSettingsView({ notifications, setNotifications, currentAccount, 
                   sx={{
                     mt: 1.5,
                     fontSize: "14px",
-                    color: "#65676B",
+                    color: MUTED,
                     backgroundColor: "#f7fbfe",
                   }}
                 >
@@ -1201,7 +1263,7 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
         }}>
           {/* Left side */}
           <Box>
-            <Typography sx={{ fontSize: "14px", fontWeight: "600", color: "#65676B", mb: 0.5 }}>
+            <Typography sx={{ fontSize: "14px", fontWeight: "600", color: MUTED, mb: 0.5 }}>
               {activeBillingTab === "ad-accounts" ? "Ad account" : "WhatsApp Business account"}
             </Typography>
             <Typography sx={{ fontSize: "18px", fontWeight: "bold", color: TEXT }}>
@@ -1212,7 +1274,7 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
           {/* Right side */}
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mb: 0.5 }}>
-              <Typography sx={{ fontSize: "14px", fontWeight: "600", color: "#65676B" }}>
+              <Typography sx={{ fontSize: "14px", fontWeight: "600", color: MUTED }}>
                 Current balance
               </Typography>
               <Info size={14} color="#65676B" />
@@ -1725,7 +1787,7 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
 
           <Typography
             align="center"
-            sx={{ maxWidth: 460, fontSize: "15px", fontWeight: "400", color: "#4f5054", mb: 3 }}
+            sx={{ maxWidth: 460, fontSize: "15px", fontWeight: "400", color: MUTED, mb: 3 }}
           >
             You have no transactions during this period. Update the date range or remove filters to expand your search.
           </Typography>
@@ -1945,37 +2007,39 @@ export default function BillingPayments() {
   ];
 
   return (
-    <Box sx={{
-      display: "flex", flexDirection: "column",
-      /* EXACT Meta page background gradient */
-      backgroundImage: PAGE_BG,
-      backgroundColor: WHITE,
-    }}>
-      <BillingHeader />
-
+    <ThemeProvider theme={theme}>
       <Box sx={{
-        display: "flex", gap: "16px",
-        p: "20px",
+        display: "flex", flexDirection: "column",
+        /* EXACT Meta page background gradient */
+        backgroundImage: PAGE_BG,
+        backgroundColor: WHITE,
       }}>
-        <SecondaryNav active={activeItem} setActive={setActiveItem} />
-        {activeItem === "payment-settings" ? (
-          <PaymentSettingsView
-            notifications={notifications}
-            setNotifications={setNotifications}
-            currentAccount={currentAccount}
-            setCurrentAccount={setCurrentAccount}
-            accounts={accounts}
-          />
-        ) : (
-          <PaymentActivityView
-            notifications={notifications}
-            setNotifications={setNotifications}
-            currentAccount={currentAccount}
-            setCurrentAccount={setCurrentAccount}
-            accounts={accounts}
-          />
-        )}
+        <BillingHeader />
+
+        <Box sx={{
+          display: "flex", gap: "16px",
+          p: "20px",
+        }}>
+          <SecondaryNav active={activeItem} setActive={setActiveItem} />
+          {activeItem === "payment-settings" ? (
+            <PaymentSettingsView
+              notifications={notifications}
+              setNotifications={setNotifications}
+              currentAccount={currentAccount}
+              setCurrentAccount={setCurrentAccount}
+              accounts={accounts}
+            />
+          ) : (
+            <PaymentActivityView
+              notifications={notifications}
+              setNotifications={setNotifications}
+              currentAccount={currentAccount}
+              setCurrentAccount={setCurrentAccount}
+              accounts={accounts}
+            />
+          )}
+        </Box>
       </Box>
-    </Box>
+    </ThemeProvider>
   );
 }

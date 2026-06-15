@@ -1,6 +1,22 @@
 /* ─── Meta Ads Manager — Exact Global Styles ─── */
 /* Extracted from live Meta computed CSS */
 
+@font-face {
+  font-family: 'Optimistic 95';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Optimistic 95'), local('Optimistic95'),
+    url('https://react.dev/fonts/Optimistic_Display_W_Bd.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Optimistic 95';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Optimistic 95'), local('Optimistic95'),
+    url('https://react.dev/fonts/Optimistic_Display_W_Md.woff2') format('woff2');
+}
+
 *,
 *::before,
 *::after {
@@ -17,14 +33,14 @@ body {
   width: 100%;
   overflow: hidden;
 
-  /* EXACT from Meta computed: -apple-system, system-ui, Arial */
-  font-family: -apple-system, "system-ui", Arial, sans-serif;
+  /* EXACT from Meta computed: "Optimistic 95", system-ui, sans-serif */
+  font-family: "Optimistic 95", system-ui, sans-serif;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.28;
 
   /* EXACT body text color from Meta */
-  color: #1c1e21;
+  color: #1c2b33;
 
   /* Base bg — actual page bg is set per-page via gradient */
   background-color: #e9ebee;
@@ -43,6 +59,7 @@ a {
   color: #0a78be;
   text-decoration: none;
 }
+
 a:hover {
   text-decoration: underline;
 }
@@ -52,18 +69,41 @@ a:hover {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.2);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.35);
 }
 
 button {
-  font-family: -apple-system, "system-ui", Arial, sans-serif;
+  font-family: "Optimistic 95", system-ui, sans-serif;
+  font-family: "Optimistic 95", system-ui, sans-serif;
   cursor: pointer;
+}
+
+/* Font styles from images */
+.font-optimistic-95-700 {
+  font-family: "Optimistic 95", system-ui, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  color: rgb(28, 43, 51);
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.font-roboto-700 {
+  font-family: Roboto, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  color: rgb(24, 113, 237);
+  font-size: 12px;
+  line-height: 15px;
 }

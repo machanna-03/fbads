@@ -6,9 +6,11 @@ import {
 } from "lucide-react";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
-const FONT = '-apple-system, "system-ui", Arial, sans-serif';
+const FONT = '"Optimistic 95", system-ui, sans-serif';
+// eslint-disable-next-line no-unused-vars
+const FONT_ROBOTO = 'Roboto, Arial, sans-serif';
 const BORDER = "1px solid #a6aab0ff";
-const TEXT = "#1C1E21";
+const TEXT = "#1c2b33";
 const MUTED = "#4a4c50ff";
 const BLUE = "#0b78be";
 const GREEN = "#006b4e";
@@ -22,7 +24,7 @@ function Txt({ children, sx = {} }) {
 }
 
 const SolidArrowDown = () => (
-  <svg width="9" height="6" viewBox="0 0 7 5" fill="#1C1E21" style={{ marginLeft: "4px" }}>
+  <svg width="9" height="6" viewBox="0 0 7 5" fill="#1c2b33" style={{ marginLeft: "4px" }}>
     <path d="M0 0h7L3.5 5z" />
   </svg>
 );
@@ -75,7 +77,7 @@ const CampaignIcon = ({ color = "#0b78be" }) => (
 );
 
 /* Ad sets: 2×2 grid */
-const AdSetsIcon = ({ color = "#1C1E21" }) => (
+const AdSetsIcon = ({ color = "#1c2b33" }) => (
   <svg width="20" height="24" viewBox="0 0 16 16" fill="none">
     <rect x="1" y="1" width="6" height="6" rx="1" stroke={color} strokeWidth="1.35" />
     <rect x="9" y="1" width="6" height="6" rx="1" stroke={color} strokeWidth="1.35" />
@@ -85,7 +87,7 @@ const AdSetsIcon = ({ color = "#1C1E21" }) => (
 );
 
 /* Ads: browser/window frame icon */
-const AdsIcon = ({ color = "#1C1E21" }) => (
+const AdsIcon = ({ color = "#1c2b33" }) => (
   <svg width="20" height="24" viewBox="0 0 16 16" fill="none">
     <rect x="1.5" y="2.5" width="13" height="11" rx="1.5" stroke={color} strokeWidth="1.35" />
     <path d="M1.5 6H14.5" stroke={color} strokeWidth="1.2" strokeLinecap="round" />
@@ -116,8 +118,8 @@ function TabItem({ icon: Icon, label, active, onClick }) {
         userSelect: "none", flexShrink: 0,
       }}
     >
-      {Icon && <Icon color={active ? BLUE : "#1C1E21"} />}
-      <Txt sx={{ fontWeight: 700, color: active ? BLUE : "#1C1E21", fontSize: "16px", whiteSpace: "nowrap", textAlign: "left" }}>
+      {Icon && <Icon color={active ? BLUE : "#1c2b33"} />}
+      <Txt sx={{ fontWeight: 700, color: active ? BLUE : "#1c2b33", fontSize: "16px", whiteSpace: "nowrap", textAlign: "left" }}>
         {label}
       </Txt>
     </Paper>
