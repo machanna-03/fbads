@@ -6,7 +6,7 @@
   font-style: normal;
   font-weight: 700;
   src: local('Optimistic 95'), local('Optimistic95'),
-       url('https://react.dev/fonts/Optimistic_Display_W_Bd.woff2') format('woff2');
+    url('https://react.dev/fonts/Optimistic_Display_W_Bd.woff2') format('woff2');
 }
 
 @font-face {
@@ -14,7 +14,7 @@
   font-style: normal;
   font-weight: 400;
   src: local('Optimistic 95'), local('Optimistic95'),
-       url('https://react.dev/fonts/Optimistic_Display_W_Md.woff2') format('woff2');
+    url('https://react.dev/fonts/Optimistic_Display_W_Md.woff2') format('woff2');
 }
 
 *,
@@ -36,7 +36,7 @@ body {
   /* EXACT from Meta computed: "Optimistic 95", system-ui, sans-serif */
   font-family: "Optimistic 95", system-ui, sans-serif;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.28;
 
   /* EXACT body text color from Meta */
@@ -59,6 +59,7 @@ a {
   color: #0a78be;
   text-decoration: none;
 }
+
 a:hover {
   text-decoration: underline;
 }
@@ -68,18 +69,22 @@ a:hover {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.2);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.35);
 }
 
 button {
+  font-family: "Optimistic 95", system-ui, sans-serif;
   font-family: "Optimistic 95", system-ui, sans-serif;
   cursor: pointer;
 }
