@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box, Checkbox, Switch, Typography } from "@mui/material";
-import { ChevronsUpDown, ChevronDown, Info } from "lucide-react";
+import { ChevronsUpDown, ChevronDown, Info, ArrowDown } from "lucide-react";
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 const FONT = '-apple-system, "system-ui", Arial, sans-serif';
 const BORDER_COLOR = "#DADDE1";
@@ -9,10 +9,10 @@ const HEADER_BG = "#F2F3F5";
 const TEXT = "#1C1E21";
 const MUTED = "#65676B";
 const BLUE = "#1877F2";
-const BLUE_LIGHT = "#f5fced";
+const BLUE_LIGHT = "#e6f5f0";
 const GREEN = "#31A24C";
-const ROW_HIGHLIGHT = "#f5fced";   /* exact Meta blue tint for highlighted row */
-const ROW_HOVER = "#f5fced";
+const ROW_HIGHLIGHT = "#e6f5f0";   /* exact Meta blue tint for highlighted row */
+const ROW_HOVER = "#e6f5f0";
 
 /* ── Reusable text ── */
 function T({ children, sx = {} }) {
@@ -24,37 +24,49 @@ function T({ children, sx = {} }) {
 }
 
 /* ── Sortable header cell ── */
-function HeaderCell({ label, sortActive = false, info = false, right = false, wrap = false }) {
+function HeaderCell({ label, sortActive = false, info = false, right = false, wrap = false, showSort = true, showCaret = true }) {
   return (
     <Box
       sx={{
-        display: "flex", alignItems: "center", gap: "3px",
+        display: "flex", alignItems: "center",
         px: "10px", height: "100%", cursor: "pointer", userSelect: "none",
-        justifyContent: right ? "flex-end" : "flex-start",
-        "&:hover .sortIcon": { opacity: 1 },
+        justifyContent: "space-between",
+        "&:hover .caretIcon": { opacity: 1 },
       }}
     >
-      {info && <Info size={11} color={MUTED} style={{ flexShrink: 0 }} />}
-      {wrap ? (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: "1px" }}>
-          <Typography sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 700, color: TEXT, lineHeight: 1.2 }}>
-            {label.split(" ")[0]}
+      <Box sx={{ display: "flex", alignItems: "center", gap: "4px", justifyContent: "flex-start", flex: 1 }}>
+        {info && <Info size={11} color={MUTED} style={{ flexShrink: 0 }} />}
+        {wrap ? (
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography sx={{ fontFamily: FONT, fontSize: "13px", fontWeight: 700, color: TEXT, lineHeight: 1.2 }}>
+              {label.split(" ")[0]} {label.split(" ")[1]}
+            </Typography>
+            <Typography sx={{ fontFamily: FONT, fontSize: "13px", fontWeight: 700, color: TEXT, lineHeight: 1.2 }}>
+              {label.split(" ").slice(2).join(" ")}
+            </Typography>
+          </Box>
+        ) : (
+          <Typography sx={{ fontFamily: FONT, fontSize: "13px", fontWeight: 700, color: TEXT, whiteSpace: "nowrap" }}>
+            {label}
           </Typography>
-          <Typography sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 700, color: TEXT, lineHeight: 1.2 }}>
-            {label.split(" ").slice(1).join(" ")}
-          </Typography>
-        </Box>
-      ) : (
-        <Typography
-          sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 700, color: TEXT, whiteSpace: "nowrap" }}
-        >
-          {label}
-        </Typography>
-      )}
+        )}
 
-      <Box sx={{ display: "flex", alignItems: "center", opacity: 0.5 }}>
-        <ChevronDown size={14} color={TEXT} />
+        {showSort && (
+          <Box sx={{ display: "flex", alignItems: "center", ml: "2px" }}>
+            {sortActive ? (
+              <ArrowDown size={14} color={BLUE} />
+            ) : (
+              <ImportExportIcon sx={{ fontSize: 16, color: TEXT }} />
+            )}
+          </Box>
+        )}
       </Box>
+
+      {showCaret && (
+        <Box className="caretIcon" sx={{ display: "flex", alignItems: "center", ml: "4px" }}>
+          <Box sx={{ width: 0, height: 0, borderLeft: "4px solid transparent", borderRight: "4px solid transparent", borderTop: `4px solid ${TEXT}` }} />
+        </Box>
+      )}
     </Box>
   );
 }
@@ -81,7 +93,7 @@ const campaigns = [
     id: 1,
     name: "Leads",
     delivery: "In draft",
-    deliveryColor: GREEN,
+    deliveryColor: "#006b4e",
     results: null,
     costPerResult: null,
     budget: "Using ad set budget",
@@ -104,285 +116,280 @@ export default function CampaignTable() {
   const indeterminate = selected.length > 0 && selected.length < campaigns.length;
 
   return (
-    <Box
-      sx={{
-        flex: 1, display: "flex", flexDirection: "column",
-        overflow: "hidden", backgroundColor: "#F5F6F7",
-      }}
-    >
-      {/* ── Table wrapper ── */}
+    <Box sx={{ backgroundColor: "#f3f6f8", }}>
       <Box
         sx={{
-          backgroundColor: "#fff",
-          borderTop: BORDER,
-          overflow: "hidden",
-          display: "flex", flexDirection: "column",
-          flex: 1,
+          flex: 1, display: "flex", flexDirection: "column",
+          overflow: "hidden", backgroundColor: "#F5F6F7",
+          mx: "6px",
         }}
       >
-        {/* ── Table header ── */}
+        {/* ── Table wrapper ── */}
         <Box
           sx={{
-            display: "flex", alignItems: "stretch",
-            height: "52px",
-            backgroundColor: "#ffffff",
-            borderBottom: BORDER,
-            flexShrink: 0,
+            backgroundColor: "#fff",
+            borderTop: BORDER,
             overflowX: "auto",
-            "&::-webkit-scrollbar": { display: "none" },
+            overflowY: "hidden",
+            display: "flex", flexDirection: "column",
+            flex: 1,
+            position: "relative",
           }}
         >
-          {/* Checkbox col */}
-          <Box
-            sx={{
-              width: 44, minWidth: 44, height: "100%",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              borderRight: BORDER, flexShrink: 0,
-            }}
-          >
-            <Checkbox
-              size="small"
-              checked={allChecked}
-              indeterminate={indeterminate}
-              onChange={(e) => setSelected(e.target.checked ? campaigns.map((c) => c.id) : [])}
-              sx={{ p: "2px", color: MUTED, "&.Mui-checked": { color: BLUE }, "&.MuiCheckbox-indeterminate": { color: BLUE } }}
-            />
-          </Box>
+          {/* Shared container to enforce identical row widths for perfect flex alignment */}
+          <Box sx={{ minWidth: 1112, display: "flex", flexDirection: "column", flex: 1, width: "100%" }}>
 
-          {/* Off/On */}
-          <Box
-            sx={{
-              width: 88, minWidth: 88, px: "10px", height: "100%",
-              display: "flex", alignItems: "center",
-              borderRight: BORDER, flexShrink: 0, gap: "4px", cursor: "pointer",
-            }}
-          >
-            <Typography sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 700, color: TEXT }}>
-              Off...
-            </Typography>
-            <ImportExportIcon size={14} color={TEXT} />
-          </Box>
-
-          {/* Campaign */}
-          <Box sx={{ flex: 2, minWidth: 200, height: "100%", borderRight: BORDER }}>
-            <HeaderCell label="Campaign" />
-          </Box>
-
-          {/* Delivery */}
-          <Box sx={{ width: 140, minWidth: 140, height: "100%", borderRight: BORDER }}>
-            <HeaderCell label="Delivery" sortActive />
-          </Box>
-
-          {/* Actions */}
-          <Box sx={{ flex: 1, minWidth: 120, height: "100%", borderRight: BORDER }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: "4px", px: "10px", height: "100%" }}>
-              <Typography sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 700, color: TEXT }}>
-                Actions
-              </Typography>
-              <ChevronsUpDown size={14} color={TEXT} />
-            </Box>
-          </Box>
-
-          {/* Results */}
-          <Box sx={{ width: 110, minWidth: 110, height: "100%", borderRight: BORDER }}>
-            <HeaderCell label="Results" info />
-          </Box>
-
-          {/* Cost per result */}
-          <Box sx={{ width: 100, minWidth: 100, height: "100%", borderRight: BORDER }}>
-            <HeaderCell label="Cost per result" wrap />
-          </Box>
-
-          {/* Sort icon sep col */}
-          <Box
-            sx={{
-              width: 36, minWidth: 36, height: "100%",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              borderRight: BORDER, flexShrink: 0, cursor: "pointer",
-            }}
-          >
-            <ChevronsUpDown size={14} color={TEXT} />
-          </Box>
-
-          {/* Budget */}
-          <Box sx={{ width: 140, minWidth: 140, height: "100%", borderRight: BORDER }}>
-            <HeaderCell label="Budget" />
-          </Box>
-
-          {/* Amount spent */}
-          <Box sx={{ width: 110, minWidth: 110, height: "100%", px: "10px", display: "flex", alignItems: "center" }}>
-            <Typography sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 700, color: TEXT }}>
-              Amount spent
-            </Typography>
-          </Box>
-        </Box>
-
-        {/* ── Data rows ── */}
-        {campaigns.map((row) => {
-          const isSelected = selected.includes(row.id);
-          const isHovered = hovered === row.id;
-          const rowBg = isSelected
-            ? BLUE_LIGHT
-            : isHovered
-              ? ROW_HOVER
-              : ROW_HIGHLIGHT;
-
-          return (
+            {/* ── Table header ── */}
             <Box
-              key={row.id}
-              onMouseEnter={() => setHovered(row.id)}
-              onMouseLeave={() => setHovered(null)}
               sx={{
-                display: "flex", alignItems: "stretch",
+                display: "grid",
+                gridTemplateColumns: "44px 88px minmax(250px, 2fr) 140px minmax(120px, 1fr) 110px 110px 140px 110px",
                 height: "52px",
-                backgroundColor: rowBg,
+                backgroundColor: "#ffffff",
                 borderBottom: BORDER,
-                transition: "background-color 0.15s",
-                cursor: "default",
-                overflowX: "auto",
-                "&::-webkit-scrollbar": { display: "none" },
+                flexShrink: 0,
               }}
             >
-              {/* Checkbox */}
+              {/* Checkbox col */}
               <Box
                 sx={{
-                  width: 44, minWidth: 44,
+                  width: 44, minWidth: 44, height: "100%",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   borderRight: BORDER, flexShrink: 0,
                 }}
               >
                 <Checkbox
                   size="small"
-                  checked={isSelected}
-                  onChange={() => toggleSelect(row.id)}
-                  sx={{
-                    p: "2px", color: MUTED,
-                    "&.Mui-checked": { color: BLUE },
-                  }}
+                  checked={allChecked}
+                  indeterminate={indeterminate}
+                  onChange={(e) => setSelected(e.target.checked ? campaigns.map((c) => c.id) : [])}
+                  sx={{ p: "2px", color: MUTED, "&.Mui-checked": { color: BLUE }, "&.MuiCheckbox-indeterminate": { color: BLUE } }}
                 />
               </Box>
 
-              {/* Toggle */}
+              {/* Off/On */}
               <Box
                 sx={{
-                  width: 88, minWidth: 88,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  borderRight: BORDER, flexShrink: 0,
+                  width: 88, minWidth: 88, height: "100%",
+                  display: "flex", alignItems: "center", justifyContent: "flex-start", px: "10px",
+                  borderRight: BORDER, flexShrink: 0, gap: "4px", cursor: "pointer",
                 }}
               >
-                <CampaignToggle checked={row.on} />
+                <Typography sx={{ fontFamily: FONT, fontSize: "13px", fontWeight: 700, color: TEXT }}>
+                  Off...
+                </Typography>
+                <ImportExportIcon sx={{ fontSize: 16, color: TEXT }} />
               </Box>
 
-              {/* Campaign name */}
-              <Box
-                sx={{
-                  flex: 2, minWidth: 200,
-                  display: "flex", alignItems: "center",
-                  px: "10px", borderRight: BORDER,
-                }}
-              >
-                <T sx={{ color: BLUE, fontWeight: 600, fontSize: "13px", cursor: "pointer", "&:hover": { textDecoration: "underline" } }}>
-                  {row.name}
-                </T>
+              {/* Campaign */}
+              <Box sx={{ flex: 2, minWidth: 250, height: "100%", borderRight: BORDER }}>
+                <HeaderCell label="Campaign" />
               </Box>
 
               {/* Delivery */}
-              <Box
-                sx={{
-                  width: 140, minWidth: 140,
-                  display: "flex", alignItems: "center",
-                  px: "10px", borderRight: BORDER, gap: "6px",
-                }}
-              >
-                <Box sx={{ width: 8, height: 8, borderRadius: "50%", backgroundColor: row.deliveryColor, flexShrink: 0 }} />
-                <T sx={{ fontSize: "12px", fontWeight: 500, color: TEXT }}>{row.delivery}</T>
+              <Box sx={{ width: 140, minWidth: 140, flexShrink: 0, height: "100%", borderRight: BORDER }}>
+                <HeaderCell label="Delivery" sortActive />
               </Box>
 
               {/* Actions */}
-              <Box
-                sx={{
-                  flex: 1, minWidth: 120,
-                  display: "flex", alignItems: "center",
-                  px: "10px", borderRight: BORDER,
-                }}
-              >
-                <T sx={{ color: MUTED }}>—</T>
+              <Box sx={{ flex: 1, minWidth: 120, height: "100%", borderRight: BORDER }}>
+                <HeaderCell label="Actions" showSort={false} />
               </Box>
 
               {/* Results */}
-              <Box
-                sx={{
-                  width: 110, minWidth: 110,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  px: "10px", borderRight: BORDER,
-                }}
-              >
-                <T sx={{ color: MUTED }}>—</T>
+              <Box sx={{ width: 110, minWidth: 110, flexShrink: 0, height: "100%", borderRight: BORDER }}>
+                <HeaderCell label="Results" info />
               </Box>
 
               {/* Cost per result */}
-              <Box
-                sx={{
-                  width: 100, minWidth: 100,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  px: "10px", borderRight: BORDER,
-                }}
-              >
-                <T sx={{ color: MUTED }}>—</T>
+              <Box sx={{ width: 110, minWidth: 110, flexShrink: 0, height: "100%", borderRight: BORDER }}>
+                <HeaderCell label="Cost per result" wrap />
               </Box>
 
-              {/* Sort sep */}
-              <Box
-                sx={{
-                  width: 36, minWidth: 36,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  borderRight: BORDER, flexShrink: 0,
-                }}
-              />
-
               {/* Budget */}
-              <Box
-                sx={{
-                  width: 140, minWidth: 140,
-                  display: "flex", flexDirection: "column", justifyContent: "center",
-                  px: "10px", borderRight: BORDER,
-                }}
-              >
-                <T sx={{ fontSize: "12px", fontWeight: 400 }}>{row.budget}</T>
-                {row.budgetSub && (
-                  <T sx={{ fontSize: "11px", color: MUTED, mt: "1px" }}>{row.budgetSub}</T>
-                )}
+              <Box sx={{ width: 140, minWidth: 140, flexShrink: 0, height: "100%", borderRight: BORDER }}>
+                <HeaderCell label="Budget" />
               </Box>
 
               {/* Amount spent */}
-              <Box
-                sx={{
-                  width: 110, minWidth: 110,
-                  display: "flex", alignItems: "center", justifyContent: "flex-end",
-                  px: "10px",
-                }}
-              >
-                <T sx={{ color: MUTED }}>—</T>
+              <Box sx={{ width: 110, minWidth: 110, flexShrink: 0, height: "100%", px: "10px", display: "flex", alignItems: "center", justifyContent: "flex-end", borderRight: BORDER }}>
+                <Typography sx={{ fontFamily: FONT, fontSize: "13px", fontWeight: 700, color: TEXT }}>
+                  Amount spent
+                </Typography>
               </Box>
             </Box>
-          );
-        })}
 
-        {/* ── Results footer ── */}
-        <Box
-          sx={{
-            display: "flex", alignItems: "center",
-            px: "16px", height: "40px",
-            borderBottom: BORDER, backgroundColor: "#fff",
-            flexShrink: 0, gap: "6px",
-          }}
-        >
-          <T sx={{ fontSize: "12px", color: MUTED }}>Results from {campaigns.length} campaign</T>
-          <Info size={13} color={MUTED} style={{ cursor: "pointer" }} />
+            {/* ── Data rows ── */}
+            {campaigns.map((row) => {
+              const isSelected = selected.includes(row.id);
+              const isHovered = hovered === row.id;
+              const rowBg = isSelected
+                ? BLUE_LIGHT
+                : isHovered
+                  ? ROW_HOVER
+                  : ROW_HIGHLIGHT;
+
+              return (
+                <Box
+                  key={row.id}
+                  onMouseEnter={() => setHovered(row.id)}
+                  onMouseLeave={() => setHovered(null)}
+                  sx={{
+                    display: "grid",
+                    gridTemplateColumns: "44px 88px minmax(250px, 2fr) 140px minmax(120px, 1fr) 110px 110px 140px 110px",
+                    height: "52px",
+                    backgroundColor: rowBg,
+                    borderBottom: BORDER,
+                    transition: "background-color 0.15s",
+                    cursor: "default",
+                  }}
+                >
+                  {/* Checkbox */}
+                  <Box
+                    sx={{
+                      width: 44, minWidth: 44,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      borderRight: BORDER, flexShrink: 0,
+                    }}
+                  >
+                    <Checkbox
+                      size="small"
+                      checked={isSelected}
+                      onChange={() => toggleSelect(row.id)}
+                      sx={{
+                        p: "2px", color: MUTED,
+                        "&.Mui-checked": { color: BLUE },
+                      }}
+                    />
+                  </Box>
+
+                  {/* Toggle */}
+                  <Box
+                    sx={{
+                      width: 88, minWidth: 88,
+                      display: "flex", alignItems: "center", justifyContent: "flex-start",
+                      px: "10px",
+                      borderRight: BORDER, flexShrink: 0,
+                    }}
+                  >
+                    <CampaignToggle checked={row.on} />
+                  </Box>
+
+                  {/* Campaign name */}
+                  <Box
+                    sx={{
+                      flex: 2, minWidth: 250,
+                      display: "flex", alignItems: "center",
+                      px: "10px", borderRight: BORDER,
+                    }}
+                  >
+                    <T sx={{ color: BLUE, fontWeight: 600, fontSize: "13px", cursor: "pointer", "&:hover": { textDecoration: "underline" } }}>
+                      {row.name}
+                    </T>
+                  </Box>
+
+                  {/* Delivery */}
+                  <Box
+                    sx={{
+                      width: 140, minWidth: 140, flexShrink: 0,
+                      display: "flex", alignItems: "center",
+                      px: "10px", borderRight: BORDER, gap: "6px",
+                    }}
+                  >
+                    <Box sx={{ width: 10, height: 10, borderRadius: "50%", border: `2px solid ${row.deliveryColor}`, flexShrink: 0 }} />
+                    <T sx={{ fontSize: "13px", color: TEXT }}>{row.delivery}</T>
+                  </Box>
+
+                  {/* Actions */}
+                  <Box
+                    sx={{
+                      flex: 1, minWidth: 120,
+                      display: "flex", alignItems: "center",
+                      px: "10px", borderRight: BORDER,
+                    }}
+                  >
+                    <T sx={{ color: MUTED }}>—</T>
+                  </Box>
+
+                  {/* Results */}
+                  <Box
+                    sx={{
+                      width: 110, minWidth: 110, flexShrink: 0,
+                      display: "flex", alignItems: "center", justifyContent: "flex-end",
+                      px: "10px", borderRight: BORDER,
+                    }}
+                  >
+                    <T sx={{ color: MUTED }}>—</T>
+                  </Box>
+
+                  {/* Cost per result */}
+                  <Box
+                    sx={{
+                      width: 110, minWidth: 110, flexShrink: 0,
+                      display: "flex", alignItems: "center", justifyContent: "flex-end",
+                      px: "10px", borderRight: BORDER,
+                    }}
+                  >
+                    <T sx={{ color: MUTED }}>—</T>
+                  </Box>
+
+                  {/* Budget */}
+                  <Box
+                    sx={{
+                      width: 140, minWidth: 140, flexShrink: 0,
+                      display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start",
+                      px: "10px", borderRight: BORDER,
+                    }}
+                  >
+                    <T sx={{ fontSize: "13px" }}>{row.budget}</T>
+                    {row.budgetSub && (
+                      <T sx={{ fontSize: "12px", color: MUTED, mt: "1px" }}>{row.budgetSub}</T>
+                    )}
+                  </Box>
+
+                  {/* Amount spent */}
+                  <Box
+                    sx={{
+                      width: 110, minWidth: 110, flexShrink: 0,
+                      display: "flex", alignItems: "center", justifyContent: "flex-end",
+                      px: "10px", borderRight: BORDER,
+                    }}
+                  >
+                    <T sx={{ color: MUTED }}>—</T>
+                  </Box>
+                </Box>
+              );
+            })}
+
+            {/* ── Results footer ── */}
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "44px 88px minmax(250px, 2fr) 140px minmax(120px, 1fr) 110px 110px 140px 110px",
+                height: "40px",
+                borderBottom: BORDER,
+                backgroundColor: "#fff",
+                flexShrink: 0,
+              }}
+            >
+              {/* Span across Checkbox, Off/On, and Campaign */}
+              <Box
+                sx={{
+                  gridColumn: "1 / 4",
+                  display: "flex", alignItems: "center", justifyContent: "flex-end",
+                  px: "10px", gap: "6px",
+                  borderRight: BORDER,
+                }}
+              >
+                <T sx={{ fontSize: "14px", color: TEXT }}>Results from {campaigns.length} campaign</T>
+                <Info size={14} color={TEXT} style={{ cursor: "pointer", fontWeight: 600, }} />
+              </Box>
+            </Box>
+
+            {/* ── Remaining space: white to match reference ── */}
+            <Box sx={{ flex: 1, backgroundColor: "#ffffff" }} />
+          </Box>
         </Box>
-
-        {/* ── Remaining space: white to match reference ── */}
-        <Box sx={{ flex: 1, backgroundColor: "#ffffff" }} />
       </Box>
     </Box>
   );

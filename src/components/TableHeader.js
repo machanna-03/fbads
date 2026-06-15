@@ -1,11 +1,11 @@
-import  { 
-  Box, 
-  Checkbox, 
-  Typography, 
-  TableContainer, 
-  Table, 
-  TableHead, 
-  TableRow, 
+import {
+  Box,
+  Checkbox,
+  Typography,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
   TableCell,
   TableBody,
   styled
@@ -73,4 +73,3 @@ export default function TableHeader() {
     </TableContainer>
   );
 }
-  
