@@ -50,41 +50,45 @@ const SlidersIcon = ({ color = MUTED }) => (
   </svg>
 );
 
-/* ── Active pill (blue outline, white bg) ── */
-function ActivePill({ icon, label }) {
+/* ── Filter pill items config ── */
+const filterItems = [
+  { id: "allads", icon: FolderIcon, label: "All ads" },
+  { id: "delivery", icon: MailIcon, label: "Had delivery" },
+  { id: "actions", icon: ActionsIcon, label: "Actions" },
+  { id: "activeads", icon: SendIcon, label: "Active ads" },
+];
+
+/* ── Single clickable filter pill ── */
+function FilterPill({ icon: IconComp, label, isActive, onClick }) {
+  const textColor = isActive ? BLUE : "rgb(28, 43, 51)";
+  const borderColor = isActive ? BLUE : "#DADDE1";
+  const fontWeight = isActive ? 700 : 400;
+
   return (
     <Box
+      onClick={onClick}
       sx={{
         display: "flex", alignItems: "center", gap: "10px",
         px: "12px", height: "36px", borderRadius: "4px",
         backgroundColor: "#fff",
-        border: `1.5px solid ${BLUE}`,
+        border: `1.5px solid ${borderColor}`,
         cursor: "pointer", flexShrink: 0, userSelect: "none",
-        "&:hover": { backgroundColor: "#a8c4f5ff" },   /* visible blue tint */
+        transition: "border-color 0.15s ease, background-color 0.15s ease",
+        "&:hover": { backgroundColor: "#a8c4f5ff" },
       }}
     >
-      {icon}
-      <Typography sx={{ fontSize: "14px", fontWeight: 700, fontFamily: FONT, color: BLUE, whiteSpace: "nowrap", }}>
-        {label}
-      </Typography>
-    </Box>
-  );
-}
-
-/* ── Outline pill (default) ── */
-function OutlinePill({ icon, label }) {
-  return (
-    <Box
-      sx={{
-        display: "flex", alignItems: "center", gap: "10px",
-        px: "12px", height: "36px", borderRadius: "4px",
-        border: BORDER, backgroundColor: "#fff",
-        cursor: "pointer", flexShrink: 0, userSelect: "none",
-        "&:hover": { backgroundColor: "#a8c4f5ff" },  /* visible gray tint */
-      }}
-    >
-      {icon}
-      <Typography sx={{ fontSize: "14.5px", fontWeight: 400, fontFamily: FONT, color: TEXT, whiteSpace: "nowrap" }}>
+      <IconComp color={textColor} />
+      <Typography
+        sx={{
+          fontSize: "14px",
+          fontWeight: fontWeight,
+          fontFamily: FONT,
+          color: textColor,
+          lineHeight: "20px",
+          whiteSpace: "nowrap",
+          transition: "color 0.15s ease, font-weight 0.15s ease",
+        }}
+      >
         {label}
       </Typography>
     </Box>
@@ -93,18 +97,27 @@ function OutlinePill({ icon, label }) {
 
 export default function FilterBar() {
   const [searchVal, setSearchVal] = useState("");
+  // "All ads" (id: "allads") is active by default
+  const [activeFilter, setActiveFilter] = useState("allads");
+
+  const handleFilterClick = (id) => {
+    setActiveFilter(id);
+  };
 
   return (
     <Box sx={{ backgroundColor: "#f1f4f7", flexShrink: 0, py: 0.5 }}>
       {/* ── Row 1: Filter pills ── */}
       <Box sx={{ display: "flex", alignItems: "center", px: "16px", height: "44px", gap: "6px" }}>
 
-        {/* Active blue pill */}
-        <ActivePill icon={<FolderIcon color={BLUE} />} label="All ads" />
-
-        <OutlinePill icon={<MailIcon />} label="Had delivery" />
-        <OutlinePill icon={<ActionsIcon />} label="Actions" />
-        <OutlinePill icon={<SendIcon />} label="Active ads" />
+        {filterItems.map((item) => (
+          <FilterPill
+            key={item.id}
+            icon={item.icon}
+            label={item.label}
+            isActive={activeFilter === item.id}
+            onClick={() => handleFilterClick(item.id)}
+          />
+        ))}
 
         {/* See more */}
         <Box
@@ -115,8 +128,8 @@ export default function FilterBar() {
             "&:hover": { backgroundColor: "#F0F2F5" },
           }}
         >
-          <Plus size={14} color={TEXT} />
-          <Typography sx={{ fontSize: "14px", fontWeight: 400, fontFamily: FONT, color: TEXT }}>See more</Typography>
+          <Plus size={14} color="rgb(28, 43, 51)" />
+          <Typography sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "20px", fontFamily: FONT, color: "rgb(28, 43, 51)" }}>See more</Typography>
         </Box>
 
         <Box sx={{ flex: 1 }} />
@@ -129,7 +142,7 @@ export default function FilterBar() {
             backgroundColor: "#F0F2F5", cursor: "pointer", flexShrink: 0,
           }}
         >
-          <Typography sx={{ fontSize: "14.5px", fontFamily: FONT, color: TEXT }}>Create a view</Typography>
+          <Typography sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "20px", fontFamily: FONT, color: "rgb(28, 43, 51)" }}>Create a view</Typography>
         </Box>
 
         {/* Sliders icon button */}
@@ -167,8 +180,8 @@ export default function FilterBar() {
             placeholder="Describe what you're looking for"
             fullWidth
             sx={{
-              fontSize: "14px", fontFamily: FONT, color: "#000000ff",
-              "& input::placeholder": { color: MUTED, opacity: 1, fontSize: "13px" },
+              fontSize: "14px", fontWeight: 400, lineHeight: "28px", fontFamily: "Roboto, Arial, sans-serif", color: "rgb(8, 8, 9)",
+              "& input::placeholder": { color: MUTED, opacity: 1, fontSize: "14px", fontWeight: 400, lineHeight: "28px", fontFamily: "Roboto, Arial, sans-serif" },
             }}
           />
         </Paper>
