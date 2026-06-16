@@ -5,7 +5,7 @@ import { Box, Tooltip, Typography } from "@mui/material";
 
 // Meta logo (∞ symbol)
 const MetaLogo = () => (
-  <svg width="28" height="28" viewBox="0 0 60 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="36" height="20" viewBox="0 0 60 36" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M5.878 18c0 3.355.733 5.926 1.705 7.37C8.795 27.072 9.978 28 11.25 28c1.627 0 3.117-.676 5.97-4.735 2.298-3.257 5.003-7.836 6.827-10.699l3.088-4.744C29.358 4.664 31.61 2 34.5 2c2.648 0 5.17 1.56 7.108 4.498C43.62 9.07 44.75 13.002 44.75 18c0 3.057-.6 5.348-1.62 7.108C42.11 26.846 40.587 28 38.75 28c-1.903 0-3.85-.945-6.27-4.605-1.325-1.993-2.68-4.434-3.885-6.63l-.588-1.078c-1.19-2.179-2.354-4.277-3.472-5.934C22.72 7.11 20.878 5 18.75 5c-2.346 0-4.346 1.694-5.96 4.258C11.273 11.684 10.5 14.855 10.5 18H5.878zm27.125-4.055c1.005 1.85 2.039 3.79 2.927 5.205C37.882 21.94 39.28 24.5 40.875 24.5c.987 0 1.875-.73 2.5-2.078.472-1.016.875-2.484.875-4.422 0-4.437-.957-7.877-2.367-10.005C40.658 5.997 39.22 5 37.75 5c-1.69 0-3.283 1.39-5.04 4.468-.432.75-.873 1.591-1.32 2.487l1.613 2.99z"
       fill="#0082FB"
@@ -145,23 +145,22 @@ const PixelIcon = ({ size = 20, color = "currentColor" }) => (
 
 /* ─── Sidebar Items Config ─── */
 const topItems = [
-  { id: "home",      icon: HomeIcon,      label: "Account overview",  tab: null },
-  { id: "campaigns", icon: CampaignsIcon, label: "Campaigns",         tab: "campaigns" },
-  { id: "adlibrary", icon: AdLibraryIcon, label: "Ad Library",        tab: null },
-  { id: "audiences", icon: AudiencesIcon, label: "Audiences",         tab: null },
-  { id: "insights",  icon: InsightsIcon,  label: "Insights",          tab: null },
-  { id: "billing",   icon: BillingIcon,   label: "Billing & payments", tab: "billing" },
-  { id: "pages",     icon: PagesIcon,     label: "Business settings", tab: null },
-  { id: "more",      icon: MoreIcon,      label: "All tools",         tab: null },
+  { id: "home", icon: HomeIcon, label: "Account overview", tab: null },
+  { id: "campaigns", icon: CampaignsIcon, label: "Campaigns", tab: "campaigns" },
+  { id: "adlibrary", icon: AdLibraryIcon, label: "Ad Library", tab: null },
+  { id: "audiences", icon: AudiencesIcon, label: "Audiences", tab: null },
+  { id: "insights", icon: InsightsIcon, label: "Insights", tab: null },
+  { id: "billing", icon: BillingIcon, label: "Billing & payments", tab: "billing" },
+  { id: "pages", icon: PagesIcon, label: "Business settings", tab: null },
+  { id: "more", icon: MoreIcon, label: "All tools", tab: null },
 ];
 
 const bottomItems = [
-  { id: "sparkle",  icon: SparkleIcon,  label: "Meta AI",     tab: null, special: "purple" },
-  { id: "help",     icon: HelpIcon,     label: "Help",        tab: null },
-  { id: "notes",    icon: NotesIcon,    label: "Drafts",      tab: null },
-  { id: "settings", icon: SettingsIcon, label: "Settings",    tab: null },
-  { id: "search",   icon: SearchIcon,   label: "Search",      tab: null },
-  { id: "pixel",    icon: PixelIcon,    label: "Events Manager", tab: null },
+  { id: "help", icon: HelpIcon, label: "Help", tab: null },
+  { id: "notes", icon: NotesIcon, label: "Drafts", tab: null },
+  { id: "settings", icon: SettingsIcon, label: "Settings", tab: null },
+  { id: "search", icon: SearchIcon, label: "Search", tab: null },
+  { id: "pixel", icon: PixelIcon, label: "Events Manager", tab: null },
 ];
 
 /* ─── Single Nav Item ─── */
@@ -218,15 +217,15 @@ function NavItem({ item, isExpanded, isActive, onClick }) {
           // Active left border indicator
           "&::before": isActive
             ? {
-                content: '""',
-                position: "absolute",
-                left: "-4px",
-                top: "6px",
-                bottom: "6px",
-                width: "3px",
-                backgroundColor: activeColor,
-                borderRadius: "0 2px 2px 0",
-              }
+              content: '""',
+              position: "absolute",
+              left: "-4px",
+              top: "6px",
+              bottom: "6px",
+              width: "3px",
+              backgroundColor: activeColor,
+              borderRadius: "0 2px 2px 0",
+            }
             : {},
         }}
       >
@@ -242,11 +241,11 @@ function NavItem({ item, isExpanded, isActive, onClick }) {
         {/* Label — only visible when expanded */}
         <Typography
           sx={{
-            fontSize: "14px",
-            fontWeight: isActive ? 600 : 400,
+            fontSize: "12px",
+            fontWeight: isActive ? 400 : 400,
             fontFamily: '"Optimistic 95", system-ui, sans-serif',
-            color: isActive ? activeColor : defaultColor,
-            lineHeight: "18px",
+            color: isActive ? "rgb(10, 120, 190)" : "rgb(40, 57, 67)",
+            lineHeight: "20px",
             opacity: isExpanded ? 1 : 0,
             width: isExpanded ? "auto" : 0,
             transition: "opacity 0.2s ease, width 0.2s ease",
@@ -290,39 +289,127 @@ export default function Sidebar({ activeTab, setActiveTab }) {
         scrollbarWidth: "none",
       }}
     >
-      {/* ── Meta Logo ── */}
+      {/* ── Meta Logo + "Meta" text ── */}
       <Box
         sx={{
-          height: 44,
           display: "flex",
           alignItems: "center",
-          px: "14px",
+          px: "16px",
+          pt: "20px",
+          pb: "4px",
           flexShrink: 0,
-          borderBottom: "1px solid #cbd2d9",
           overflow: "hidden",
         }}
       >
         <Box sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
           <MetaLogo />
         </Box>
-        {/* "Meta Ads" label when expanded */}
         <Typography
           sx={{
-            ml: "10px",
-            fontSize: "15px",
-            fontWeight: 700,
+            ml: "0px",
+            fontSize: "16px",
+            fontWeight: 400,
             fontFamily: '"Optimistic 95", system-ui, sans-serif',
-            color: "#1c2b33",
+            color: "rgb(28, 30, 33)",
+            lineHeight: "20px",
             whiteSpace: "nowrap",
             opacity: isExpanded ? 1 : 0,
             width: isExpanded ? "auto" : 0,
             transition: "opacity 0.2s ease",
             overflow: "hidden",
+            lineHeight: "15px"
           }}
         >
-          Meta Ads
+          Meta
         </Typography>
       </Box>
+
+      {/* ── "Ads Manager" heading ── */}
+      <Typography
+        sx={{
+          px: "16px",
+          pt: "2px",
+          pb: "12px",
+          fontSize: "24px",
+          fontWeight: 700,
+          fontFamily: '"Optimistic 95", system-ui, sans-serif',
+          color: "rgb(28, 43, 51)",
+          lineHeight: "28px",
+          letterSpacing: "-0.2px",
+          whiteSpace: "nowrap",
+          opacity: isExpanded ? 1 : 0,
+          height: isExpanded ? "auto" : 0,
+          transition: "opacity 0.2s ease, height 0.2s ease",
+          overflow: "hidden",
+          flexShrink: 0,
+        }}
+      >
+        Ads Manager
+      </Typography>
+
+      {/* ── Notifications ── */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+          px: "14px",
+          py: "10px",
+          mx: "4px",
+          cursor: "pointer",
+          borderRadius: "6px",
+          color: "#1c2b33",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          transition: "background-color 0.15s ease",
+          "&:hover": {
+            backgroundColor: "rgba(0,0,0,0.04)",
+          },
+        }}
+      >
+        <Box sx={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M12 3C8.686 3 6 5.686 6 9V13L4.293 14.707C4.007 14.993 4 15.134 4 15.5C4 16.328 4.672 17 5.5 17H18.5C19.328 17 20 16.328 20 15.5C20 15.134 19.993 14.993 19.707 14.707L18 13V9C18 5.686 15.314 3 12 3Z"
+              stroke="#1c2b33"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M9.5 17C9.5 18.38 10.62 19.5 12 19.5C13.38 19.5 14.5 18.38 14.5 17"
+              stroke="#1c2b33"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
+        </Box>
+        <Typography
+          sx={{
+            fontSize: "14px",
+            fontWeight: 400,
+            fontFamily: '"Optimistic 95", system-ui, sans-serif',
+            color: "rgb(40, 57, 67)",
+            lineHeight: "20px",
+            opacity: isExpanded ? 1 : 0,
+            width: isExpanded ? "auto" : 0,
+            transition: "opacity 0.2s ease, width 0.2s ease",
+            overflow: "hidden",
+          }}
+        >
+          Notifications
+        </Typography>
+      </Box>
+
+      {/* ── Divider ── */}
+      <Box
+        sx={{
+          height: "1px",
+          backgroundColor: "#dddfe2",
+          mx: "16px",
+          my: "4px",
+          flexShrink: 0,
+        }}
+      />
 
       {/* ── Top Nav Items ── */}
       <Box sx={{ pt: "8px", flex: 1 }}>
@@ -348,17 +435,64 @@ export default function Sidebar({ activeTab, setActiveTab }) {
         }}
       />
 
-      {/* ── Bottom Nav Items ── */}
-      <Box sx={{ pb: "8px" }}>
-        {bottomItems.map((item) => (
-          <NavItem
-            key={item.id}
-            item={item}
-            isExpanded={isExpanded}
-            isActive={false}
-            onClick={() => {}}
-          />
-        ))}
+      {/* ── Bottom Nav Items (horizontal icon row when expanded) ── */}
+      <Box
+        sx={{
+          pb: "12px",
+          px: "12px",
+          display: "flex",
+          flexDirection: isExpanded ? "row" : "column",
+          alignItems: "center",
+          justifyContent: isExpanded ? "space-around" : "center",
+          gap: isExpanded ? "0px" : "4px",
+          transition: "all 0.22s ease",
+        }}
+      >
+        {bottomItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <Tooltip
+              key={item.id}
+              title={item.label}
+              placement={isExpanded ? "top" : "right"}
+              arrow
+              componentsProps={{
+                tooltip: {
+                  sx: {
+                    fontSize: "14px",
+                    fontWeight: 400,
+                    lineHeight: "20px",
+                    fontFamily: '"Optimistic 95", system-ui, sans-serif',
+                    color: "#fff",
+                    bgcolor: "rgb(28, 43, 51)",
+                    borderRadius: "4px",
+                    py: "4px",
+                    px: "8px",
+                  },
+                },
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  color: "rgb(28, 43, 51)",
+                  transition: "background-color 0.15s ease",
+                  "&:hover": {
+                    backgroundColor: "rgba(0,0,0,0.06)",
+                  },
+                }}
+              >
+                <Icon size={20} color="rgb(28, 43, 51)" />
+              </Box>
+            </Tooltip>
+          );
+        })}
       </Box>
     </Box>
   );
