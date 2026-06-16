@@ -130,8 +130,8 @@ function TabItem({ icon: Icon, label, active, onClick }) {
         userSelect: "none", flexShrink: 0,
       }}
     >
-      {Icon && <Icon color={active ? BLUE : "#1c2b33"} />}
-      <Txt sx={{ fontWeight: 700, color: active ? BLUE : "#1c2b33", fontSize: "16px", whiteSpace: "nowrap", textAlign: "left" }}>
+      {Icon && <Icon color={active ? "rgb(10, 120, 190)" : "rgb(28, 43, 51)"} />}
+      <Txt sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontSize: "16px", fontWeight: 700, lineHeight: "20px", color: active ? "rgb(10, 120, 190)" : "rgb(28, 43, 51)", whiteSpace: "nowrap", textAlign: "left" }}>
         {label}
       </Txt>
     </Paper>
@@ -198,10 +198,10 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
             }}
           >
             <CalendarDays size={20} color={MUTED} />
-            <Txt sx={{ color: TEXT, fontSize: "14px", fontWeight: 500, whiteSpace: "nowrap" }}>
+            <Txt sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "20px", color: "rgb(28, 43, 51)", whiteSpace: "nowrap" }}>
               Last 30 days: 3 May 2026 - 1 Jun 2026
             </Txt>
-            <ArrowDropDownIcon size={11} color={MUTED} />
+            <ArrowDropDownIcon sx={{ fontSize: "28px", color: "rgb(28, 43, 51)" }} />
           </Box>
         </Box>
 
