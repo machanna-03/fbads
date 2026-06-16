@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Box } from "@mui/material";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
@@ -7,6 +7,18 @@ import Campaigns from "./components/Campaigns";
 
 function App() {
   const [activeTab, setActiveTab] = useState("campaigns");
+  const scrollRef = useRef(null);
+  const scrollTimer = useRef(null);
+
+  const handleScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.classList.add("scrolling");
+    clearTimeout(scrollTimer.current);
+    scrollTimer.current = setTimeout(() => {
+      el.classList.remove("scrolling");
+    }, 400);
+  }, []);
 
   return (
     <Box
@@ -38,43 +50,33 @@ function App() {
 
         {/* Page Content */}
         <Box
+          ref={scrollRef}
+          onScroll={handleScroll}
           sx={{
             flex: 1,
             overflow: "auto",
             display: "flex",
             flexDirection: "column",
             "&::-webkit-scrollbar": {
-              width: "16px",
-              height: "16px",
+              width: "8px",
+              height: "8px",
             },
             "&::-webkit-scrollbar-track": {
-              background: "#f1f1f1",
+              background: "transparent",
             },
             "&::-webkit-scrollbar-thumb": {
-              background: "#a0a0a0",
-              borderRadius: "8px",
-              border: "2px solid #f1f1f1",
+              background: "transparent",
+              borderRadius: "4px",
+              transition: "background 0.4s",
             },
-            "&::-webkit-scrollbar-thumb:hover": {
-              background: "#808080",
+            "&.scrolling::-webkit-scrollbar-thumb": {
+              background: "rgba(0,0,0,0.45)",
             },
-            "&::-webkit-scrollbar-button:single-button": {
-              backgroundColor: "#f1f1f1",
-              display: "block",
-              height: "16px",
-              width: "16px",
+            "&.scrolling::-webkit-scrollbar-thumb:hover": {
+              background: "rgba(0,0,0,0.6)",
             },
-            "&::-webkit-scrollbar-button:single-button:vertical:decrement": {
-              backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2365676B'><path d='M3 16l9-9 9 9z'/></svg>")`,
-              backgroundSize: "14px 14px",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-            },
-            "&::-webkit-scrollbar-button:single-button:vertical:increment": {
-              backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2365676B'><path d='M3 8l9 9 9-9z'/></svg>")`,
-              backgroundSize: "14px 14px",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
+            "&::-webkit-scrollbar-button": {
+              display: "none",
             },
           }}
         >
