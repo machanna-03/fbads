@@ -3,7 +3,8 @@ import { Box, Typography, Avatar, Menu, MenuItem } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import PersonIcon from '@mui/icons-material/Person';
 const FONT = '"Optimistic 95", system-ui, sans-serif';
-const TEXT = "rgba(28, 43, 51, 1)";
+const FONT_13 = '"Roboto", Arial, sans-serif';
+const TEXT = "rgb(28, 43, 51)";
 const MUTED = "#65676B";
 const BLUE = "#1877F2";
 const BORDER = "1px solid #a6aab0ff";
@@ -11,10 +12,10 @@ const BORDER = "1px solid #a6aab0ff";
 /* ── SVG Icons ── */
 const RefreshIcon = () => (
   <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
-    <path d="M3.5 10A6.5 6.5 0 0 1 16 7" stroke="#000" strokeWidth="1.8" strokeLinecap="round" />
-    <path d="M16.5 10A6.5 6.5 0 0 1 4 13" stroke="#000" strokeWidth="1.8" strokeLinecap="round" />
-    <path d="M13.5 7H16V4.5" stroke="#000" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M6.5 13H4V15.5" stroke="#000" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M3.5 10A6.5 6.5 0 0 1 16 7" stroke="rgb(28, 43, 51)" strokeWidth="1.8" strokeLinecap="round" />
+    <path d="M16.5 10A6.5 6.5 0 0 1 4 13" stroke="rgb(28, 43, 51)" strokeWidth="1.8" strokeLinecap="round" />
+    <path d="M13.5 7H16V4.5" stroke="rgb(28, 43, 51)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M6.5 13H4V15.5" stroke="rgb(28, 43, 51)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -25,14 +26,14 @@ const ChevronDown = ({ color = TEXT, size = 13 }) => (
 );
 
 const SolidArrowDown = () => (
-  <svg width="9" height="6" viewBox="0 0 7 5" fill="#1c2b33" style={{ marginLeft: "4px" }}>
+  <svg width="9" height="6" viewBox="0 0 7 5" fill="rgb(40, 57, 67)" style={{ marginLeft: "4px" }}>
     <path d="M0 0h7L3.5 5z" />
   </svg>
 );
 
 const OpportunityBadge = ({ score = 100 }) => (
-  <Box sx={{ position: "relative", display: "inline-flex", width: 28, height: 28, flexShrink: 0 }}>
-    <svg width="28" height="28" viewBox="0 0 36 36">
+  <Box sx={{ position: "relative", display: "inline-flex", width: 34, height: 34, flexShrink: 0 }}>
+    <svg width="34" height="34" viewBox="0 0 36 36">
       {/* Background track with gap at the bottom */}
       <path
         d="M 8.5 27.5 A 13.5 13.5 0 1 1 27.5 27.5"
@@ -45,7 +46,7 @@ const OpportunityBadge = ({ score = 100 }) => (
       <path
         d="M 8.5 27.5 A 13.5 13.5 0 1 1 27.5 27.5"
         fill="none"
-        stroke="#1877F2"
+        stroke="rgb(23 113 237)"
         strokeWidth="3.2"
         strokeLinecap="round"
       />
@@ -57,7 +58,7 @@ const OpportunityBadge = ({ score = 100 }) => (
         display: "flex", alignItems: "center", justifyContent: "center",
       }}
     >
-      <Typography sx={{ fontSize: "10px", fontWeight: 750, fontFamily: FONT, color: TEXT, lineHeight: 1 }}>
+      <Typography sx={{ fontSize: "10px", fontWeight: 750, fontFamily: FONT, color: '#000', lineHeight: 1 }}>
         {score}
       </Typography>
     </Box>
@@ -82,10 +83,10 @@ const AdAccountIcon = () => (
 
 const TrashIcon = () => (
   <svg width="18" height="20" viewBox="0 0 20 20" fill="none">
-    <path d="M3 6H17" stroke="#000" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M8 6V4H12V6" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <rect x="5" y="6" width="10" height="11" rx="1.5" stroke="#000" strokeWidth="1.5" />
-    <path d="M8 9V14M12 9V14" stroke="#000" strokeWidth="1.3" strokeLinecap="round" />
+    <path d="M3 6H17" stroke="rgb(28, 43, 51)" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M8 6V4H12V6" stroke="rgb(28, 43, 51)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <rect x="5" y="6" width="10" height="11" rx="1.5" stroke="rgb(28, 43, 51)" strokeWidth="1.5" />
+    <path d="M8 9V14M12 9V14" stroke="rgb(28, 43, 51)" strokeWidth="1.3" strokeLinecap="round" />
   </svg>
 );
 
@@ -155,15 +156,15 @@ export default function Header() {
       </Typography>
 
       {/* ── Account Selector ── */}
-      <OutlineBtn onClick={(e) => setAnchorEl(e.currentTarget)}>
+      <OutlineBtn onClick={(e) => setAnchorEl(e.currentTarget)} sx={{ backgroundColor: '#fff' }}>
         <AdAccountIcon />
-        <Typography sx={{ fontSize: "14px", fontWeight: 500, fontFamily: FONT, color: TEXT, whiteSpace: "nowrap" }}>
+        <Typography sx={{ fontSize: "14px", fontWeight: 400, fontFamily: FONT, color: "rgb(28, 43, 51)", whiteSpace: "nowrap", lineHeight: '20px', }}>
           {accountId} ({accountId.slice(0, 7)}...)
         </Typography>
         <ArrowDropDownIcon sx={{ fontSize: "24px" }} />
       </OutlineBtn>
 
-      <Menu
+      {/* <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
@@ -206,43 +207,8 @@ export default function Header() {
             ID: {accountId}
           </Typography>
         </MenuItem>
-        <MenuItem
-          onClick={() => setAnchorEl(null)}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            py: "10px",
-            px: "16px",
-            minHeight: "56px",
-          }}
-        >
-          <Typography sx={{ fontSize: "13px", fontWeight: 500, fontFamily: FONT, color: TEXT }}>
-            Personal Account
-          </Typography>
-          <Typography sx={{ fontSize: "11px", color: MUTED, fontFamily: FONT }}>
-            ID: 498042116267790
-          </Typography>
-        </MenuItem>
-        <MenuItem
-          onClick={() => setAnchorEl(null)}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            py: "10px",
-            px: "16px",
-            minHeight: "56px",
-          }}
-        >
-          <Typography sx={{ fontSize: "13px", fontWeight: 500, fontFamily: FONT, color: TEXT }}>
-            Sandbox Testing Group
-          </Typography>
-          <Typography sx={{ fontSize: "11px", color: MUTED, fontFamily: FONT }}>
-            ID: 988692073881999
-          </Typography>
-        </MenuItem>
-      </Menu>
+
+      </Menu> */}
 
       {/* ── Opportunity Score Badge ── */}
       <Box
@@ -254,7 +220,7 @@ export default function Header() {
         }}
       >
         <OpportunityBadge score={100} />
-        <Typography sx={{ fontSize: "14px", fontWeight: 500, color: "#1c2b33", fontFamily: FONT, whiteSpace: "nowrap" }}>
+        <Typography sx={{ fontSize: "14px", fontWeight: 400, color: "#rgb(28, 43, 51)", fontFamily: FONT, whiteSpace: "nowrap" }}>
           Opportunity score
         </Typography>
         <SolidArrowDown />
@@ -264,7 +230,7 @@ export default function Header() {
       <Box sx={{ flex: 1 }} />
 
       {/* ── Updated just now ── */}
-      <Typography sx={{ fontSize: "14px", fontWeight: 600, color: "#000", fontFamily: FONT, whiteSpace: "nowrap", flexShrink: 0 }}>
+      <Typography sx={{ fontSize: "14px", fontWeight: 400, fontStyle: "normal", color: TEXT, fontFamily: FONT, whiteSpace: "nowrap", flexShrink: 0, lineHeight: "20px" }}>
         Updated just now
       </Typography>
 
@@ -276,7 +242,7 @@ export default function Header() {
       {/* ── Discard Drafts ── */}
       <OutlineBtn>
         <TrashIcon />
-        <Typography sx={{ fontSize: "13px", fontWeight: 500, fontFamily: FONT, color: TEXT, whiteSpace: "nowrap" }}>
+        <Typography sx={{ fontSize: "14px", fontWeight: 400, fontFamily: FONT, color: TEXT, whiteSpace: "nowrap" }}>
           Discard Drafts
         </Typography>
       </OutlineBtn>
@@ -291,7 +257,7 @@ export default function Header() {
           transition: "background-color 0.15s",
         }}
       >
-        <Typography sx={{ fontSize: "15px", fontWeight: 600, color: "#fff", fontFamily: FONT, whiteSpace: "nowrap" }}>
+        <Typography sx={{ fontSize: "14px", fontWeight: 500, color: "#fff", fontFamily: FONT, whiteSpace: "nowrap", lineHeight: '20px' }}>
           Review and publish (2)
         </Typography>
       </Box>
