@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Box, Checkbox, Switch, Typography } from "@mui/material";
-import { ChevronsUpDown, ChevronDown, Info, ArrowDown } from "lucide-react";
-import ImportExportIcon from '@mui/icons-material/ImportExport';
+import { ChevronsUpDown, ChevronDown, Info, ArrowDown, ArrowUpDown } from "lucide-react";
 const FONT = '"Optimistic 95", system-ui, sans-serif';
 // eslint-disable-next-line no-unused-vars
 const FONT_ROBOTO = 'Roboto, Arial, sans-serif';
@@ -19,7 +18,17 @@ const ROW_HOVER = "#e6f5f0";
 /* ── Reusable text ── */
 function T({ children, sx = {} }) {
   return (
-    <Typography sx={{ fontFamily: FONT, fontSize: "13px", color: TEXT, lineHeight: 1.4, ...sx }}>
+    <Typography
+      sx={{
+        fontFamily: FONT,
+        fontStyle: "normal",
+        fontWeight: 700,
+        color: "rgb(28, 43, 51)",
+        fontSize: "15px",
+        lineHeight: "19px",
+        ...sx
+      }}
+    >
       {children}
     </Typography>
   );
@@ -40,15 +49,15 @@ function HeaderCell({ label, sortActive = false, info = false, right = false, wr
         {info && <Info size={11} color={MUTED} style={{ flexShrink: 0 }} />}
         {wrap ? (
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography sx={{ fontFamily: FONT, fontSize: "13px", fontWeight: 700, color: TEXT, lineHeight: 1.2 }}>
+            <Typography sx={{ fontFamily: FONT, fontStyle: "normal", fontWeight: 700, color: "rgb(28, 43, 51)", fontSize: "15px", lineHeight: "19px" }}>
               {label.split(" ")[0]} {label.split(" ")[1]}
             </Typography>
-            <Typography sx={{ fontFamily: FONT, fontSize: "13px", fontWeight: 700, color: TEXT, lineHeight: 1.2 }}>
+            <Typography sx={{ fontFamily: FONT, fontStyle: "normal", fontWeight: 700, color: "rgb(28, 43, 51)", fontSize: "15px", lineHeight: "19px" }}>
               {label.split(" ").slice(2).join(" ")}
             </Typography>
           </Box>
         ) : (
-          <Typography sx={{ fontFamily: FONT, fontSize: "13px", fontWeight: 700, color: TEXT, whiteSpace: "nowrap" }}>
+          <Typography sx={{ fontFamily: FONT, fontStyle: "normal", fontWeight: 700, color: "rgb(28, 43, 51)", fontSize: "15px", lineHeight: "19px", whiteSpace: "nowrap" }}>
             {label}
           </Typography>
         )}
@@ -56,9 +65,9 @@ function HeaderCell({ label, sortActive = false, info = false, right = false, wr
         {showSort && (
           <Box sx={{ display: "flex", alignItems: "center", ml: "2px" }}>
             {sortActive ? (
-              <ArrowDown size={14} color={BLUE} />
+              <ArrowDown size={15} color="rgb(40, 57, 67)" strokeWidth={2.8} />
             ) : (
-              <ImportExportIcon sx={{ fontSize: 16, color: TEXT }} />
+              <ArrowUpDown size={15} color="rgb(40, 57, 67)" strokeWidth={2.8} />
             )}
           </Box>
         )}
@@ -66,7 +75,7 @@ function HeaderCell({ label, sortActive = false, info = false, right = false, wr
 
       {showCaret && (
         <Box className="caretIcon" sx={{ display: "flex", alignItems: "center", ml: "4px" }}>
-          <Box sx={{ width: 0, height: 0, borderLeft: "4px solid transparent", borderRight: "4px solid transparent", borderTop: `4px solid ${TEXT}` }} />
+          <Box sx={{ width: 0, height: 0, borderLeft: "4px solid transparent", borderRight: "4px solid transparent", borderTop: "4px solid rgb(28, 43, 51)" }} />
         </Box>
       )}
     </Box>
@@ -139,13 +148,13 @@ export default function CampaignTable() {
           }}
         >
           {/* Shared container to enforce identical row widths for perfect flex alignment */}
-          <Box sx={{ minWidth: 1112, display: "flex", flexDirection: "column", flex: 1, width: "100%" }}>
+          <Box sx={{ minWidth: 1150, display: "flex", flexDirection: "column", flex: 1, width: "100%" }}>
 
             {/* ── Table header ── */}
             <Box
               sx={{
                 display: "grid",
-                gridTemplateColumns: "44px 88px minmax(250px, 2fr) 140px minmax(120px, 1fr) 110px 110px 140px 110px",
+                gridTemplateColumns: "44px 88px minmax(250px, 2fr) 140px minmax(120px, 1fr) 130px 125px 140px 110px",
                 height: "52px",
                 backgroundColor: "#ffffff",
                 borderBottom: BORDER,
@@ -177,10 +186,10 @@ export default function CampaignTable() {
                   borderRight: BORDER, flexShrink: 0, gap: "4px", cursor: "pointer",
                 }}
               >
-                <Typography sx={{ fontFamily: FONT, fontSize: "13px", fontWeight: 700, color: TEXT }}>
+                <Typography sx={{ fontFamily: FONT, fontStyle: "normal", fontWeight: 700, color: "rgb(28, 43, 51)", fontSize: "15px", lineHeight: "19px" }}>
                   Off...
                 </Typography>
-                <ImportExportIcon sx={{ fontSize: 16, color: TEXT }} />
+                <ArrowUpDown size={15} color="rgb(40, 57, 67)" strokeWidth={2.8} />
               </Box>
 
               {/* Campaign */}
@@ -199,12 +208,12 @@ export default function CampaignTable() {
               </Box>
 
               {/* Results */}
-              <Box sx={{ width: 110, minWidth: 110, flexShrink: 0, height: "100%", borderRight: BORDER }}>
+              <Box sx={{ width: 130, minWidth: 130, flexShrink: 0, height: "100%", borderRight: BORDER }}>
                 <HeaderCell label="Results" info />
               </Box>
 
               {/* Cost per result */}
-              <Box sx={{ width: 110, minWidth: 110, flexShrink: 0, height: "100%", borderRight: BORDER }}>
+              <Box sx={{ width: 125, minWidth: 125, flexShrink: 0, height: "100%", borderRight: BORDER }}>
                 <HeaderCell label="Cost per result" wrap />
               </Box>
 
@@ -215,7 +224,7 @@ export default function CampaignTable() {
 
               {/* Amount spent */}
               <Box sx={{ width: 110, minWidth: 110, flexShrink: 0, height: "100%", px: "10px", display: "flex", alignItems: "center", justifyContent: "flex-end", borderRight: BORDER }}>
-                <Typography sx={{ fontFamily: FONT, fontSize: "13px", fontWeight: 700, color: TEXT }}>
+                <Typography sx={{ fontFamily: FONT, fontStyle: "normal", fontWeight: 700, color: "rgb(28, 43, 51)", fontSize: "15px", lineHeight: "19px" }}>
                   Amount spent
                 </Typography>
               </Box>
@@ -238,7 +247,7 @@ export default function CampaignTable() {
                   onMouseLeave={() => setHovered(null)}
                   sx={{
                     display: "grid",
-                    gridTemplateColumns: "44px 88px minmax(250px, 2fr) 140px minmax(120px, 1fr) 110px 110px 140px 110px",
+                    gridTemplateColumns: "44px 88px minmax(250px, 2fr) 140px minmax(120px, 1fr) 130px 125px 140px 110px",
                     height: "52px",
                     backgroundColor: rowBg,
                     borderBottom: BORDER,
@@ -285,7 +294,7 @@ export default function CampaignTable() {
                       px: "10px", borderRight: BORDER,
                     }}
                   >
-                    <T sx={{ color: BLUE, fontWeight: 600, fontSize: "13px", cursor: "pointer", "&:hover": { textDecoration: "underline" } }}>
+                    <T sx={{ color: BLUE, cursor: "pointer", "&:hover": { textDecoration: "underline" } }}>
                       {row.name}
                     </T>
                   </Box>
@@ -299,7 +308,7 @@ export default function CampaignTable() {
                     }}
                   >
                     <Box sx={{ width: 10, height: 10, borderRadius: "50%", border: `2px solid ${row.deliveryColor}`, flexShrink: 0 }} />
-                    <T sx={{ fontSize: "13px", color: TEXT }}>{row.delivery}</T>
+                    <T>{row.delivery}</T>
                   </Box>
 
                   {/* Actions */}
@@ -316,7 +325,7 @@ export default function CampaignTable() {
                   {/* Results */}
                   <Box
                     sx={{
-                      width: 110, minWidth: 110, flexShrink: 0,
+                      width: 130, minWidth: 130, flexShrink: 0,
                       display: "flex", alignItems: "center", justifyContent: "flex-end",
                       px: "10px", borderRight: BORDER,
                     }}
@@ -327,7 +336,7 @@ export default function CampaignTable() {
                   {/* Cost per result */}
                   <Box
                     sx={{
-                      width: 110, minWidth: 110, flexShrink: 0,
+                      width: 125, minWidth: 125, flexShrink: 0,
                       display: "flex", alignItems: "center", justifyContent: "flex-end",
                       px: "10px", borderRight: BORDER,
                     }}
@@ -343,9 +352,9 @@ export default function CampaignTable() {
                       px: "10px", borderRight: BORDER,
                     }}
                   >
-                    <T sx={{ fontSize: "13px" }}>{row.budget}</T>
+                    <T>{row.budget}</T>
                     {row.budgetSub && (
-                      <T sx={{ fontSize: "12px", color: MUTED, mt: "1px" }}>{row.budgetSub}</T>
+                      <Typography sx={{ fontFamily: FONT, fontStyle: "normal", fontWeight: 400, color: MUTED, fontSize: "12px", mt: "1px" }}>{row.budgetSub}</Typography>
                     )}
                   </Box>
 
@@ -367,7 +376,7 @@ export default function CampaignTable() {
             <Box
               sx={{
                 display: "grid",
-                gridTemplateColumns: "44px 88px minmax(250px, 2fr) 140px minmax(120px, 1fr) 110px 110px 140px 110px",
+                gridTemplateColumns: "44px 88px minmax(250px, 2fr) 140px minmax(120px, 1fr) 130px 125px 140px 110px",
                 height: "40px",
                 borderBottom: BORDER,
                 backgroundColor: "#fff",
@@ -383,8 +392,8 @@ export default function CampaignTable() {
                   borderRight: BORDER,
                 }}
               >
-                <T sx={{ fontSize: "14px", color: TEXT }}>Results from {campaigns.length} campaign</T>
-                <Info size={14} color={TEXT} style={{ cursor: "pointer", fontWeight: 600, }} />
+                <T sx={{ color: "rgba(1, 2, 2, 0.8)", fontWeight: 400, fontSize: "14px", fontStyle: "normal", lineHeight: "20px", fontFamily: FONT }}>Results from {campaigns.length} campaign</T>
+                <Info size={14} color="rgba(1, 2, 2, 1)" style={{ cursor: "pointer", fontWeight: 400, }} />
               </Box>
             </Box>
 

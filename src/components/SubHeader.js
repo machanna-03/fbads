@@ -23,13 +23,13 @@ function Txt({ children, sx = {} }) {
   );
 }
 
-const SolidArrowDown = () => (
-  <svg width="9" height="6" viewBox="0 0 7 5" fill="#1c2b33" style={{ marginLeft: "4px" }}>
+const SolidArrowDown = ({ color = "#1c2b33" }) => (
+  <svg width="9" height="6" viewBox="0 0 7 5" fill={color} style={{ marginLeft: "4px" }}>
     <path d="M0 0h7L3.5 5z" />
   </svg>
 );
 
-function ActionBtn({ icon: Icon, label, split = false, iconSize = 14 }) {
+function ActionBtn({ icon: Icon, label, split = false, iconSize = 14, color = "rgb(28, 43, 51)" }) {
   return (
     <Box sx={{ display: "flex", alignItems: "center", height: "36px", flexShrink: 0 }}>
       <Box
@@ -45,8 +45,20 @@ function ActionBtn({ icon: Icon, label, split = false, iconSize = 14 }) {
           "&:hover": { backgroundColor: "#F0F2F5" },
         }}
       >
-        {Icon && <Icon size={iconSize} color={MUTED} />}
-        {label && <Txt sx={{ color: MUTED, fontWeight: 500 }}>{label}</Txt>}
+        {Icon && <Icon size={iconSize} color={color} />}
+        {label && (
+          <Txt
+            sx={{
+              color: color,
+              fontWeight: 500,
+              fontSize: "14px",
+              fontStyle: "normal",
+              lineHeight: "20px",
+            }}
+          >
+            {label}
+          </Txt>
+        )}
       </Box>
       {split && (
         <Box
@@ -57,7 +69,7 @@ function ActionBtn({ icon: Icon, label, split = false, iconSize = 14 }) {
             "&:hover": { backgroundColor: "#F0F2F5" },
           }}
         >
-          <SolidArrowDown size={12} color={MUTED} />
+          <SolidArrowDown size={12} color={color} />
         </Box>
       )}
     </Box>
@@ -218,11 +230,11 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
             }}
           >
             <Plus size={14} color="#fff" strokeWidth={2.5} />
-            <Txt sx={{ color: "#fff", fontWeight: 600, fontSize: "13px" }}>Create</Txt>
+            <Txt sx={{ color: "#fff", fontWeight: 500, fontSize: "14px", fontStyle: "normal", lineHeight: "20px" }}>Create</Txt>
           </Box>
 
-          <ActionBtn icon={Copy} label="Duplicate" />
-          <ActionBtn icon={Pencil} label="Edit" />
+          <ActionBtn icon={Copy} label="Duplicate" color="rgba(28, 43, 51, 0.6)" />
+          <ActionBtn icon={Pencil} label="Edit" color="rgba(28, 43, 51, 0.6)" />
 
           <ActionBtn icon={LineChart} label="Analyse" />
 
@@ -235,8 +247,8 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
               "&:hover": { backgroundColor: "#F0F2F5" },
             }}
           >
-            <FlaskConical size={14} color={MUTED} />
-            <Txt sx={{ color: MUTED, fontWeight: 500, fontSize: "13px" }}>A/B test</Txt>
+            <FlaskConical size={14} color="rgb(28, 43, 51)" />
+            <Txt sx={{ color: "rgb(28, 43, 51)", fontWeight: 500, fontSize: "14px", fontStyle: "normal", lineHeight: "20px" }}>A/B test</Txt>
           </Box>
 
           {/* More */}
@@ -248,8 +260,8 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
               "&:hover": { backgroundColor: "#F0F2F5" },
             }}
           >
-            <Txt sx={{ color: MUTED, fontWeight: 500, fontSize: "13px" }}>More</Txt>
-            <SolidArrowDown size={14} color={MUTED} />
+            <Txt sx={{ color: "rgb(28, 43, 51)", fontWeight: 500, fontSize: "14px", fontStyle: "normal", lineHeight: "20px" }}>More</Txt>
+            <SolidArrowDown size={14} color="rgb(28, 43, 51)" />
           </Box>
 
           <Box sx={{ flex: 1 }} />
