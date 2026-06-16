@@ -6,12 +6,12 @@ const FONT = '"Optimistic 95", system-ui, sans-serif';
 const BORDER = "1px solid #DADDE1";
 const TEXT = "#000000";
 const MUTED = "#424345";
-const BLUE = "#0b78be";
+const BLUE = "rgb(10, 120, 190)";
 
 /* ── Inline SVG icons matching the screenshot exactly ── */
 
 const FolderIcon = ({ color = BLUE }) => (
-  <svg width="14" height="16" viewBox="0 0 20 20" fill="none">
+  <svg width="16" height="18" viewBox="0 0 20 20" fill="none">
     <path
       d="M2 6.5C2 5.67 2.67 5 3.5 5H8l2 2h6.5C17.33 7 18 7.67 18 8.5v7c0 .83-.67 1.5-1.5 1.5h-13C2.67 17 2 16.33 2 15.5v-9z"
       fill={color} fillOpacity="0.9"
@@ -64,10 +64,9 @@ function ActivePill({ icon, label }) {
       }}
     >
       {icon}
-      <Typography sx={{ fontSize: "13px", fontWeight: 600, fontFamily: FONT, color: BLUE, whiteSpace: "nowrap", }}>
+      <Typography sx={{ fontSize: "14px", fontWeight: 700, fontFamily: FONT, color: BLUE, whiteSpace: "nowrap", }}>
         {label}
       </Typography>
-      <ChevronDown size={12} color={BLUE} />
     </Box>
   );
 }
@@ -88,7 +87,6 @@ function OutlinePill({ icon, label }) {
       <Typography sx={{ fontSize: "14.5px", fontWeight: 400, fontFamily: FONT, color: TEXT, whiteSpace: "nowrap" }}>
         {label}
       </Typography>
-      <ChevronDown size={12} color={MUTED} />
     </Box>
   );
 }

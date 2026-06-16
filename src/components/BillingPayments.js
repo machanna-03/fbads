@@ -5,7 +5,7 @@ import {
   CreditCard, Activity, Info, X, ChevronDown,
   LayoutGrid, Edit3, HelpCircle, Settings2,
   MinusCircle, PlusCircle, Settings, Search,
-  Plus, Trash2
+  Plus, Trash2, CalendarDays
 } from "lucide-react";
 import ArrowDropDown from "@mui/icons-material/ArrowDropDown";
 import LockIcon from "@mui/icons-material/Lock";
@@ -1310,12 +1310,12 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
               <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mb: 0.5 }}>
                   <Typography sx={{
-                    fontSize: "12px",
+                    fontSize: "14px",
                     fontWeight: 400,
                     fontStyle: "normal",
                     fontFamily: '-apple-system, "system-ui", Arial, sans-serif',
-                    color: "rgb(40, 57, 67)",
-                    lineHeight: "16px"
+                    color: "rgb(28, 43, 51)",
+                    lineHeight: "20px"
                   }}>
                     Current balance
                   </Typography>
@@ -1392,7 +1392,7 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
                   }
                 }}
               >
-                <MenuItem value="Transactions" sx={{ fontSize: "14px", fontWeight: "500", lineHeight: "20px", pl: "12px", color: "rgb(28, 43, 51)" }}>Transactions</MenuItem>
+                <MenuItem value="Transactions" sx={{ fontSize: "14px", fontWeight: "500", lineHeight: "20px", pl: "12px", color: "rgb(28, 43, 51)", "&:hover": { backgroundColor: "#f5f6fa" }, }}>Transactions</MenuItem>
                 <MenuItem value="Account spending limit" sx={{ fontSize: "14px", fontWeight: "500", lineHeight: "20px", pl: "12px", color: "rgb(28, 43, 51)" }}>Account spending limit</MenuItem>
               </Select>
 
@@ -1403,7 +1403,7 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Search size={14} fontWeight="400" lineHeight="20px" color="rgb(40,57,67" />
+                      <Search size={18} fontWeight="400" lineHeight="20px" color="rgba(28, 43, 51, 0.65)" />
                     </InputAdornment>
                   ),
                 }}
@@ -1413,9 +1413,20 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "4px",
                     height: "36px",
-                    fontSize: "15px",
-                    fontWeight: "600",
+                    fontSize: "14px",
+                    fontWeight: "400",
                     backgroundColor: "#ffffff",
+                    color: "rgba(28, 43, 51, 0.65)",
+                    fontStyle: "normal",
+                    lineHeight: "20px"
+                  },
+                  "& .MuiOutlinedInput-input::placeholder": {
+                    color: "rgba(28, 43, 51, 0.65)",
+                    opacity: 1,
+                    fontSize: "14px",
+                    fontWeight: "400",
+                    fontStyle: "normal",
+                    lineHeight: "20px"
                   },
                 }}
               />
@@ -1430,15 +1441,15 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
                     height: "36px",
                     p: 0,
                     color: showFilters ? "#1877F2" : "#65676B",
-                    backgroundColor: showFilters ? "rgba(24,119,242,0.05)" : "transparent",
+                    backgroundColor: showFilters ? "#f5f6f8" : "transparent",
                     borderColor: showFilters ? "#1877F2" : "#cbd2d9",
                     "&:hover": {
                       borderColor: "#8a8d91",
-                      backgroundColor: "rgba(0,0,0,0.02)"
+                      backgroundColor: "#f5f6f8"
                     }
                   }}
                 >
-                  <Settings2 size={18} />
+                  <Settings2 size={18} sx={{ color: "rgb(28, 43, 51)", fontWeight: "400" }} />
                 </IconButton>
 
                 {showFilters && (
@@ -1757,7 +1768,7 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Search size={14} color="#65676B" />
+                      <Search size={18} />
                     </InputAdornment>
                   ),
                 }}
@@ -1767,9 +1778,15 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "4px",
                     height: "36px",
-                    fontSize: "15px",
-                    fontWeight: "600",
+                    color: "rgb(28, 43, 51)",
+                    fontSize: "14px",
+                    fontWeight: "400",
                     backgroundColor: "#ffffff",
+                    "&:hover": { backgroundColor: "#f5f6fa" },
+                  },
+                  "& .MuiOutlinedInput-input::placeholder": {
+                    color: "#000000",
+                    opacity: 1,
                   },
                 }}
               />
@@ -1786,14 +1803,18 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
                   backgroundColor: "rgba(0,0,0,0.02)"
                 }
               }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#65676B" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                  <line x1="16" y1="2" x2="16" y2="6" />
-                  <line x1="8" y1="2" x2="8" y2="6" />
-                  <line x1="3" y1="10" x2="21" y2="10" />
-                </svg>
-                <T sx={{ fontSize: "15px", fontWeight: "600", color: TEXT, flexGrow: 1, ml: 1, whiteSpace: "nowrap" }}>30 May 2026 - 5 Jun 2026</T>
-                <ArrowDropDown sx={{ color: "#65676B", fontSize: 28 }} />
+                <CalendarDays size={16} color="#65676B" strokeWidth={2.2} />
+                <T sx={{
+                  fontStyle: "normal",
+                  fontWeight: "600",
+                  color: "rgb(28, 43, 51)",
+                  fontSize: "15px",
+                  lineHeight: "23px",
+                  flexGrow: 1,
+                  ml: 1,
+                  whiteSpace: "nowrap"
+                }}>30 May 2026 - 5 Jun 2026</T>
+                <ArrowDropDown sx={{ color: "#000", fontSize: 28 }} />
               </Box>
             </Box>
           </>
@@ -1810,42 +1831,102 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
           }}
         >
           <Box sx={{ mb: 2, display: "flex", justifyContent: "center" }}>
-            <svg width="240" height="150" viewBox="0 0 240 150" fill="none">
-              {/* Clouds */}
-              <path d="M40,110 C20,110 10,120 15,130 C20,135 40,135 50,130 Q60,115 80,120 Q90,110 110,115 C130,110 150,125 160,130 Q170,120 185,122 C200,120 215,135 200,140 L40,140 Z" fill="#e4e6eb" opacity="0.6" />
+            <svg width="360" height="240" viewBox="0 0 640 400" fill="none">
+              <defs>
+                {/* Premium metallic gradient for the telescope tube segments */}
+                <linearGradient id="metal-gradient-body" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#d0e6ff" />
+                  <stop offset="25%" stopColor="#ffffff" />
+                  <stop offset="60%" stopColor="#a1c5e8" />
+                  <stop offset="85%" stopColor="#5d85a6" />
+                  <stop offset="100%" stopColor="#8bb6de" />
+                </linearGradient>
 
-              {/* Tripod legs */}
-              <line x1="120" y1="80" x2="95" y2="140" stroke="#4F5E7B" strokeWidth="3.5" strokeLinecap="round" />
-              <line x1="120" y1="80" x2="145" y2="140" stroke="#4F5E7B" strokeWidth="3.5" strokeLinecap="round" />
-              <line x1="120" y1="80" x2="120" y2="140" stroke="#374357" strokeWidth="4.5" strokeLinecap="round" />
+                {/* Darker gradient for internal rim/recessed details */}
+                <linearGradient id="metal-gradient-dark" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#6c8aa6" />
+                  <stop offset="30%" stopColor="#a4c3e3" />
+                  <stop offset="100%" stopColor="#3b566c" />
+                </linearGradient>
 
-              {/* Tripod connector */}
-              <rect x="115" y="75" width="10" height="10" rx="2" fill="#374357" />
+                {/* Glowing cyan-blue gradient for the front lens glass reflection */}
+                <linearGradient id="lens-gradient" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#ffffff" />
+                  <stop offset="30%" stopColor="#e3f4ff" />
+                  <stop offset="70%" stopColor="#82b3e8" />
+                  <stop offset="100%" stopColor="#3a7ebd" />
+                </linearGradient>
 
-              {/* Telescope tube */}
-              <g transform="rotate(-20 120 70)">
-                {/* Main body */}
-                <rect x="80" y="60" width="70" height="16" rx="2" fill="#B0C4DE" />
-                {/* Scope finder */}
-                <rect x="95" y="52" width="25" height="5" rx="1" fill="#708090" />
-                <line x1="100" y1="57" x2="100" y2="60" stroke="#708090" strokeWidth="2" />
-                <line x1="115" y1="57" x2="115" y2="60" stroke="#708090" strokeWidth="2" />
-                {/* Lens ring */}
-                <rect x="76" y="58" width="4" height="20" rx="1" fill="#708090" />
-                {/* Eyepiece mount */}
-                <rect x="150" y="64" width="12" height="8" rx="1" fill="#708090" />
-                <path d="M162,62 L172,58 L175,64 L162,70 Z" fill="#374357" />
+                {/* Drop shadow for the overall illustration to add modern depth */}
+                <filter id="subtle-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="16" stdDeviation="12" floodColor="#0066e2" floodOpacity={0.16} />
+                </filter>
+              </defs>
+
+              <g filter="url(#subtle-shadow)">
+                {/* Stationary Tripod Structure (Centered around X=320) */}
+                {/* Center leg */}
+                <line x1="320" y1="210" x2="320" y2="360" stroke="#0066e2" strokeWidth={11} strokeLinecap="round" />
+                {/* Left leg */}
+                <line x1="320" y1="210" x2="245" y2="360" stroke="#0066e2" strokeWidth={11} strokeLinecap="round" />
+                {/* Right leg */}
+                <line x1="320" y1="210" x2="395" y2="360" stroke="#0066e2" strokeWidth={11} strokeLinecap="round" />
+
+                {/* Tripod Platform */}
+                <line x1="285" y1="210" x2="355" y2="210" stroke="#0066e2" strokeWidth={10} strokeLinecap="round" />
+
+                {/* Hinge/Head Stem connecting to the cradle bottom (from Y=173 to Y=210) */}
+                <line x1="320" y1="173" x2="320" y2="210" stroke="#0066e2" strokeWidth={12} strokeLinecap="round" />
+
+                {/* Rotated Assembly: Telescope Tube AND Cradle U-shape rotate together around pivot (320, 173) */}
+                <g transform="rotate(-20 320 173)">
+                  {/* Cradle U-shape (Placed behind/underneath the tube) */}
+                  <path d="M 287,140 A 33,33 0 0,0 353,140" stroke="#0066e2" strokeWidth={10} fill="none" strokeLinecap="round" />
+
+                  {/* Hinge Pivot cap (Center of rotation) */}
+                  <circle cx="320" cy="173" r="10" fill="#0055c4" />
+
+                  {/* Eyepiece Cap (Leftmost, Segment 0) */}
+                  <path d="M 120,132 L 135,132 A 3.2,8 0 0,1 135,148 L 120,148 A 3.2,8 0 0,0 120,132 Z" fill="url(#metal-gradient-dark)" />
+
+                  {/* Segment 1 (Eyepiece connector) */}
+                  <path d="M 135,129 L 160,129 A 4.4,11 0 0,1 160,151 L 135,151 A 4.4,11 0 0,0 135,129 Z" fill="url(#metal-gradient-body)" />
+
+                  {/* Segment 2 */}
+                  <path d="M 160,125 L 190,125 A 6,15 0 0,1 190,155 L 160,155 A 6,15 0 0,0 160,125 Z" fill="url(#metal-gradient-body)" />
+
+                  {/* Segment 3 */}
+                  <path d="M 190,119 L 230,119 A 8.4,21 0 0,1 230,161 L 190,161 A 8.4,21 0 0,0 190,119 Z" fill="url(#metal-gradient-body)" />
+
+                  {/* Segment 4 (Main body) */}
+                  <path d="M 230,111 L 390,111 A 11.6,29 0 0,1 390,169 L 230,169 A 11.6,29 0 0,0 230,111 Z" fill="url(#metal-gradient-body)" />
+
+                  {/* Segment 5 (Front rim bell) */}
+                  <path d="M 390,102 L 470,102 A 15.2,38 0 0,1 470,178 L 390,178 A 15.2,38 0 0,0 390,102 Z" fill="url(#metal-gradient-body)" />
+
+                  {/* Outer Rim Ellipse for Lens Opening */}
+                  <ellipse cx="470" cy="140" rx="15.2" ry="38" fill="url(#metal-gradient-dark)" />
+
+                  {/* Glowing Front Lens Glass (Recessed slightly to the left) */}
+                  <ellipse cx="464" cy="140" rx="13.5" ry="35.5" fill="url(#lens-gradient)" />
+
+                  {/* Shiny lens highlight overlay */}
+                  <ellipse cx="461" cy="126" rx="5.5" ry="15" fill="#ffffff" opacity={0.65} transform="rotate(-10 461 126)" />
+                </g>
+
+                {/* Stationary Hinge center cap (drawn on top of the rotated pivot for overlap depth) */}
+                <circle cx="320" cy="173" r="8" fill="#0066e2" />
               </g>
             </svg>
           </Box>
 
-          <Typography sx={{ fontWeight: "600", fontSize: "18px", mb: 1, color: TEXT }}>
+          <Typography sx={{ fontWeight: "700", fontSize: "18px", mb: 1, color: TEXT }}>
             No transactions
           </Typography>
 
           <Typography
             align="center"
-            sx={{ maxWidth: 460, fontSize: "15px", fontWeight: "400", color: MUTED, mb: 3 }}
+            sx={{ maxWidth: 800, fontSize: "14px", fontWeight: "400", color: MUTED, mb: 3, color: "rgb(28, 43, 51)" }}
           >
             You have no transactions during this period. Update the date range or remove filters to expand your search.
           </Typography>

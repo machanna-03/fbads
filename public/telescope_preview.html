@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: #f5f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Extra-large canvas: 640x400 -->
+    <svg width="640" height="400" viewBox="0 0 640 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Premium metallic gradient for the telescope tube segments -->
+        <linearGradient id="metal-gradient-body" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#d0e6ff" />
+          <stop offset="25%" stop-color="#ffffff" />
+          <stop offset="60%" stop-color="#a1c5e8" />
+          <stop offset="85%" stop-color="#5d85a6" />
+          <stop offset="100%" stop-color="#8bb6de" />
+        </linearGradient>
+
+        <!-- Darker gradient for internal rim/recessed details -->
+        <linearGradient id="metal-gradient-dark" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#6c8aa6" />
+          <stop offset="30%" stop-color="#a4c3e3" />
+          <stop offset="100%" stop-color="#3b566c" />
+        </linearGradient>
+
+        <!-- Glowing cyan-blue gradient for the front lens glass reflection -->
+        <linearGradient id="lens-gradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffffff" />
+          <stop offset="30%" stop-color="#e3f4ff" />
+          <stop offset="70%" stop-color="#82b3e8" />
+          <stop offset="100%" stop-color="#3a7ebd" />
+        </linearGradient>
+
+        <!-- Drop shadow for the overall illustration to add modern depth -->
+        <filter id="subtle-shadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="16" stdDeviation="12" flood-color="#0066e2" flood-opacity="0.16" />
+        </filter>
+      </defs>
+
+      <g filter="url(#subtle-shadow)">
+        <!-- Stationary Tripod Structure (Centered around X=320) -->
+        <!-- Center leg -->
+        <line x1="320" y1="210" x2="320" y2="360" stroke="#0066e2" stroke-width="11" stroke-linecap="round" />
+        <!-- Left leg -->
+        <line x1="320" y1="210" x2="245" y2="360" stroke="#0066e2" stroke-width="11" stroke-linecap="round" />
+        <!-- Right leg -->
+        <line x1="320" y1="210" x2="395" y2="360" stroke="#0066e2" stroke-width="11" stroke-linecap="round" />
+
+        <!-- Tripod Platform -->
+        <line x1="285" y1="210" x2="355" y2="210" stroke="#0066e2" stroke-width="10" stroke-linecap="round" />
+
+        <!-- Hinge/Head Stem connecting to the cradle bottom (from Y=173 to Y=210) -->
+        <line x1="320" y1="173" x2="320" y2="210" stroke="#0066e2" stroke-width="12" stroke-linecap="round" />
+
+        <!-- Rotated Assembly: Telescope Tube AND Cradle U-shape rotate together around pivot (320, 173) -->
+        <g transform="rotate(-20 320 173)">
+          <!-- Cradle U-shape (Placed behind/underneath the tube) -->
+          <path d="M 287,140 A 33,33 0 0,0 353,140" stroke="#0066e2" stroke-width="10" fill="none" stroke-linecap="round" />
+
+          <!-- Hinge Pivot cap (Center of rotation) -->
+          <circle cx="320" cy="173" r="10" fill="#0055c4" />
+          
+          <!-- Eyepiece Cap (Leftmost, Segment 0) -->
+          <path d="M 120,132 L 135,132 A 3.2,8 0 0,1 135,148 L 120,148 A 3.2,8 0 0,0 120,132 Z" fill="url(#metal-gradient-dark)" />
+
+          <!-- Segment 1 (Eyepiece connector) -->
+          <path d="M 135,129 L 160,129 A 4.4,11 0 0,1 160,151 L 135,151 A 4.4,11 0 0,0 135,129 Z" fill="url(#metal-gradient-body)" />
+          
+          <!-- Segment 2 -->
+          <path d="M 160,125 L 190,125 A 6,15 0 0,1 190,155 L 160,155 A 6,15 0 0,0 160,125 Z" fill="url(#metal-gradient-body)" />
+          
+          <!-- Segment 3 -->
+          <path d="M 190,119 L 230,119 A 8.4,21 0 0,1 230,161 L 190,161 A 8.4,21 0 0,0 190,119 Z" fill="url(#metal-gradient-body)" />
+          
+          <!-- Segment 4 (Main body) -->
+          <path d="M 230,111 L 390,111 A 11.6,29 0 0,1 390,169 L 230,169 A 11.6,29 0 0,0 230,111 Z" fill="url(#metal-gradient-body)" />
+          
+          <!-- Segment 5 (Front rim bell) -->
+          <path d="M 390,102 L 470,102 A 15.2,38 0 0,1 470,178 L 390,178 A 15.2,38 0 0,0 390,102 Z" fill="url(#metal-gradient-body)" />
+
+          <!-- Outer Rim Ellipse for Lens Opening -->
+          <ellipse cx="470" cy="140" rx="15.2" ry="38" fill="url(#metal-gradient-dark)" />
+
+          <!-- Glowing Front Lens Glass (Recessed slightly to the left) -->
+          <ellipse cx="464" cy="140" rx="13.5" ry="35.5" fill="url(#lens-gradient)" />
+
+          <!-- Shiny lens highlight overlay -->
+          <ellipse cx="461" cy="126" rx="5.5" ry="15" fill="#ffffff" opacity="0.65" transform="rotate(-10 461 126)" />
+        </g>
+        
+        <!-- Stationary Hinge center cap (drawn on top of the rotated pivot for overlap depth) -->
+        <circle cx="320" cy="173" r="8" fill="#0066e2" />
+      </g>
+    </svg>
+  </div>
+</body>
+</html>
