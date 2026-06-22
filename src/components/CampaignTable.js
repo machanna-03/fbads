@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Box, Checkbox, Switch, Typography } from "@mui/material";
-import { ChevronsUpDown, ChevronDown, Info, ArrowDown, ArrowUpDown, Plus, Check } from "lucide-react";
+import { ChevronsUpDown, ChevronDown, Info, ArrowDown, ArrowUpDown, Check } from "lucide-react";
+import { ReactComponent as Plus } from '../assets/icons/plus-icon.svg';
+import { ReactComponent as ReportIcon } from '../assets/icons/ReportIcon.svg';
+
 const FONT = '"Optimistic 95", system-ui, sans-serif';
 // eslint-disable-next-line no-unused-vars
 const FONT_ROBOTO = 'Roboto, Arial, sans-serif';
@@ -14,13 +17,12 @@ const BLUE_LIGHT = "#e6f5f0";
 const GREEN = "#31A24C";
 const ROW_HIGHLIGHT = "#e6f5f0";   /* exact Meta blue tint for highlighted row */
 const ROW_HOVER = "#e6f5f0";
-const GRID_TEMPLATE = "44px 88px 250px 140px 120px 130px 125px 180px 130px 130px 120px 110px 140px 160px 40px";
-
+const GRID_TEMPLATE = "44px 88px 250px 140px 180px 130px 125px 180px 130px 130px 120px 110px 200px 200px 40px";
 const UncheckedIcon = () => (
   <Box
     sx={{
-      width: 18,
-      height: 18,
+      width: 22,
+      height: 22,
       border: "1.5px solid rgba(28, 43, 51, 0.3)",
       borderRadius: "4px",
       backgroundColor: "#ffffff",
@@ -31,8 +33,8 @@ const UncheckedIcon = () => (
 const CheckedIcon = () => (
   <Box
     sx={{
-      width: 18,
-      height: 18,
+      width: 22,
+      height: 22,
       border: "1.8px solid #1877F2",
       borderRadius: "4px",
       backgroundColor: "#ffffff",
@@ -41,15 +43,15 @@ const CheckedIcon = () => (
       justifyContent: "center",
     }}
   >
-    <Check size={14} color="#1877F2" strokeWidth={3} />
+    <Check size={20} color="#1877F2" strokeWidth={3} />
   </Box>
 );
 
 const IndeterminateIcon = () => (
   <Box
     sx={{
-      width: 18,
-      height: 18,
+      width: 22,
+      height: 22,
       border: "1.8px solid #1877F2",
       borderRadius: "4px",
       backgroundColor: "#ffffff",
@@ -58,7 +60,7 @@ const IndeterminateIcon = () => (
       justifyContent: "center",
     }}
   >
-    <Box sx={{ width: 10, height: 2, backgroundColor: "#1877F2", borderRadius: "1px" }} />
+    <Box sx={{ width: 14, height: 2, backgroundColor: "#1877F2", borderRadius: "1px" }} />
   </Box>
 );
 
@@ -82,7 +84,7 @@ function T({ children, sx = {} }) {
 }
 
 /* ── Sortable header cell ── */
-function HeaderCell({ label, sortActive = false, info = false, right = false, wrap = false, showSort = true, showCaret = true }) {
+function HeaderCell({ label, sortActive = false, info = false, right = false, wrap = false, showSort = true, showCaret = true, labelColor }) {
   const iconColor = sortActive ? "rgb(20, 97, 204)" : "rgb(40, 57, 67)";
   const caretColor = sortActive ? "rgb(28, 43, 51)" : "rgb(28, 43, 51)";
 
@@ -99,15 +101,15 @@ function HeaderCell({ label, sortActive = false, info = false, right = false, wr
         {info && <Info size={11} color={MUTED} style={{ flexShrink: 0 }} />}
         {wrap ? (
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography sx={{ fontFamily: FONT, fontStyle: "normal", fontWeight: 700, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "19px" }}>
+            <Typography sx={{ fontFamily: FONT, fontStyle: "normal", fontWeight: 700, color: labelColor || "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "19px" }}>
               {label.split(" ").slice(0, label.split(" ").length > 2 ? 2 : 1).join(" ")}
             </Typography>
-            <Typography sx={{ fontFamily: FONT, fontStyle: "normal", fontWeight: 700, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "19px" }}>
+            <Typography sx={{ fontFamily: FONT, fontStyle: "normal", fontWeight: 700, color: labelColor || "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "19px" }}>
               {label.split(" ").slice(label.split(" ").length > 2 ? 2 : 1).join(" ")}
             </Typography>
           </Box>
         ) : (
-          <Typography sx={{ fontFamily: FONT, fontStyle: "normal", fontWeight: 700, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "19px", whiteSpace: "nowrap" }}>
+          <Typography sx={{ fontFamily: FONT, fontStyle: "normal", fontWeight: 700, color: labelColor || "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "19px", whiteSpace: "nowrap" }}>
             {label}
           </Typography>
         )}
@@ -133,16 +135,46 @@ function HeaderCell({ label, sortActive = false, info = false, right = false, wr
 }
 
 /* ── Campaign row toggle switch ── */
-function CampaignToggle({ checked }) {
-  const [on, setOn] = useState(checked);
+function CampaignToggle({ checked, onChange }) {
   return (
     <Switch
-      checked={on}
-      onChange={(e) => setOn(e.target.checked)}
-      size="small"
+      checked={checked}
+      onChange={onChange}
       sx={{
-        "& .MuiSwitch-switchBase.Mui-checked": { color: BLUE },
-        "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": { backgroundColor: BLUE },
+        width: 36,
+        height: 22,
+        padding: 0,
+        display: "flex",
+        alignItems: "center",
+        "& .MuiSwitch-switchBase": {
+          padding: "2px",
+          transitionDuration: "250ms",
+          "&.Mui-checked": {
+            transform: "translateX(16px)",
+            color: "#fff",
+            "& + .MuiSwitch-track": {
+              backgroundColor: "#e2ecf5",
+              opacity: 1,
+              border: "0.1px solid #d2d8deff",
+            },
+            "& .MuiSwitch-thumb": {
+              backgroundColor: "#1877F2",
+            },
+          },
+        },
+        "& .MuiSwitch-thumb": {
+          boxSizing: "border-box",
+          width: 18,
+          height: 18,
+          backgroundColor: "#ffffff",
+          boxShadow: "0 1px 2px rgba(0, 0, 0, 0.15)",
+        },
+        "& .MuiSwitch-track": {
+          borderRadius: 10,
+          backgroundColor: "#ccd0d5",
+          opacity: 1,
+          transition: "background-color 250ms cubic-bezier(0.4, 0, 0.2, 1)",
+        },
       }}
     />
   );
@@ -152,43 +184,50 @@ function CampaignToggle({ checked }) {
 const campaigns = [
   {
     id: 1,
-    name: "New Leads campaign",
-    delivery: "In draft",
+    name: "Oct 1",
+    delivery: "Active",
     deliveryColor: "#006b4e",
-    results: null,
-    costPerResult: null,
+    results: "19",
+    resultsSub: "Meta Leads",
+    costPerResult: "39.96",
+    costPerResultSub: "Per Meta Lead",
     budget: "Using ad set budget",
     budgetSub: "Not shared",
-    amountSpent: null,
-    actions: null,
+    amountSpent: "759.324",
+    actions: "recommendation",
     on: true,
-    impressions: null,
-    reach: null,
+    impressions: "32,724",
+    reach: "28,378",
     ends: "Ongoing",
-    attribution: null,
-    bidStrategy: "Using ad set bid...",
+    attribution: "7-day click or 1-day view",
+    attributionSub: "Below All Conversions",
+    bidStrategy: "Using ad set bid strategy",
   },
   {
     id: 2,
-    name: "Ashwayana Reality Groups",
-    delivery: "Off",
-    deliveryColor: "#65676B",
-    results: null,
-    costPerResult: null,
+    name: "NKN V1",
+    delivery: "Active",
+    deliveryColor: GREEN,
+    results: "29",
+    resultsSub: "Leads (form)",
+    costPerResult: "52.06",
+    costPerResultSub: "Per Lead(form)",
     budget: "Using ad set budget",
     budgetSub: "Not shared",
-    amountSpent: null,
-    actions: null,
-    on: false,
-    impressions: null,
-    reach: null,
-    ends: null,
-    attribution: null,
-    bidStrategy: null,
+    amountSpent: "1509.74",
+    actions: "3 recommendations",
+    on: true,
+    impressions: "52,298",
+    reach: "48,471",
+    ends: "Ongoing",
+    attribution: "7-day click or 1-day view",
+    attributionSub: "Below All Conversions",
+    bidStrategy: "Using ad set bid strategy",
   },
 ];
 
 export default function CampaignTable() {
+  const [campaignList, setCampaignList] = useState(campaigns);
   const [selected, setSelected] = useState([]);
   const [hovered, setHovered] = useState(null);
 
@@ -196,8 +235,14 @@ export default function CampaignTable() {
     setSelected((prev) => prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]);
   };
 
-  const allChecked = campaigns.length > 0 && selected.length === campaigns.length;
-  const indeterminate = selected.length > 0 && selected.length < campaigns.length;
+  const handleToggle = (id) => {
+    setCampaignList((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, on: !c.on } : c))
+    );
+  };
+
+  const allChecked = campaignList.length > 0 && selected.length === campaignList.length;
+  const indeterminate = selected.length > 0 && selected.length < campaignList.length;
 
   return (
     <Box sx={{ backgroundColor: "#f3f6f8", }}>
@@ -237,7 +282,7 @@ export default function CampaignTable() {
           }}
         >
           {/* Shared container to enforce identical row widths for perfect flex alignment */}
-          <Box sx={{ minWidth: 1907, display: "flex", flexDirection: "column", flex: 1, width: "100%" }}>
+          <Box sx={{ minWidth: 2067, display: "flex", flexDirection: "column", flex: 1, width: "100%" }}>
 
             {/* ── Table header ── */}
             <Box
@@ -266,7 +311,7 @@ export default function CampaignTable() {
                   indeterminateIcon={<IndeterminateIcon />}
                   checked={allChecked}
                   indeterminate={indeterminate}
-                  onChange={(e) => setSelected(e.target.checked ? campaigns.map((c) => c.id) : [])}
+                  onChange={(e) => setSelected(e.target.checked ? campaignList.map((c) => c.id) : [])}
                   sx={{ p: "2px" }}
                 />
               </Box>
@@ -301,17 +346,17 @@ export default function CampaignTable() {
 
               {/* Delivery */}
               <Box sx={{ width: 140, minWidth: 140, flexShrink: 0, height: "100%", borderRight: BORDER }}>
-                <HeaderCell label="Delivery" sortActive />
+                <HeaderCell label="Delivery" sortActive labelColor="rgb(20, 97, 204)" />
               </Box>
 
               {/* Actions */}
-              <Box sx={{ flex: 1, minWidth: 120, height: "100%", borderRight: BORDER }}>
+              <Box sx={{ flex: 1, minWidth: 180, height: "100%", borderRight: BORDER }}>
                 <HeaderCell label="Actions" showSort={false} />
               </Box>
 
               {/* Results */}
               <Box sx={{ width: 130, minWidth: 130, flexShrink: 0, height: "100%", borderRight: BORDER }}>
-                <HeaderCell label="Results" info />
+                <HeaderCell label="Results" />
               </Box>
 
               {/* Cost per result */}
@@ -345,12 +390,12 @@ export default function CampaignTable() {
               </Box>
 
               {/* Attribution setting */}
-              <Box sx={{ width: 140, minWidth: 140, flexShrink: 0, height: "100%", borderRight: BORDER }}>
+              <Box sx={{ width: 200, minWidth: 200, flexShrink: 0, height: "100%", borderRight: BORDER }}>
                 <HeaderCell label="Attribution setting" showSort={false} showCaret={true} wrap />
               </Box>
 
               {/* Bid strategy */}
-              <Box sx={{ width: 160, minWidth: 160, flexShrink: 0, height: "100%", borderRight: BORDER }}>
+              <Box sx={{ width: 200, minWidth: 200, flexShrink: 0, height: "100%", borderRight: BORDER }}>
                 <HeaderCell label="Bid strategy" showSort={false} showCaret={true} />
               </Box>
 
@@ -368,16 +413,16 @@ export default function CampaignTable() {
             </Box>
 
             {/* ── Data rows ── */}
-            {campaigns.map((row) => {
+            {campaignList.map((row) => {
               const isSelected = selected.includes(row.id);
               const isHovered = hovered === row.id;
 
-              // 3 Background colors logic based on row.on, hover, and selection:
-              const rowBg = row.on
-                ? "#e6f5f0"
-                : (isHovered || isSelected)
-                  ? "#eff1f4ff"
-                  : "#ffffff";
+              // Background colors logic based on active/inactive, hover, and selection states:
+              const rowBg = isSelected
+                ? "#dbe6f9ff"
+                : row.on
+                  ? (isHovered ? "#dae6faff" : "#e6f5f0")
+                  : (isHovered ? "#e6f5f0" : "#ffffff");
 
               return (
                 <Box
@@ -387,11 +432,12 @@ export default function CampaignTable() {
                   sx={{
                     display: "grid",
                     gridTemplateColumns: GRID_TEMPLATE,
-                    height: "52px",
+                    minHeight: "52px",
                     backgroundColor: rowBg,
                     borderBottom: BORDER,
                     transition: "background-color 0.15s",
                     cursor: "default",
+                    pb: "2px",
                   }}
                 >
                   {/* Checkbox */}
@@ -424,7 +470,7 @@ export default function CampaignTable() {
                       backgroundColor: rowBg,
                     }}
                   >
-                    <CampaignToggle checked={row.on} />
+                    <CampaignToggle checked={row.on} onChange={() => handleToggle(row.id)} />
                   </Box>
 
                   {/* Campaign name */}
@@ -451,40 +497,94 @@ export default function CampaignTable() {
                     }}
                   >
                     <Box sx={{ width: 10, height: 10, borderRadius: "50%", border: `2px solid ${row.deliveryColor}`, flexShrink: 0 }} />
-                    <T sx={{ fontSize: '14px', fontWeight: 400 }}>{row.delivery}</T>
+                    <T sx={{
+                      fontSize: '14px', fontWeight: 400, color: 'rgb(28, 43, 51)'
+                    }}>{row.delivery}</T>
                   </Box>
 
                   {/* Actions */}
                   <Box
                     sx={{
-                      flex: 1, minWidth: 120,
+                      flex: 1, minWidth: 180,
                       display: "flex", alignItems: "center",
                       px: "10px", borderRight: BORDER,
                     }}
                   >
-                    <T sx={{ color: MUTED }}>—</T>
+                    <T sx={{ color: 'rgb(28, 43, 51)', fontSize: '14px', fontWeight: 400 }}>{row.actions}</T>
                   </Box>
 
                   {/* Results */}
                   <Box
                     sx={{
                       width: 130, minWidth: 130, flexShrink: 0,
-                      display: "flex", alignItems: "center", justifyContent: "flex-end",
+                      display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-end",
                       px: "10px", borderRight: BORDER,
                     }}
                   >
-                    <T sx={{ color: MUTED }}>—</T>
+                    <Typography
+                      sx={{
+                        fontFamily: FONT,
+                        fontStyle: "normal",
+                        fontWeight: 400,
+                        color: "rgb(28, 43, 51)",
+                        fontSize: "14px",
+                        lineHeight: "20px",
+                      }}
+                    >
+                      {row.results || "—"}
+                    </Typography>
+                    {row.resultsSub && (
+                      <Typography
+                        sx={{
+                          fontFamily: FONT,
+                          fontStyle: "normal",
+                          fontWeight: 400,
+                          color: "rgba(28, 43, 51, 0.65)",
+                          fontSize: "12px",
+                          lineHeight: "16px",
+                          mt: "1px",
+                        }}
+                      >
+                        {row.resultsSub}
+                      </Typography>
+                    )}
                   </Box>
 
                   {/* Cost per result */}
                   <Box
                     sx={{
                       width: 125, minWidth: 125, flexShrink: 0,
-                      display: "flex", alignItems: "center", justifyContent: "flex-end",
+                      display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-end",
                       px: "10px", borderRight: BORDER,
                     }}
                   >
-                    <T sx={{ color: MUTED }}>—</T>
+                    <Typography
+                      sx={{
+                        fontFamily: FONT,
+                        fontStyle: "normal",
+                        fontWeight: 400,
+                        color: "rgb(28, 43, 51)",
+                        fontSize: "14px",
+                        lineHeight: "20px",
+                      }}
+                    >
+                      {row.costPerResult || "—"}
+                    </Typography>
+                    {row.costPerResultSub && (
+                      <Typography
+                        sx={{
+                          fontFamily: FONT,
+                          fontStyle: "normal",
+                          fontWeight: 400,
+                          color: "rgba(28, 43, 51, 0.65)",
+                          fontSize: "12px",
+                          lineHeight: "16px",
+                          mt: "1px",
+                        }}
+                      >
+                        {row.costPerResultSub}
+                      </Typography>
+                    )}
                   </Box>
 
                   {/* Budget */}
@@ -532,7 +632,7 @@ export default function CampaignTable() {
                       px: "10px", borderRight: BORDER,
                     }}
                   >
-                    <T sx={{ color: MUTED }}>—</T>
+                    <T sx={{ color: 'rgb(28, 43, 51)', fontSize: '14px', fontWeight: 400 }}>{row.amountSpent}</T>
                   </Box>
 
                   {/* Impressions */}
@@ -543,7 +643,7 @@ export default function CampaignTable() {
                       px: "10px", borderRight: BORDER,
                     }}
                   >
-                    <T sx={{ color: MUTED }}>{row.impressions || "—"}</T>
+                    <T sx={{ color: 'rgb(28, 43, 51)', fontSize: '14px', fontWeight: 400 }}>{row.impressions || "—"}</T>
                   </Box>
 
                   {/* Reach */}
@@ -554,7 +654,7 @@ export default function CampaignTable() {
                       px: "10px", borderRight: BORDER,
                     }}
                   >
-                    <T sx={{ color: MUTED }}>{row.reach || "—"}</T>
+                    <T sx={{ color: 'rgb(28, 43, 51)', fontSize: '14px', fontWeight: 400 }}>{row.reach || "—"}</T>
                   </Box>
 
                   {/* Ends */}
@@ -582,18 +682,44 @@ export default function CampaignTable() {
                   {/* Attribution setting */}
                   <Box
                     sx={{
-                      width: 140, minWidth: 140, flexShrink: 0,
-                      display: "flex", alignItems: "center", justifyContent: "flex-start",
+                      width: 200, minWidth: 200, flexShrink: 0,
+                      display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start",
                       px: "10px", borderRight: BORDER,
                     }}
                   >
-                    <T sx={{ color: MUTED }}>{row.attribution || "—"}</T>
+                    <Typography
+                      sx={{
+                        fontFamily: FONT,
+                        fontStyle: "normal",
+                        fontWeight: 400,
+                        color: "rgb(28, 43, 51)",
+                        fontSize: "14px",
+                        lineHeight: "20px",
+                      }}
+                    >
+                      {row.attribution || "—"}
+                    </Typography>
+                    {row.attributionSub && (
+                      <Typography
+                        sx={{
+                          fontFamily: FONT,
+                          fontStyle: "normal",
+                          fontWeight: 400,
+                          color: "rgba(28, 43, 51, 0.65)",
+                          fontSize: "12px",
+                          lineHeight: "16px",
+                          mt: "1px",
+                        }}
+                      >
+                        {row.attributionSub}
+                      </Typography>
+                    )}
                   </Box>
 
                   {/* Bid strategy */}
                   <Box
                     sx={{
-                      width: 160, minWidth: 160, flexShrink: 0,
+                      width: 200, minWidth: 200, flexShrink: 0,
                       display: "flex", alignItems: "center", justifyContent: "flex-start",
                       px: "10px", borderRight: BORDER,
                     }}
@@ -649,8 +775,8 @@ export default function CampaignTable() {
                   width: 382, minWidth: 382, flexShrink: 0,
                 }}
               >
-                <T sx={{ color: "rgba(1, 2, 2, 0.8)", fontWeight: 400, fontSize: "14px", fontStyle: "normal", lineHeight: "20px", fontFamily: FONT }}>Results from {campaigns.length} campaigns</T>
-                <Info size={14} color="rgba(1, 2, 2, 1)" style={{ cursor: "pointer", fontWeight: 400, }} />
+                <T sx={{ color: "rgba(1, 2, 2, 0.8)", fontWeight: 400, fontSize: "14px", fontStyle: "normal", lineHeight: "20px", fontFamily: FONT }}>Results from {campaignList.length} campaigns</T>
+                <ReportIcon size={14} color="rgba(1, 2, 2, 1)" style={{ cursor: "pointer", fontWeight: 400, }} />
               </Box>
             </Box>
 

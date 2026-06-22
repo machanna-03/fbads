@@ -5,6 +5,16 @@ import {
   Columns3, AlignJustify, BarChart2, Download, Maximize2, CalendarDays, LineChart
 } from "lucide-react";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { ReactComponent as CampaignIcon } from "../assets/icons/campaign-folder-icon.svg";
+import { ReactComponent as AdSetsIcon } from "../assets/icons/menu-icon.svg";
+import { ReactComponent as AdsIcon } from "../assets/icons/date-icon.svg";
+import { ReactComponent as CopyIcon } from "../assets/icons/copy-icon.svg";
+import { ReactComponent as EditIcon } from "../assets/icons/edit-icon.svg";
+import { ReactComponent as FilterIcon } from "../assets/icons/filter-icon.svg";
+import { ReactComponent as DownArrowDotIcon } from "../assets/icons/down-arrow-dot-icon.svg";
+import { ReactComponent as ColumnIcon } from "../assets/icons/column-icon.svg";
+import { ReactComponent as DownloadIcon } from "../assets/icons/download-icon.svg";
+import { ReactComponent as GraphIcon } from "../assets/icons/graph-icon.svg";
 
 const FONT = '"Optimistic 95", system-ui, sans-serif';
 // eslint-disable-next-line no-unused-vars
@@ -23,11 +33,6 @@ function Txt({ children, sx = {} }) {
   );
 }
 
-const SolidArrowDown = ({ color = "#1c2b33" }) => (
-  <svg width="9" height="6" viewBox="0 0 7 5" fill={color} style={{ marginLeft: "4px" }}>
-    <path d="M0 0h7L3.5 5z" />
-  </svg>
-);
 
 function ActionBtn({ icon: Icon, label, split = false, iconSize = 14, color = "rgb(28, 43, 51)" }) {
   return (
@@ -69,43 +74,14 @@ function ActionBtn({ icon: Icon, label, split = false, iconSize = 14, color = "r
             "&:hover": { backgroundColor: "#F0F2F5" },
           }}
         >
-          <SolidArrowDown size={12} color={color} />
+          <DownArrowDotIcon width={16} height={16} color={color} />
         </Box>
       )}
+
     </Box>
   );
 }
 
-/* ── Campaign / Ad sets / Ads tab icons ── */
-/* Campaigns: folder with triangle flag inside */
-const CampaignIcon = ({ color = "#0b78be" }) => (
-  <svg width="20" height="24" viewBox="0 0 18 18" fill="none">
-    <path
-      d="M2 7C2 6.17 2.67 5.5 3.5 5.5H7.5L9 7H15.5C16.33 7 17 7.67 17 8.5v6c0 .83-.67 1.5-1.5 1.5h-13C2.67 16 2 15.33 2 14.5V7z"
-      fill={color} fillOpacity="0.15" stroke={color} strokeWidth="1.3"
-    />
-    <path d="M7 10.5l2.5-2 2.5 2" stroke={color} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-/* Ad sets: 2×2 grid */
-const AdSetsIcon = ({ color = "#1c2b33" }) => (
-  <svg width="20" height="24" viewBox="0 0 16 16" fill="none">
-    <rect x="1" y="1" width="6" height="6" rx="1" stroke={color} strokeWidth="1.35" />
-    <rect x="9" y="1" width="6" height="6" rx="1" stroke={color} strokeWidth="1.35" />
-    <rect x="1" y="9" width="6" height="6" rx="1" stroke={color} strokeWidth="1.35" />
-    <rect x="9" y="9" width="6" height="6" rx="1" stroke={color} strokeWidth="1.35" />
-  </svg>
-);
-
-/* Ads: browser/window frame icon */
-const AdsIcon = ({ color = "#1c2b33" }) => (
-  <svg width="20" height="24" viewBox="0 0 16 16" fill="none">
-    <rect x="1.5" y="2.5" width="13" height="11" rx="1.5" stroke={color} strokeWidth="1.35" />
-    <path d="M1.5 6H14.5" stroke={color} strokeWidth="1.2" strokeLinecap="round" />
-    <rect x="3.5" y="3.5" width="2" height="1.5" rx="0.5" fill={color} />
-  </svg>
-);
 
 function TabItem({ icon: Icon, label, active, onClick }) {
   return (
@@ -164,7 +140,7 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
         >
           <TabItem
             label="Campaigns"
-            icon={({ color }) => <CampaignIcon color={color} />}
+            icon={({ color }) => <CampaignIcon color={color} width={22} height={22} />}
             active={activeTab === "campaigns"}
             onClick={() => handleTab("campaigns")}
           />
@@ -172,14 +148,14 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
 
           <TabItem
             label="Ad sets"
-            icon={({ color }) => <AdSetsIcon color={color} />}
+            icon={() => <AdSetsIcon width={22} height={22} />}
             active={activeTab === "adsets"}
             onClick={() => handleTab("adsets")}
           />
 
           <TabItem
             label="Ads"
-            icon={({ color }) => <AdsIcon color={color} />}
+            icon={({ color }) => <AdsIcon color={color} width={22} height={22} />}
             active={activeTab === "ads"}
             onClick={() => handleTab("ads")}
           />
@@ -197,7 +173,7 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
               "&:hover": { backgroundColor: "#F0F2F5" },
             }}
           >
-            <CalendarDays size={20} color={MUTED} />
+            <CalendarDays size={18} color="#1c1c1cff" />
             <Txt sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "20px", color: "rgb(28, 43, 51)", whiteSpace: "nowrap" }}>
               Last 30 days: 3 May 2026 - 1 Jun 2026
             </Txt>
@@ -233,8 +209,8 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
             <Txt sx={{ color: "#fff", fontWeight: 500, fontSize: "14px", fontStyle: "normal", lineHeight: "20px" }}>Create</Txt>
           </Box>
 
-          <ActionBtn icon={Copy} label="Duplicate" color="rgba(28, 43, 51, 0.6)" />
-          <ActionBtn icon={Pencil} label="Edit" color="rgba(28, 43, 51, 0.6)" />
+          <ActionBtn icon={CopyIcon} label="Duplicate" color="rgba(28, 43, 51, 0.6)" />
+          <ActionBtn icon={EditIcon} label="Edit" color="rgba(28, 43, 51, 0.6)" />
 
           <ActionBtn icon={LineChart} label="Analyse" />
 
@@ -247,7 +223,7 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
               "&:hover": { backgroundColor: "#F0F2F5" },
             }}
           >
-            <FlaskConical size={14} color="rgb(28, 43, 51)" />
+            <FilterIcon size={14} color="rgb(28, 43, 51)" />
             <Txt sx={{ color: "rgb(28, 43, 51)", fontWeight: 500, fontSize: "14px", fontStyle: "normal", lineHeight: "20px" }}>A/B test</Txt>
           </Box>
 
@@ -261,16 +237,16 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
             }}
           >
             <Txt sx={{ color: "rgb(28, 43, 51)", fontWeight: 500, fontSize: "14px", fontStyle: "normal", lineHeight: "20px" }}>More</Txt>
-            <SolidArrowDown size={14} color="rgb(28, 43, 51)" />
+            <DownArrowDotIcon size={14} color="rgb(28, 43, 51)" />
           </Box>
 
           <Box sx={{ flex: 1 }} />
 
           {/* Right Controls */}
-          <ActionBtn icon={Columns3} label="Columns: Performance" split />
-          <ActionBtn icon={AlignJustify} label="Breakdown" split />
-          <ActionBtn icon={BarChart2} split />
-          <ActionBtn icon={Download} split />
+          <ActionBtn icon={ColumnIcon} label="Columns" split />
+          <ActionBtn icon={AlignJustify} fontWeight={800} label="Breakdown" split />
+          <ActionBtn icon={CopyIcon} split />
+          <ActionBtn icon={DownloadIcon} split />
           <Box
             sx={{
               display: "flex", alignItems: "center", justifyContent: "center",
@@ -279,7 +255,7 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
               "&:hover": { backgroundColor: "#F0F2F5" },
             }}
           >
-            <Maximize2 size={14} color={TEXT} />
+            <GraphIcon color={TEXT} />
           </Box>
         </Paper>
       </Box>
