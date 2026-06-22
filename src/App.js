@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { Box } from "@mui/material";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
@@ -9,6 +9,13 @@ function App() {
   const [activeTab, setActiveTab] = useState("campaigns");
   const scrollRef = useRef(null);
   const scrollTimer = useRef(null);
+
+  useEffect(() => {
+    const defaultUrl = "/adsmanager/manage/campaigns?act=1144652500847915&date=2026-06-21_2026-06-22%2Cyesterday&insights_date=2026-06-21_2026-06-22%2Cyesterday&nav_source=no_referrer&treenav=true&selected_campaign_ids=1202461195576847362";
+    if (window.location.pathname === "/" || window.location.pathname === "") {
+      window.history.pushState(null, "", defaultUrl);
+    }
+  }, []);
 
   const handleScroll = useCallback(() => {
     const el = scrollRef.current;

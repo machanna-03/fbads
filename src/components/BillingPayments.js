@@ -18,7 +18,7 @@ import img4 from "../assets/Gpay.png";
 import img5 from "../assets/PhonePay.png";
 import img6 from "../assets/Paytm.png";
 import img7 from "../assets/NetBanking.png";
-
+import AvailableFundsIcon from '../assets/icons/available-funds-icons.webp'
 const paymentOptions = [
   { label: "Debit or credit card", value: "card", icons: [img1, img2] },
   { label: "UPI", value: "upi", icons: [img3, img4, img5, img6] },
@@ -433,11 +433,122 @@ function NotificationsPanel({ notifications, setNotifications }) {
 /* ─── Current Balance ─── */
 function CurrentBalanceCard() {
   return (
-    <Card sx={{ px: "20px", py: "20px", mb: "16px" }}>
-      <T sx={{ ...T_LABEL, mb: "20px", fontWeight: 700 }}>Current balance</T>
-      <Box sx={{ display: "flex", alignItems: "baseline", gap: "4px" }}>
-        <T sx={{ ...T_BAL, fontSize: "32px", fontWeight: 300, lineHeight: "40px" }}>₹ 0.00</T>
-        <T sx={{ ...T_MUTED, fontSize: "12px", color: MUTED }}>+ any applicable fees</T>
+    <Card sx={{ px: "24px", py: "24px", mb: "16px", border: "1px solid #dee1e5" }}>
+      {/* Top Row: Title & Add Funds */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: "12px" }}>
+        <T sx={{ fontSize: "16px", fontWeight: 700, color: "rgb(28, 43, 51)", lineHeight: "20px" }}>
+          Available funds
+        </T>
+        <Button
+          variant="outlined"
+          sx={{
+            textTransform: "none",
+            borderColor: "rgba(28, 43, 51, 0.2)",
+            color: "rgb(28, 43, 51)",
+            fontWeight: 500,
+            fontSize: "14px",
+            fontFamily: FONT,
+            px: "18px",
+            py: "6px",
+            borderRadius: "4px",
+            backgroundColor: WHITE,
+            height: "36px",
+            "&:hover": {
+              borderColor: "rgba(28, 43, 51, 0.4)",
+              backgroundColor: "#f5f6fa",
+            }
+          }}
+        >
+          Add funds
+        </Button>
+      </Box>
+
+      {/* Amount Row: ₹ 0.00 & Three Dots */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: "4px" }}>
+        <T sx={{ fontSize: "32px", fontWeight: 400, color: "rgb(28, 43, 51)", lineHeight: "40px" }}>
+          ₹ 186.96
+        </T>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "46px",
+            height: "32px",
+            border: "1px solid rgba(28, 43, 51, 0.2)",
+            borderRadius: "6px",
+            cursor: "pointer",
+            backgroundColor: WHITE,
+            "&:hover": {
+              borderColor: "rgba(28, 43, 51, 0.4)",
+              backgroundColor: "#f5f6fa",
+            }
+          }}
+        >
+          <svg width="18" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+            <circle cx="6" cy="12" r="1.5" fill="currentColor" stroke="none" />
+            <circle cx="18" cy="12" r="1.5" fill="currentColor" stroke="none" />
+          </svg>
+        </Box>
+      </Box>
+
+      {/* Divider stretching across */}
+      <Box sx={{ borderBottom: "1px solid #dee1e5", m: "15px 10px 8px 8px" }} />
+
+      {/* "How you'll pay" section */}
+      <T sx={{ fontSize: "15px", fontWeight: 700, color: "rgb(28, 43, 51)", mb: "16px" }}>
+        How you'll pay
+      </T>
+
+      {/* Wallet row */}
+      <Box sx={{ display: "flex", alignItems: "center", gap: "10px", mb: "12px" }}>
+        <svg width="24" height="17" viewBox="0 0 24 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="17" rx="3" fill="#2e8b75" />
+          <rect x="15" y="5" width="9" height="7" rx="1.5" fill="#206958" />
+          <circle cx="19.5" cy="8.5" r="1.5" fill="white" />
+        </svg>
+        <T sx={{ fontSize: "15px", fontWeight: 700, color: "rgb(28, 43, 51)" }}>
+          Available funds
+        </T>
+      </Box>
+
+      {/* Deduct text */}
+      <T sx={{ fontSize: "12px", fontWeight: 400, color: "rgb(28, 43, 51)", lineHeight: "20px", mb: "12px" }}>
+        We'll deduct funds about once a day when you run ads. If funds run out, your ads will be paused.
+      </T>
+
+      {/* Spending limit text */}
+      <T sx={{ fontSize: "14px", fontWeight: 400, color: "rgb(28, 43, 51)", mb: "12px" }}>
+        Daily spending limit (set by Meta): <Box component="span" sx={{ fontWeight: 700 }}>₹ 1,918.37</Box>
+      </T>
+
+      {/* Projected spend & Learn more row */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <Box sx={{
+            width: "6px",
+            height: "6px",
+            borderRadius: "50%",
+            backgroundColor: "#1f7a42",
+            display: "inline-block"
+          }} />
+          <T sx={{ fontSize: "14px", fontWeight: 400, color: "#1f7a42" }}>
+            Your projected spend today is within this limit
+          </T>
+        </Box>
+
+        <Box sx={{ display: "flex", alignItems: "center", gap: "4px", cursor: "pointer", color: "rgb(28, 43, 51)" }}>
+          <T sx={{
+            fontSize: "14px",
+            fontWeight: 500,
+            color: "inherit",
+            "&:hover": { textDecoration: "underline" }
+          }}>
+            Learn more
+          </T>
+          <ChevronDown size={16} />
+        </Box>
       </Box>
     </Card>
   );
@@ -1966,7 +2077,7 @@ function BillingHeader() {
       {/* Other assets dropdown */}
       <Box ref={otherAssetsRef} sx={{ position: "relative", mt: 1, pl: "8px" }}>
         <Box
-          onClick={() => setShowOtherAssetsDropdown(!showOtherAssetsDropdown)}
+          // onClick={() => setShowOtherAssetsDropdown(!showOtherAssetsDropdown)}
           sx={{
             display: "flex", alignItems: "center",
             px: "14px", height: "36px",
@@ -1984,7 +2095,7 @@ function BillingHeader() {
           }}>
             <LayoutGrid size={15} color={TEXT} strokeWidth={1.6} />
           </Box>
-          <T sx={{ ...T_BODY, fontSize: "14px", color: TEXT, fontWeight: 400, flexGrow: 1 }}>Other assets</T>
+          <T sx={{ ...T_BODY, fontSize: "14px", color: TEXT, fontWeight: 400, flexGrow: 1 }}>Vinayaka Oam A</T>
           <ArrowDropDown sx={{ color: TEXT, fontSize: 28 }} />
         </Box>
 
@@ -2136,13 +2247,13 @@ export default function BillingPayments() {
   const [activeItem, setActiveItem] = useState("payment-settings");
   const [notifications, setNotifications] = useState({ setup: true, tax: true });
   const [currentAccount, setCurrentAccount] = useState({
-    name: "Gorantla Machanna",
-    id: "498042116267790"
+    name: "Vinayaka Oam A",
+    id: "1144652500438518"
   });
 
   const accounts = [
-    { name: "Gorantla Machanna", id: "498042116267790" },
-    { name: "Gorantla Machanna", id: "988692073881733" }
+    { name: "Ashwayana Reality Groups", id: "498042116267790" },
+    { name: "Ashwayana Reality Groups", id: "988692073881733" }
   ];
 
   return (
