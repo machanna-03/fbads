@@ -2,66 +2,23 @@ import { useState } from "react";
 import { Box, Typography, Avatar, Menu, MenuItem } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import PersonIcon from '@mui/icons-material/Person';
+import { ReactComponent as NumberIcon } from '../assets/icons/score-icon.svg';
+import { ReactComponent as DownArrowIcon } from '../assets/icons/down-arrow-dot-icon.svg';
+import { ReactComponent as RefreshIcon } from '../assets/icons/refresh-icon.svg';
+import { ReactComponent as DeleteIcon } from '../assets/icons/delete-icon.svg';
+
 const FONT = '"Optimistic 95", system-ui, sans-serif';
 const FONT_13 = '"Roboto", Arial, sans-serif';
-const TEXT = "rgb(28, 43, 51)";
+const TEXT = "#rgb(28, 43, 51)";
 const MUTED = "#65676B";
 const BLUE = "#1877F2";
 const BORDER = "1px solid #a6aab0ff";
 
-/* ── SVG Icons ── */
-const RefreshIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
-    <path d="M3.5 10A6.5 6.5 0 0 1 16 7" stroke="rgb(28, 43, 51)" strokeWidth="1.8" strokeLinecap="round" />
-    <path d="M16.5 10A6.5 6.5 0 0 1 4 13" stroke="rgb(28, 43, 51)" strokeWidth="1.8" strokeLinecap="round" />
-    <path d="M13.5 7H16V4.5" stroke="rgb(28, 43, 51)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M6.5 13H4V15.5" stroke="rgb(28, 43, 51)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
-const ChevronDown = ({ color = TEXT, size = 13 }) => (
-  <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <path d="M4 6L8 10L12 6" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
-const SolidArrowDown = () => (
-  <svg width="9" height="6" viewBox="0 0 7 5" fill="rgb(40, 57, 67)" style={{ marginLeft: "4px" }}>
-    <path d="M0 0h7L3.5 5z" />
-  </svg>
-);
-
-const OpportunityBadge = ({ score = 100 }) => (
-  <Box sx={{ position: "relative", display: "inline-flex", width: 34, height: 34, flexShrink: 0 }}>
-    <svg width="34" height="34" viewBox="0 0 36 36">
-      {/* Background track with gap at the bottom */}
-      <path
-        d="M 8.5 27.5 A 13.5 13.5 0 1 1 27.5 27.5"
-        fill="none"
-        stroke="#E4E6EB"
-        strokeWidth="2.8"
-        strokeLinecap="round"
-      />
-      {/* Active progress track with gap at the bottom */}
-      <path
-        d="M 8.5 27.5 A 13.5 13.5 0 1 1 27.5 27.5"
-        fill="none"
-        stroke="rgb(23 113 237)"
-        strokeWidth="3.2"
-        strokeLinecap="round"
-      />
-    </svg>
-    <Box
-      sx={{
-        position: "absolute",
-        top: 0, left: 0, bottom: 0, right: 0,
-        display: "flex", alignItems: "center", justifyContent: "center",
-      }}
-    >
-      <Typography sx={{ fontSize: "10px", fontWeight: 750, fontFamily: FONT, color: '#000', lineHeight: 1 }}>
-        {score}
-      </Typography>
-    </Box>
+const OpportunityBadge = () => (
+  <Box sx={{ display: "inline-flex", width: 34, height: 34, flexShrink: 0, alignItems: "center", justifyContent: "center" }}>
+    <NumberIcon width={30} height={30} />
   </Box>
 );
 
@@ -81,14 +38,16 @@ const AdAccountIcon = () => (
   </svg>
 );
 
-const TrashIcon = () => (
-  <svg width="18" height="20" viewBox="0 0 20 20" fill="none">
-    <path d="M3 6H17" stroke="rgb(28, 43, 51)" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M8 6V4H12V6" stroke="rgb(28, 43, 51)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <rect x="5" y="6" width="10" height="11" rx="1.5" stroke="rgb(28, 43, 51)" strokeWidth="1.5" />
-    <path d="M8 9V14M12 9V14" stroke="rgb(28, 43, 51)" strokeWidth="1.3" strokeLinecap="round" />
+const AdAccountSwitcherIcon = ({ size = 20, color = "currentColor" }) => (
+  <svg width={size} height={size} viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }}>
+    <rect x="2" y="3.5" width="11" height="11" rx="2" stroke={color} strokeWidth="1.8" fill="none" />
+    <line x1="2" y1="10.5" x2="13" y2="10.5" stroke={color} strokeWidth="1.8" />
+    <line x1="16" y1="6" x2="18.5" y2="6" stroke={color} strokeWidth="2" strokeLinecap="round" />
+    <line x1="16" y1="9" x2="18.5" y2="9" stroke={color} strokeWidth="2" strokeLinecap="round" />
+    <line x1="16" y1="12" x2="18.5" y2="12" stroke={color} strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
+
 
 function IconBtn({ children, onClick }) {
   return (
@@ -128,7 +87,7 @@ function OutlineBtn({ children, onClick, sx = {} }) {
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
-  const accountId = "988692073881733";
+  const accountId = "1144652500438518";
 
   return (
     <Box
@@ -148,16 +107,29 @@ export default function Header() {
       <Typography
         sx={{
           fontSize: "18px", fontWeight: 700,
-          fontFamily: FONT, color: "rgb(28, 43, 51) ",
+          fontFamily: 500, color: "rgb(28, 43, 51) ",
           whiteSpace: "nowrap", mr: "4px", flexShrink: 0, lineHeight: '22px'
         }}
       >
-        Ad sets
+        Campaigns
       </Typography>
 
       {/* ── Account Selector ── */}
-      <OutlineBtn onClick={(e) => setAnchorEl(e.currentTarget)} sx={{ backgroundColor: '#fff' }}>
-        <AdAccountIcon />
+      <OutlineBtn onClick={(e) => setAnchorEl(e.currentTarget)} sx={{ backgroundColor: '#fff', gap: "8px", pl: "8px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 26,
+            height: 26,
+            borderRadius: "50%",
+            backgroundColor: "#e1edf7",
+            flexShrink: 0,
+          }}
+        >
+          <AdAccountSwitcherIcon size={16} color="#1c2b33" />
+        </Box>
         <Typography sx={{ fontSize: "14px", fontWeight: 400, fontFamily: FONT, color: "rgb(28, 43, 51)", whiteSpace: "nowrap", lineHeight: '20px', }}>
           {accountId} ({accountId.slice(0, 7)}...)
         </Typography>
@@ -223,7 +195,7 @@ export default function Header() {
         <Typography sx={{ fontSize: "14px", fontWeight: 400, color: "#rgb(28, 43, 51)", fontFamily: FONT, whiteSpace: "nowrap" }}>
           Opportunity score
         </Typography>
-        <SolidArrowDown />
+        <DownArrowIcon width={16} height={16} />
       </Box>
 
       {/* ── Spacer ── */}
@@ -236,12 +208,12 @@ export default function Header() {
 
       {/* ── Refresh ── */}
       <IconBtn>
-        <RefreshIcon />
+        <RefreshIcon width={16} height={16} />
       </IconBtn>
 
       {/* ── Discard Drafts ── */}
       <OutlineBtn>
-        <TrashIcon />
+        <DeleteIcon />
         <Typography sx={{ fontSize: "14px", fontWeight: 400, fontFamily: FONT, color: TEXT, whiteSpace: "nowrap" }}>
           Discard Drafts
         </Typography>
