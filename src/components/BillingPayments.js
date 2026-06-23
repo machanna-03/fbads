@@ -431,7 +431,7 @@ function NotificationsPanel({ notifications, setNotifications }) {
 }
 
 /* ─── Current Balance ─── */
-function CurrentBalanceCard() {
+function CurrentBalanceCard({ onAddFunds }) {
   return (
     <Card sx={{ px: "24px", py: "24px", mb: "16px", border: "1px solid #dee1e5" }}>
       {/* Top Row: Title & Add Funds */}
@@ -441,6 +441,7 @@ function CurrentBalanceCard() {
         </T>
         <Button
           variant="outlined"
+          onClick={onAddFunds}
           sx={{
             textTransform: "none",
             borderColor: "rgba(28, 43, 51, 0.2)",
@@ -583,17 +584,54 @@ function PaymentMethodsCard({ onAddPaymentMethod }) {
 }
 
 /* ─── Payment Activity Inline ─── */
-// function PaymentActivityInlineCard() {
-//   return (
-//     <Card sx={{ px: "20px", py: "16px", mb: "12px" }}>
-//       <T sx={{ ...T_LABEL, mb: "10px" }}>Payment activity</T>
-//       <Box sx={{ display: "flex", alignItems: "center", gap: "4px", flexWrap: "wrap" }}>
-//         <T sx={T_BODY}>You have no recent spending.</T>
-//         <T sx={T_LINK}>Create an ad</T>
-//       </Box>
-//     </Card>
-//   );
-// }
+function PaymentActivityInlineCard() {
+  const activities = [
+    { date: "22 Jun 2026", method: "Prepaid balance", amount: "₹ 366.71", status: "Paid" },
+    { date: "21 Jun 2026", method: "Manual payment", amount: "₹ 410.00", status: "Funded" },
+    { date: "21 Jun 2026", method: "Prepaid balance", amount: "₹ 410.00", status: "Paid" },
+  ];
+
+  return (
+    <Card sx={{ px: "20px", py: "16px", mb: "12px", border: "1px solid #dee1e5" }}>
+      <T sx={{
+        fontFamily: '"Optimistic 95", system-ui, sans-serif',
+        fontWeight: 700,
+        color: "rgb(28, 43, 51)",
+        fontSize: "16px",
+        lineHeight: "20px",
+        mb: "16px"
+      }}>Payment activity</T>
+
+      <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1.5fr 1fr 1fr", mb: "12px" }}>
+        <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 600, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>Date</T>
+        <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 600, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>Payment method</T>
+        <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 600, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>Amount</T>
+        <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 600, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>Status</T>
+      </Box>
+
+      {activities.map((item, index) => (
+        <Box key={index} sx={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1.5fr 1fr 1fr",
+          py: "12px",
+          borderTop: "1px solid #dee1e5"
+        }}>
+          <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 400, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>{item.date}</T>
+          <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 400, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>{item.method}</T>
+          <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 400, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>{item.amount}</T>
+          <Box sx={{ display: "flex", alignItems: "center", gap: "6px" }}>
+            <Box sx={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#1f7a42" }} />
+            <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 400, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>{item.status}</T>
+          </Box>
+        </Box>
+      ))}
+
+      <Box sx={{ pt: "16px", borderTop: "1px solid #dee1e5", mt: "4px" }}>
+        <T sx={T_LINK}>View all activity</T>
+      </Box>
+    </Card>
+  );
+}
 
 /* ─── Business Info ─── */
 function BusinessInfoCard() {
@@ -611,24 +649,24 @@ function BusinessInfoCard() {
         <Box sx={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           <Box>
             <T sx={{ ...T_LABEL, fontSize: "15px", mb: "4px" }}>Business name</T>
-            <T sx={{ ...T_BODY, fontSize: "14px", color: MUTED }}>-</T>
+            <T sx={{ ...T_BODY, fontSize: "14px", color: "rgb(28, 43, 51)" }}>-</T>
           </Box>
           <Box>
             <T sx={{ ...T_LABEL, fontSize: "15px", mb: "4px" }}>Tax ID</T>
-            <T sx={{ ...T_BODY, fontSize: "14px", color: MUTED }}>-</T>
+            <T sx={{ ...T_BODY, fontSize: "14px", color: "rgb(28, 43, 51)" }}>-</T>
           </Box>
         </Box>
 
         {/* Column 2 */}
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <T sx={{ ...T_LABEL, fontSize: "15px", mb: "4px" }}>Address</T>
-          <T sx={{ ...T_BODY, fontSize: "14px", color: MUTED }}>India</T>
+          <T sx={{ ...T_BODY, fontSize: "14px", color: "rgb(28, 43, 51)" }}>India</T>
         </Box>
 
         {/* Column 3 */}
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <T sx={{ ...T_LABEL, fontSize: "15px", mb: "4px" }}>Currency</T>
-          <T sx={{ ...T_BODY, fontSize: "14px", color: MUTED }}>Indian Rupee INR</T>
+          <T sx={{ ...T_BODY, fontSize: "14px", color: "rgb(28, 43, 51)" }}>Indian Rupee INR</T>
         </Box>
       </Box>
     </Card>
@@ -717,6 +755,11 @@ function PaymentSettingsView({ notifications, setNotifications, currentAccount, 
   const [selectedBudget, setSelectedBudget] = useState("");
   const [selectedPayment, setSelectedPayment] = useState("");
   const [hasAdCredit, setHasAdCredit] = useState(false);
+
+  const [showAddFundsModal, setShowAddFundsModal] = useState(false);
+  const [addFundsAmount, setAddFundsAmount] = useState("2478.00");
+  const [addFundsCustomAmount, setAddFundsCustomAmount] = useState("2,478.00");
+  const [addFundsPaymentMethod, setAddFundsPaymentMethod] = useState("upi");
 
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
 
@@ -848,9 +891,9 @@ function PaymentSettingsView({ notifications, setNotifications, currentAccount, 
       {/* Two-column layout */}
       <Box sx={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
         <Box sx={{ flex: 1, maxWidth: "800px", minWidth: 0 }}>
-          <CurrentBalanceCard />
+          <CurrentBalanceCard onAddFunds={() => setShowAddFundsModal(true)} />
           <PaymentMethodsCard onAddPaymentMethod={() => setShowSetupModal(true)} />
-          {/* <PaymentActivityInlineCard /> */}
+          <PaymentActivityInlineCard />
           <BusinessInfoCard />
         </Box>
         <Box sx={{ width: 340, minWidth: 360, flexShrink: 0 }}>
@@ -881,308 +924,383 @@ function PaymentSettingsView({ notifications, setNotifications, currentAccount, 
             alignItems: "center",
             justifyContent: "center",
             zIndex: 1300,
-            paddingTop: "50vh",
+            p: "24px",
+          }}
+        >
+          <Paper
+            elevation={0}
+            sx={{
+              width: 600,
+              borderRadius: "24px",
+              overflow: "hidden",
+              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
+              pt: "16px",
+              pb: "16px",
+              px: "16px",
+              position: "relative",
+              border: "1px solid #e4e6eb",
+            }}
+          >
+            <IconButton onClick={() => setShowSetupModal(false)} sx={{ position: "absolute", top: "16px", right: "16px", p: 0 }}>
+              <X size={26} color={TEXT} />
+            </IconButton>
+
+            {/* Header */}
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontFamily: '"Optimistic", "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif',
+                fontWeight: 600,
+                color: "rgb(17, 17, 18)",
+                fontSize: "17px",
+                lineHeight: "22px",
+                textAlign: "center",
+                mb: 1,
+              }}
+            >
+              Add payment information
+            </Typography>
+
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontWeight: 600,
+                fontSize: "16px",
+                mb: 1,
+              }}
+            >
+              Add payment method
+            </Typography>
+
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+              {/* Debit or credit card */}
+              <Box onClick={() => setSelectedPayment("card")} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", py: "4px" }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <Typography sx={{ fontSize: "15px", color: TEXT }}>Debit or credit card</Typography>
+                  <Box sx={{ display: "flex", gap: "4px" }}>
+                    <Box component="img" src={img1} sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px", backgroundColor: "#1434cb" }} />
+                    <Box component="img" src={img2} sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px" }} />
+                    <Box sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px", display: "flex", alignItems: "center", justifyContent: "center", px: "4px" }}>
+                      <Typography sx={{ fontSize: "8px", fontWeight: "bold", color: "#0033a0" }}>RuPay</Typography>
+                    </Box>
+                  </Box>
+                </Box>
+                <Radio
+                  checked={selectedPayment === "card"}
+                  onChange={() => setSelectedPayment("card")}
+                  sx={{ p: 0, color: "#1877f2", "&.Mui-checked": { color: "#1877f2" } }}
+                />
+              </Box>
+
+              {/* UPI */}
+              <Box onClick={() => setSelectedPayment("upi")} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", py: "4px" }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <Typography sx={{ fontSize: "15px", color: TEXT }}>UPI</Typography>
+                  <Box sx={{ display: "flex", gap: "4px" }}>
+                    <Box component="img" src={img3} sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px" }} />
+                    <Box component="img" src={img4} sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px" }} />
+                    <Box component="img" src={img5} sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px" }} />
+                    <Box component="img" src={img6} sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px" }} />
+                  </Box>
+                </Box>
+                <Radio
+                  checked={selectedPayment === "upi"}
+                  onChange={() => setSelectedPayment("upi")}
+                  sx={{ p: 0, color: "#1877f2", "&.Mui-checked": { color: "#1877f2" } }}
+                />
+              </Box>
+
+              {/* WhatsApp UPI */}
+              <Box onClick={() => setSelectedPayment("whatsapp")} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", py: "4px" }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <Typography sx={{ fontSize: "15px", color: TEXT }}>WhatsApp UPI</Typography>
+                  <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: 22, height: 22, backgroundColor: "#25D366", borderRadius: "4px" }}>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="#ffffff">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.662-2.062-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a5.26 5.26 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+                    </svg>
+                  </Box>
+                </Box>
+                <Radio
+                  checked={selectedPayment === "whatsapp"}
+                  onChange={() => setSelectedPayment("whatsapp")}
+                  sx={{ p: 0, color: "#1877f2", "&.Mui-checked": { color: "#1877f2" } }}
+                />
+              </Box>
+
+              {/* Net Banking */}
+              <Box onClick={() => setSelectedPayment("netbanking")} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", py: "4px" }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <Typography sx={{ fontSize: "15px", color: TEXT }}>Net Banking</Typography>
+                  <Box component="img" src={img7} sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px" }} />
+                </Box>
+                <Radio
+                  checked={selectedPayment === "netbanking"}
+                  onChange={() => setSelectedPayment("netbanking")}
+                  sx={{ p: 0, color: "#1877f2", "&.Mui-checked": { color: "#1877f2" } }}
+                />
+              </Box>
+
+              {/* Ad credit */}
+              <Box onClick={() => setSelectedPayment("adcredit")} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", py: "4px" }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <Typography sx={{ fontSize: "15px", color: TEXT }}>Ad credit</Typography>
+                </Box>
+                <Radio
+                  checked={selectedPayment === "adcredit"}
+                  onChange={() => setSelectedPayment("adcredit")}
+                  sx={{ p: 0, color: "#1877f2", "&.Mui-checked": { color: "#1877f2" } }}
+                />
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                mt: 4,
+                gap: "2px"
+              }}
+            >
+              <LockIcon sx={{ color: "#65676b", fontSize: "18px" }} />
+              <Typography variant="subtitle1" sx={{ fontSize: "13px", color: "#65676b", textAlign: "center" }}>
+                Your payment methods are saved and stored securely.
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                sx={{ fontSize: "13px", color: "#1877f2", fontWeight: 600, cursor: "pointer", textAlign: "center", "&:hover": { textDecoration: "underline" } }}
+              >
+                Terms and privacy policies apply.
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                pt: 3,
+                display: "flex",
+                justifyContent: "flex-end", // Next button is aligned to the right in the image
+                alignItems: "center",
+              }}
+            >
+              <Button
+                variant="contained"
+                onClick={() => setShowSetupModal(false)}
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 700,
+                  fontSize: "15px",
+                  bgcolor: "#1877F2",
+                  "&:hover": { bgcolor: "#166FE5" },
+                  px: "32px",
+                  py: "8px",
+                  borderRadius: "20px", // pill shape
+                }}
+              >
+                Next
+              </Button>
+            </Box>
+          </Paper>
+        </Box>
+      )}
+
+      {showAddFundsModal && (
+        <Box
+          sx={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            overflowY: "auto",
+            scrollbarWidth: "thin",
+            scrollbarColor: "grey",
+            backgroundColor: "rgba(243, 237, 237, 0.5)",
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "center",
+            zIndex: 1300,
+            paddingTop: "50px",
+            paddingBottom: "50px",
           }}
         >
           <Paper
             elevation={0}
             sx={{
               width: 550,
-              borderRadius: 1,
+              borderRadius: 2,
               overflow: "hidden",
               boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
               p: 3,
-              mb: 3,
               border: "1px solid #e4e6eb",
-              //   backgroundColor: "white",
-              cursor: "pointer",
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                mb: 2,
-                justifyContent: "center",
-              }}
-            >
-              <Typography
-                variant="subtitle1"
-                sx={{ fontWeight: "bold", fontSize: "16px" }}
-              >
-                Add payment Information
+            {/* Header */}
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
+              <Box sx={{ width: 24 }} /> {/* Spacer */}
+              <Typography variant="subtitle1" sx={{ fontWeight: 700, fontSize: "18px" }}>
+                Add funds
               </Typography>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                mb: 2,
-                borderBottom: "1px solid #E4E6EB",
-              }}
-            >
-              {/* Left column with text */}
-              <Box>
-                <Typography
-                  variant="subtitle1"
-                  sx={{ fontWeight: "bold", fontSize: "16px" }}
-                >
-                  Business location and currency
-                </Typography>
-                <Typography
-                  variant="subtitle2"
-                  sx={{ fontSize: "16px", mb: 2 }}
-                >
-                  India, Indian Rupee INR
-                </Typography>
-              </Box>
-
-              <Typography
-                variant="subtitle2"
-                color="primary"
-                sx={{ fontSize: "16px", p: 1 }}
-              >
-                Edit
-              </Typography>
+              <IconButton onClick={() => setShowAddFundsModal(false)} size="small">
+                <X size={20} color={TEXT} />
+              </IconButton>
             </Box>
 
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                mb: 2,
-                borderBottom: "1px solid #E4E6EB",
-              }}
-            >
-              {/* Left column with text */}
-              <Box>
-                <Typography
-                  variant="subtitle1"
-                  sx={{ fontWeight: "bold", fontSize: "16px" }}
-                >
-                  Business and tax info
-                </Typography>
-                <Typography
-                  variant="subtitle2"
-                  sx={{ fontSize: "16px", mb: 2 }}
-                >
-                  Optional – Add a tax ID or address
-                </Typography>
-              </Box>
+            {/* Choose Amount */}
+            <Typography variant="subtitle1" sx={{ fontWeight: 700, fontSize: "16px", mb: 0.5 }}>
+              Choose amount
+            </Typography>
+            <Typography sx={{ fontSize: "15px", color: TEXT, mb: 2 }}>
+              Choose an amount to add to your available funds. We'll deduct from your total as your ads run.
+            </Typography>
 
-              <Typography
-                variant="subtitle2"
-                color="primary"
-                sx={{ fontSize: "16px", p: 1 }}
-              >
-                Edit
-              </Typography>
-            </Box>
-
-            {budgetOptions.map((option) => (
-              <Box
-                key={option.value}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  mb: 1,
-                  p: 1,
-                  borderRadius: 2,
-                  border:
-                    selectedBudget === option.value
-                      ? "2px solid #1877F2"
-                      : "1px solid #ccc",
-                  cursor: "pointer",
-                  bgcolor:
-                    selectedBudget === option.value
-                      ? "#E8F0FE"
-                      : "white",
-                }}
-                onClick={() => setSelectedBudget(option.value)}
-              >
-                <Typography
-                  variant="subtitle2"
-                  size="small"
-                  sx={{ fontSize: "14px" }}
-                >
-                  {option.label}
-                </Typography>
-
-                <Radio
-                  checked={selectedBudget === option.value}
-                  value={option.value}
-                  onChange={() => setSelectedBudget(option.value)}
-                  sx={{
-                    p: 0,
-                    color: "#1877F2",
-                    "&.Mui-checked": {
-                      color: "#1877F2",
-                    },
-                  }}
-                />
-              </Box>
-            ))}
-            <Box sx={{ borderTop: "1px solid #E4E6EB", mt: 2 }}>
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: "bold",
-                  fontSize: "16px",
-                  mb: 1,
-                  mt: 1,
-                  letterSpacing: "-0.5px",
-                }}
-              >
-                Add payment method
-              </Typography>
-              {paymentOptions.map((option) => (
-                <Box
-                  key={option.value}
-                  sx={{
-                    display: "flex",
-                    //   alignItems: "center",
-                    justifyContent: "space-between",
-                    mb: 1.2,
-                    //   p: 1,
-                    width: "100%",
-                    cursor: "pointer",
-                    bgcolor:
-                      selectedPayment === option.value
-                        ? "#E8F0FE"
-                        : "#fff",
-                  }}
-                  onClick={() => setSelectedPayment(option.value)}
-                >
+            <Box sx={{ display: "flex", gap: "12px", mb: 2 }}>
+              {["2478.00", "4956.00", "other"].map((amt) => {
+                const isSelected = addFundsAmount === amt;
+                const label = amt === "other" ? "Other" : `₹ ${parseInt(amt).toLocaleString()}.00`;
+                return (
                   <Box
+                    key={amt}
+                    onClick={() => {
+                      setAddFundsAmount(amt);
+                      if (amt !== "other") setAddFundsCustomAmount(parseInt(amt).toLocaleString() + ".00");
+                    }}
                     sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
+                      px: "16px",
+                      py: "8px",
+                      borderRadius: "6px",
+                      border: isSelected ? "1px solid #283943" : "1px solid #ccd0d5",
+                      backgroundColor: isSelected ? "#283943" : WHITE,
+                      color: isSelected ? WHITE : TEXT,
+                      cursor: "pointer",
+                      fontWeight: 600,
+                      fontSize: "15px",
                     }}
                   >
-                    <Typography
-                      variant="subtitle2"
-                      sx={{ fontSize: "16px" }}
-                    >
-                      {option.label}
-                    </Typography>
-                    <Box sx={{ display: "flex", gap: 1 }}>
-                      {option.icons.map((icon, idx) => (
-                        <Box
-                          component="img"
-                          key={idx}
-                          src={icon}
-                          alt={`${option.label} logo ${idx}`}
-                          sx={{ width: 30, height: 24 }}
-                        />
-                      ))}
+                    {label}
+                  </Box>
+                );
+              })}
+            </Box>
+
+            <Box sx={{
+              border: "1px solid #283943",
+              borderRadius: "8px",
+              p: "8px 12px",
+              mb: "8px",
+            }}>
+              <Typography sx={{ fontSize: "12px", color: MUTED }}>Amount</Typography>
+              <Typography sx={{ fontSize: "16px", color: TEXT }}>
+                ₹ <input
+                  value={addFundsCustomAmount}
+                  onChange={(e) => {
+                    setAddFundsCustomAmount(e.target.value);
+                    setAddFundsAmount("other");
+                  }}
+                  style={{
+                    border: "none",
+                    outline: "none",
+                    fontSize: "16px",
+                    fontFamily: FONT,
+                    color: TEXT,
+                    width: "90%"
+                  }}
+                />
+              </Typography>
+            </Box>
+            <Typography sx={{ fontSize: "13px", color: TEXT, mb: 3 }}>
+              Amount needed to cover your next 7 days of ad spending plus estimated tax, based on campaign budgets.
+            </Typography>
+
+            {/* Add payment method */}
+            <Typography variant="subtitle1" sx={{ fontWeight: 700, fontSize: "16px", mb: 2 }}>
+              Add payment method
+            </Typography>
+
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "16px", mb: 4 }}>
+              {/* UPI */}
+              <Box onClick={() => setAddFundsPaymentMethod("upi")} sx={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", cursor: "pointer" }}>
+                <Box>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: "8px", mb: "8px" }}>
+                    <Typography sx={{ fontSize: "15px", color: TEXT }}>UPI</Typography>
+                    <Box sx={{ display: "flex", gap: "4px" }}>
+                      <Box component="img" src={img3} sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px" }} />
+                      <Box component="img" src={img4} sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px" }} />
+                      <Box component="img" src={img5} sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px" }} />
+                      <Box component="img" src={img6} sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px" }} />
                     </Box>
                   </Box>
-                  <Radio
-                    checked={selectedPayment === option.value}
-                    value={option.value}
-                    onChange={() => setSelectedPayment(option.value)}
-                    sx={{
-                      color: "#1877F2",
-                      "&.Mui-checked": {
-                        color: "#1877F2",
-                      },
-                      p: 0,
-                    }}
-                  />
+                  <Box sx={{
+                    display: "inline-block",
+                    backgroundColor: "#e4e6eb",
+                    borderRadius: "12px",
+                    px: "12px",
+                    py: "4px",
+                  }}>
+                    <Typography sx={{ fontSize: "14px", color: "#65676b" }}>Recommended based on your account</Typography>
+                  </Box>
                 </Box>
-              ))}
-            </Box>
-            <Box sx={{ mb: 2 }}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Checkbox
-                  checked={hasAdCredit}
-                  onChange={(e) => setHasAdCredit(e.target.checked)}
-                  sx={{ mr: 1 }}
+                <Radio
+                  checked={addFundsPaymentMethod === "upi"}
+                  onChange={() => setAddFundsPaymentMethod("upi")}
+                  sx={{ p: 0, color: "#1877f2", "&.Mui-checked": { color: "#1877f2" } }}
                 />
-                <Typography
-                  variant="subtitle2"
-                  sx={{ fontSize: "16px" }}
-                >
-                  I have an ad credit to claim.
-                </Typography>
               </Box>
 
-              {hasAdCredit && (
-                <Typography
-                  variant="body2"
-                  sx={{
-                    mt: 1.5,
-                    fontSize: "14px",
-                    color: MUTED,
-                    backgroundColor: "#f7fbfe",
-                  }}
-                >
-                  Even with an ad credit, you'll need to add a payment
-                  method to run ads. You can claim the ad credit after
-                  entering your payment information.
-                </Typography>
-              )}
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                mt: 6,
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <LockIcon sx={{ color: "grey", fontSize: "16px" }} />
-              <Typography variant="subtitle1" sx={{ fontSize: "14px" }}>
-                Your payment methods are saved and stored securely.
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                color="primary"
-                sx={{ fontSize: "14px" }}
-              >
-                Terms and applicable privacy policies apply
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                pt: 4,
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Button
-                variant="text"
-                onClick={() => setShowSetupModal(false)}
-                sx={{
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  fontSize: "14px",
-                  color: "#1877F2",
-                }}
-              >
-                Back
-              </Button>
+              {/* Debit/Credit */}
+              <Box onClick={() => setAddFundsPaymentMethod("card")} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <Typography sx={{ fontSize: "15px", color: TEXT }}>Debit or credit card</Typography>
+                  <Box sx={{ display: "flex", gap: "4px" }}>
+                    <Box component="img" src={img1} sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px", backgroundColor: "#1434cb" }} />
+                    <Box component="img" src={img2} sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px" }} />
+                    <Box sx={{ height: 18, border: "1px solid #dee1e5", borderRadius: "2px", p: "2px", display: "flex", alignItems: "center", justifyContent: "center", px: "4px" }}>
+                      <Typography sx={{ fontSize: "8px", fontWeight: "bold", color: "#0033a0" }}>RuPay</Typography>
+                    </Box>
+                  </Box>
+                </Box>
+                <Radio
+                  checked={addFundsPaymentMethod === "card"}
+                  onChange={() => setAddFundsPaymentMethod("card")}
+                  sx={{ p: 0, color: "#1877f2", "&.Mui-checked": { color: "#1877f2" } }}
+                />
+              </Box>
 
+              {/* WhatsApp UPI */}
+              <Box onClick={() => setAddFundsPaymentMethod("whatsapp")} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <Typography sx={{ fontSize: "15px", color: TEXT }}>WhatsApp UPI</Typography>
+                  <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: 22, height: 22, backgroundColor: "#25D366", borderRadius: "4px" }}>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="#ffffff">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.662-2.062-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a5.26 5.26 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.052 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+                    </svg>
+                  </Box>
+                </Box>
+                <Radio
+                  checked={addFundsPaymentMethod === "whatsapp"}
+                  onChange={() => setAddFundsPaymentMethod("whatsapp")}
+                  sx={{ p: 0, color: "#1877f2", "&.Mui-checked": { color: "#1877f2" } }}
+                />
+              </Box>
+            </Box>
+
+            {/* Bottom Actions */}
+            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
               <Button
                 variant="contained"
-                // disabled={!selectedSetup}
-                // onClick={handleContinueFromSetup}
+                onClick={() => setShowAddFundsModal(false)}
                 sx={{
                   textTransform: "none",
-                  fontWeight: "bold",
+                  fontWeight: 700,
                   fontSize: "14px",
-                  bgcolor: "#1877F2",
-                  "&:hover": { bgcolor: "#166FE5" },
-                  px: 3,
+                  bgcolor: "#1877f2",
+                  color: WHITE,
+                  px: "24px",
+                  py: "8px",
+                  borderRadius: "6px",
+                  "&:hover": { bgcolor: "#166fe5" }
                 }}
               >
-                Continue
+                Next
               </Button>
             </Box>
           </Paper>
