@@ -593,28 +593,35 @@ function PaymentActivityInlineCard() {
 
   return (
     <Card sx={{ px: "20px", py: "16px", mb: "12px", border: "1px solid #dee1e5" }}>
-      <T sx={{ ...T_LABEL, mb: "16px", fontSize: "16px" }}>Payment activity</T>
-      
+      <T sx={{
+        fontFamily: '"Optimistic 95", system-ui, sans-serif',
+        fontWeight: 700,
+        color: "rgb(28, 43, 51)",
+        fontSize: "16px",
+        lineHeight: "20px",
+        mb: "16px"
+      }}>Payment activity</T>
+
       <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1.5fr 1fr 1fr", mb: "12px" }}>
-        <T sx={{ fontSize: "14px", fontWeight: 700, color: "rgb(28, 43, 51)" }}>Date</T>
-        <T sx={{ fontSize: "14px", fontWeight: 700, color: "rgb(28, 43, 51)" }}>Payment method</T>
-        <T sx={{ fontSize: "14px", fontWeight: 700, color: "rgb(28, 43, 51)" }}>Amount</T>
-        <T sx={{ fontSize: "14px", fontWeight: 700, color: "rgb(28, 43, 51)" }}>Status</T>
+        <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 600, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>Date</T>
+        <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 600, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>Payment method</T>
+        <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 600, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>Amount</T>
+        <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 600, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>Status</T>
       </Box>
 
       {activities.map((item, index) => (
-        <Box key={index} sx={{ 
-          display: "grid", 
-          gridTemplateColumns: "1fr 1.5fr 1fr 1fr", 
-          py: "12px", 
-          borderTop: "1px solid #dee1e5" 
+        <Box key={index} sx={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1.5fr 1fr 1fr",
+          py: "12px",
+          borderTop: "1px solid #dee1e5"
         }}>
-          <T sx={{ fontSize: "14px", color: "rgb(28, 43, 51)" }}>{item.date}</T>
-          <T sx={{ fontSize: "14px", color: "rgb(28, 43, 51)" }}>{item.method}</T>
-          <T sx={{ fontSize: "14px", color: "rgb(28, 43, 51)" }}>{item.amount}</T>
+          <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 400, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>{item.date}</T>
+          <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 400, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>{item.method}</T>
+          <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 400, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>{item.amount}</T>
           <Box sx={{ display: "flex", alignItems: "center", gap: "6px" }}>
             <Box sx={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#1f7a42" }} />
-            <T sx={{ fontSize: "14px", color: "rgb(28, 43, 51)" }}>{item.status}</T>
+            <T sx={{ fontFamily: '"Optimistic 95", system-ui, sans-serif', fontWeight: 400, color: "rgb(28, 43, 51)", fontSize: "14px", lineHeight: "20px" }}>{item.status}</T>
           </Box>
         </Box>
       ))}
@@ -642,24 +649,24 @@ function BusinessInfoCard() {
         <Box sx={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           <Box>
             <T sx={{ ...T_LABEL, fontSize: "15px", mb: "4px" }}>Business name</T>
-            <T sx={{ ...T_BODY, fontSize: "14px", color: MUTED }}>-</T>
+            <T sx={{ ...T_BODY, fontSize: "14px", color: "rgb(28, 43, 51)" }}>-</T>
           </Box>
           <Box>
             <T sx={{ ...T_LABEL, fontSize: "15px", mb: "4px" }}>Tax ID</T>
-            <T sx={{ ...T_BODY, fontSize: "14px", color: MUTED }}>-</T>
+            <T sx={{ ...T_BODY, fontSize: "14px", color: "rgb(28, 43, 51)" }}>-</T>
           </Box>
         </Box>
 
         {/* Column 2 */}
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <T sx={{ ...T_LABEL, fontSize: "15px", mb: "4px" }}>Address</T>
-          <T sx={{ ...T_BODY, fontSize: "14px", color: MUTED }}>India</T>
+          <T sx={{ ...T_BODY, fontSize: "14px", color: "rgb(28, 43, 51)" }}>India</T>
         </Box>
 
         {/* Column 3 */}
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <T sx={{ ...T_LABEL, fontSize: "15px", mb: "4px" }}>Currency</T>
-          <T sx={{ ...T_BODY, fontSize: "14px", color: MUTED }}>Indian Rupee INR</T>
+          <T sx={{ ...T_BODY, fontSize: "14px", color: "rgb(28, 43, 51)" }}>Indian Rupee INR</T>
         </Box>
       </Box>
     </Card>
@@ -941,7 +948,15 @@ function PaymentSettingsView({ notifications, setNotifications, currentAccount, 
             {/* Header */}
             <Typography
               variant="subtitle1"
-              sx={{ fontWeight: 600, fontSize: "16px", textAlign: "center", mb: 1 }}
+              sx={{
+                fontFamily: '"Optimistic", "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif',
+                fontWeight: 600,
+                color: "rgb(17, 17, 18)",
+                fontSize: "17px",
+                lineHeight: "22px",
+                textAlign: "center",
+                mb: 1,
+              }}
             >
               Add payment information
             </Typography>
