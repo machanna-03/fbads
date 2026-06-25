@@ -1,4 +1,5 @@
 import { useState } from "react";
+import DateRangePicker, { PRESETS, formatDateShort, getPresetRange } from "./DateRangePicker";
 import { Box, Typography, Paper } from "@mui/material";
 import {
   Plus, Copy, Pencil, FlaskConical, ChevronDown,
@@ -116,11 +117,23 @@ function TabItem({ icon: Icon, label, active, onClick }) {
 
 export default function SubHeader({ activeView = "campaigns", onViewChange }) {
   const [activeTab, setActiveTab] = useState(activeView);
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [preset, setPreset] = useState("today");
+  const [dateRange, setDateRange] = useState(() => {
+    const range = getPresetRange("today");
+    return range || { start: new Date(), end: new Date() };
+  });
 
   const handleTab = (tab) => {
     setActiveTab(tab);
     onViewChange && onViewChange(tab);
   };
+
+  const isSingleDay = dateRange.start && dateRange.end &&
+    dateRange.start.getFullYear() === dateRange.end.getFullYear() &&
+    dateRange.start.getMonth() === dateRange.end.getMonth() &&
+    dateRange.start.getDate() === dateRange.end.getDate();
 
   return (
     <Box>
@@ -164,6 +177,10 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
 
           {/* Date range picker */}
           <Box
+            onClick={(event) => {
+              setAnchorEl(event.currentTarget);
+              setDatePickerOpen(true);
+            }}
             sx={{
               display: "flex", alignItems: "center", gap: "6px",
               px: "10px", height: "39px", border: BORDER, borderRadius: "4px",
@@ -175,10 +192,26 @@ export default function SubHeader({ activeView = "campaigns", onViewChange }) {
           >
             <CalendarDays size={18} color="#1c1c1cff" />
             <Txt sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "20px", color: "rgb(28, 43, 51)", whiteSpace: "nowrap" }}>
-              Last 30 days: 3 May 2026 - 1 Jun 2026
+              {PRESETS.find(p => p.id === preset)?.label || "Custom"}: {formatDateShort(dateRange.start)}{!isSingleDay && ` - ${formatDateShort(dateRange.end)}`}
             </Txt>
             <ArrowDropDownIcon sx={{ fontSize: "28px", color: "rgb(28, 43, 51)" }} />
           </Box>
+
+          <DateRangePicker
+            open={datePickerOpen}
+            anchorEl={anchorEl}
+            onClose={() => {
+              setDatePickerOpen(false);
+              setAnchorEl(null);
+            }}
+            initialStartDate={dateRange.start}
+            initialEndDate={dateRange.end}
+            initialPreset={preset}
+            onApply={(range) => {
+              setDateRange({ start: range.start, end: range.end });
+              setPreset(range.preset);
+            }}
+          />
         </Box>
 
       </Box>
