@@ -207,7 +207,7 @@ const campaigns = [
     id: 2,
     name: "NKN V1",
     delivery: "Active",
-    deliveryColor: GREEN,
+    deliveryColor: "#006b4e",
     results: "29",
     resultsSub: "Leads (form)",
     costPerResult: "52.06",
@@ -496,7 +496,7 @@ export default function CampaignTable() {
                       px: "10px", borderRight: BORDER, gap: "6px",
                     }}
                   >
-                    <Box sx={{ width: 10, height: 10, borderRadius: "50%", border: `2px solid ${row.deliveryColor}`, flexShrink: 0 }} />
+                    <Box sx={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: row.deliveryColor, flexShrink: 0 }} />
                     <T sx={{
                       fontSize: '14px', fontWeight: 400, color: 'rgb(28, 43, 51)'
                     }}>{row.delivery}</T>
