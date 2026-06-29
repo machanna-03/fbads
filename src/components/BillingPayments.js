@@ -19,6 +19,7 @@ import img5 from "../assets/PhonePay.png";
 import img6 from "../assets/Paytm.png";
 import img7 from "../assets/NetBanking.png";
 import AvailableFundsIcon from '../assets/icons/available-funds-icons.webp'
+import { ReactComponent as CalenderIcon } from "../assets/icons/date-icon.svg";
 const paymentOptions = [
   { label: "Debit or credit card", value: "card", icons: [img1, img2] },
   { label: "UPI", value: "upi", icons: [img3, img4, img5, img6] },
@@ -521,7 +522,7 @@ function CurrentBalanceCard({ onAddFunds }) {
 
       {/* Spending limit text */}
       <T sx={{ fontSize: "14px", fontWeight: 400, color: "rgb(28, 43, 51)", mb: "12px" }}>
-        Daily spending limit (set by Meta): <Box component="span" sx={{ fontWeight: 700 }}>₹ 1,918.37</Box>
+        Daily spending limit (set by Meta): <Box component="span" sx={{ fontWeight: 700 }}>₹ 7491.86</Box>
       </T>
 
       {/* Projected spend & Learn more row */}
@@ -534,7 +535,7 @@ function CurrentBalanceCard({ onAddFunds }) {
             backgroundColor: "#1f7a42",
             display: "inline-block"
           }} />
-          <T sx={{ fontSize: "14px", fontWeight: 400, color: "#1f7a42" }}>
+          <T sx={{ fontSize: "14px", fontWeight: 400, }}>
             Your projected spend today is within this limit
           </T>
         </Box>
@@ -584,11 +585,11 @@ function PaymentMethodsCard({ onAddPaymentMethod }) {
 }
 
 /* ─── Payment Activity Inline ─── */
-function PaymentActivityInlineCard() {
+function PaymentActivityInlineCard({ setActiveItem }) {
   const activities = [
-    { date: "22 Jun 2026", method: "Prepaid balance", amount: "₹ 366.71", status: "Paid" },
-    { date: "21 Jun 2026", method: "Manual payment", amount: "₹ 410.00", status: "Funded" },
-    { date: "21 Jun 2026", method: "Prepaid balance", amount: "₹ 410.00", status: "Paid" },
+    { id: "27560139770340451-27511448021876290", date: "29 Jun 2026", amount: "₹2,485.35", method: "Prepaid balance", methodLabel: "PrePaid balance", status: "Paid", vatId: "FBADS-447-106077989" },
+    { id: "27547447038276391-27563333640021068", date: "28 Jun 2026", amount: "₹3,000.00", method: "Manual payment", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+    { id: "27550673244620441-27552092401148933", date: "28 Jun 2026", amount: "₹2,134.62", method: "Prepaid balance", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106068867" },
   ];
 
   return (
@@ -627,7 +628,9 @@ function PaymentActivityInlineCard() {
       ))}
 
       <Box sx={{ pt: "16px", borderTop: "1px solid #dee1e5", mt: "4px" }}>
-        <T sx={T_LINK}>View all activity</T>
+        <T sx={{ ...T_LINK, cursor: "pointer" }} onClick={() => setActiveItem && setActiveItem("payment-activity")}>
+          View all activity
+        </T>
       </Box>
     </Card>
   );
@@ -649,7 +652,7 @@ function BusinessInfoCard() {
         <Box sx={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           <Box>
             <T sx={{ ...T_LABEL, fontSize: "15px", mb: "4px" }}>Business name</T>
-            <T sx={{ ...T_BODY, fontSize: "14px", color: "rgb(28, 43, 51)" }}>-</T>
+            <T sx={{ ...T_BODY, fontSize: "14px", color: "rgb(28, 43, 51)" }}>T Mohan Kumar</T>
           </Box>
           <Box>
             <T sx={{ ...T_LABEL, fontSize: "15px", mb: "4px" }}>Tax ID</T>
@@ -750,7 +753,7 @@ function HelpCentreCard() {
 }
 
 /* ─── Payment Settings View ─── */
-function PaymentSettingsView({ notifications, setNotifications, currentAccount, setCurrentAccount, accounts }) {
+function PaymentSettingsView({ notifications, setNotifications, currentAccount, setCurrentAccount, accounts, setActiveItem }) {
   const [showSetupModal, setShowSetupModal] = useState(false);
   const [selectedBudget, setSelectedBudget] = useState("");
   const [selectedPayment, setSelectedPayment] = useState("");
@@ -893,7 +896,7 @@ function PaymentSettingsView({ notifications, setNotifications, currentAccount, 
         <Box sx={{ flex: 1, maxWidth: "800px", minWidth: 0 }}>
           <CurrentBalanceCard onAddFunds={() => setShowAddFundsModal(true)} />
           <PaymentMethodsCard onAddPaymentMethod={() => setShowSetupModal(true)} />
-          <PaymentActivityInlineCard />
+          <PaymentActivityInlineCard setActiveItem={setActiveItem} />
           <BusinessInfoCard />
         </Box>
         <Box sx={{ width: 340, minWidth: 360, flexShrink: 0 }}>
@@ -1310,10 +1313,74 @@ function PaymentSettingsView({ notifications, setNotifications, currentAccount, 
   );
 }
 
+const TRANSACTIONS_DATA = [
+  { id: "27560139770340451-27511448021876290", date: "29 Jun 2026", amount: "₹2,485.35", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106077989" },
+  { id: "27547447038276391-27563333640021068", date: "28 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27550673244620441-27552092401148933", date: "28 Jun 2026", amount: "₹2,134.62", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106068867" },
+  { id: "27539968339024261-27537763355911424", date: "27 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27550673244620441-27552092401145193", date: "27 Jun 2026", amount: "₹2,318.42", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106068867" },
+  { id: "27487778188476607-27487778305143262", date: "26 Jun 2026", amount: "₹2,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27537987015889064-27519827531038340", date: "26 Jun 2026", amount: "₹2,411.97", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106064108" },
+  { id: "27468291004756721-27468291106473882", date: "25 Jun 2026", amount: "₹2,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27519827531038340-27537987015889064", date: "25 Jun 2026", amount: "₹1,823.52", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106060441" },
+  { id: "27448812319038124-27448812430145192", date: "24 Jun 2026", amount: "₹2,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27501638207154921-27501638318261990", date: "24 Jun 2026", amount: "₹1,432.61", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106056774" },
+  { id: "27438492018472910-27438192830192830", date: "23 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27481239847291039-27481290384729102", date: "23 Jun 2026", amount: "₹2,264.98", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106047820" },
+  { id: "27429182039482910-27428192837492019", date: "22 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27471203948291029-27471029384729102", date: "22 Jun 2026", amount: "₹2,371.47", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106043115" },
+  { id: "27419283019283910-27418291029384729", date: "21 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27461928301928391-27461029384729102", date: "21 Jun 2026", amount: "₹2,148.61", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106038920" },
+  { id: "27409283019283910-27408291029384729", date: "20 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27451928301928391-27451029384729102", date: "20 Jun 2026", amount: "₹2,618.98", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106034180" },
+  { id: "27399283019283910-27398291029384729", date: "19 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27441928301928391-27441029384729102", date: "19 Jun 2026", amount: "₹2,491.37", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106029830" },
+  { id: "27389283019283910-27388291029384729", date: "18 Jun 2026", amount: "₹2,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27431928301928391-27431029384729102", date: "18 Jun 2026", amount: "₹1,792.57", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106025190" },
+  { id: "27379283019283910-27378291029384729", date: "17 Jun 2026", amount: "3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27421928301928391-27421029384729102", date: "17 Jun 2026", amount: "₹2,391.28", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106021080" },
+  { id: "27369283019283910-27368291029384729", date: "16 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27411928301928391-27411029384729102", date: "16 Jun 2026", amount: "₹2,048.48", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106016920" },
+  { id: "27359283019283910-27358291029384729", date: "15 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27401928301928391-27401029384729102", date: "15 Jun 2026", amount: "₹2,561.68", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106012110" },
+  { id: "27349283019283910-27348291029384729", date: "14 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27391928301928391-27391029384729102", date: "14 Jun 2026", amount: "₹2,891.18", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106007890" },
+  { id: "27339283019283910-27338291029384729", date: "13 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27381928301928391-27381029384729102", date: "13 Jun 2026", amount: "₹2,418.24", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-106003290" },
+  { id: "27329283019283910-27328291029384729", date: "12 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27371928301928391-27371029384729102", date: "12 Jun 2026", amount: "₹2,419.86", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-105998120" },
+  { id: "27319283019283910-27318291029384729", date: "11 Jun 2026", amount: "₹2,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27361928301928391-27361029384729102", date: "11 Jun 2026", amount: "₹1,532.56", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-105993840" },
+  { id: "27309283019283910-27308291029384729", date: "10 Jun 2026", amount: "₹2,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27351928301928391-27351029384729102", date: "10 Jun 2026", amount: "₹1,675.20", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-105989120" },
+  { id: "27299283019283910-27298291029384729", date: "09 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27341928301928391-27341029384729102", date: "09 Jun 2026", amount: "₹2,468.15", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-105984180" },
+  { id: "27289283019283910-27288291029384729", date: "08 Jun 2026", amount: "₹2,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27331928301928391-27331029384729102", date: "08 Jun 2026", amount: "₹1,363.39", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-105979240" },
+  { id: "27279283019283910-27278291029384729", date: "07 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27321928301928391-27321029384729102", date: "07 Jun 2026", amount: "₹2,318.49", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-105974910" },
+  { id: "27269283019283910-27268291029384729", date: "06 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27311928301928391-27311029384729102", date: "06 Jun 2026", amount: "₹2,023.26", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-105969920" },
+  { id: "27259283019283910-27258291029384729", date: "05 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27301928301928391-27301029384729102", date: "05 Jun 2026", amount: "₹2,415.89", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-105964890" },
+  { id: "27249283019283910-27248291029384729", date: "04 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27291928301928391-27291029384729102", date: "04 Jun 2026", amount: "₹2,689.58", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-105959820" },
+  { id: "27239283019283910-27238291029384729", date: "03 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27281928301928391-27281029384729102", date: "03 Jun 2026", amount: "₹2,414.29", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-105954910" },
+  { id: "27229283019283910-27228291029384729", date: "02 Jun 2026", amount: "₹3,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27271928301928391-27271029384729102", date: "02 Jun 2026", amount: "₹2,505.51", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-105949820" },
+  { id: "27219283019283910-27218291029384729", date: "01 Jun 2026", amount: "₹2,000.00", method: "manual", methodLabel: "Manual payment", status: "Funded", vatId: "" },
+  { id: "27261928301928391-27261029384729102", date: "01 Jun 2026", amount: "₹1,462.44", method: "prepaid", methodLabel: "Prepaid balance", status: "Paid", vatId: "FBADS-447-105944110" },
+];
+
 /* ─── Payment Activity View ─── */
 function PaymentActivityView({ notifications, setNotifications, currentAccount, setCurrentAccount, accounts }) {
   const [activeBillingTab, setActiveBillingTab] = useState("ad-accounts");
-  const [dateRange, setDateRange] = useState("Lifetime");
+  const [dateRange, setDateRange] = useState("Today: 29 Jun 2026");
+  const [selectedPreset, setSelectedPreset] = useState("Today");
+  const [tempStartDate, setTempStartDate] = useState(new Date("2026-06-29"));
+  const [tempEndDate, setTempEndDate] = useState(new Date("2026-06-29"));
+  const [compareChecked, setCompareChecked] = useState(false);
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const [activityViewType, setActivityViewType] = useState("Transactions");
@@ -1323,6 +1390,162 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
   const [filterField, setFilterField] = useState("payment-status");
   const [filterOperator, setFilterOperator] = useState("is");
   const [filterValue, setFilterValue] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(10);
+
+  const [showCalendarDropdown, setShowCalendarDropdown] = useState(false);
+  const calendarDropdownRef = useRef(null);
+
+  const formatDateLong = (date) => {
+    if (!date) return "";
+    const fullMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    return `${date.getDate()} ${fullMonths[date.getMonth()]} ${date.getFullYear()}`;
+  };
+
+  const formatDateShort = (date) => {
+    if (!date) return "";
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+  };
+
+  const handleDateClick = (date) => {
+    const today = new Date("2026-06-29");
+    const yesterday = new Date("2026-06-28");
+    const isToday = date.toDateString() === today.toDateString();
+    const isYesterday = date.toDateString() === yesterday.toDateString();
+    if (!isToday && !isYesterday) return;
+
+    if (!tempStartDate || (tempStartDate && tempEndDate && tempStartDate.getTime() !== tempEndDate.getTime())) {
+      setTempStartDate(date);
+      setTempEndDate(date);
+      setSelectedPreset("Custom");
+    } else if (date < tempStartDate) {
+      setTempStartDate(date);
+      setSelectedPreset("Custom");
+    } else {
+      setTempEndDate(date);
+      setSelectedPreset("Custom");
+    }
+  };
+
+  const handlePresetClick = (preset) => {
+    if (preset.id !== "today1" && preset.id !== "today2" && preset.id !== "yesterday") return;
+    setSelectedPreset(preset.label);
+    const [start, end] = preset.getRange();
+    if (start && end) {
+      setTempStartDate(start);
+      setTempEndDate(start.getTime() === end.getTime() ? start : end);
+    }
+  };
+
+  const renderWeekdayHeaders = () => {
+    const headers = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    return headers.map((h) => (
+      <Box key={h} sx={{
+        textAlign: "center",
+        fontSize: "12px",
+        fontWeight: 500,
+        color: "rgba(28,43,51,0.6)",
+        py: "6px",
+        fontFamily: FONT
+      }}>
+        {h}
+      </Box>
+    ));
+  };
+
+  const formatJuneDays = () => {
+    const days = [];
+    days.push(null);
+    for (let d = 1; d <= 30; d++) {
+      days.push(new Date(2026, 5, d));
+    }
+    return days;
+  };
+
+  const formatJulyDays = () => {
+    const days = [];
+    for (let i = 0; i < 3; i++) {
+      days.push(null);
+    }
+    for (let d = 1; d <= 31; d++) {
+      days.push(new Date(2026, 6, d));
+    }
+    return days;
+  };
+
+  const renderDay = (date) => {
+    if (!date) return <Box key={Math.random()} sx={{ width: "32px", height: "32px" }} />;
+
+    const isFuture = date > new Date("2026-06-29");
+    const isSelected = tempStartDate && tempEndDate &&
+      (date.toDateString() === tempStartDate.toDateString() || date.toDateString() === tempEndDate.toDateString());
+
+    const inRange = tempStartDate && tempEndDate &&
+      (date > tempStartDate && date < tempEndDate);
+
+    let dayStyle = {
+      width: "32px",
+      height: "32px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontFamily: FONT,
+      fontSize: "13px",
+      cursor: isFuture ? "default" : "pointer",
+      color: isFuture ? "rgba(28,43,51,0.4)" : "rgba(28, 43, 51, 0.9)",
+      borderRadius: "4px",
+      userSelect: "none"
+    };
+
+    if (isSelected) {
+      dayStyle = {
+        ...dayStyle,
+        backgroundColor: "#1877f2",
+        color: "#ffffff",
+        fontWeight: "bold",
+        "&:hover": {
+          backgroundColor: "#166fe5"
+        }
+      };
+    } else if (inRange) {
+      dayStyle = {
+        ...dayStyle,
+        backgroundColor: "#e7f0fd",
+        borderRadius: "0px"
+      };
+    } else if (!isFuture) {
+      dayStyle["&:hover"] = {
+        backgroundColor: "rgba(0,0,0,0.05)"
+      };
+    }
+
+    return (
+      <Box
+        key={date.toISOString()}
+        onClick={() => !isFuture && handleDateClick(date)}
+        sx={dayStyle}
+      >
+        {date.getDate()}
+      </Box>
+    );
+  };
+
+  const presetsList = [
+    { id: "today1", label: "Today", getRange: () => [new Date("2026-06-29"), new Date("2026-06-29")] },
+    { id: "today2", label: "Today", getRange: () => [new Date("2026-06-29"), new Date("2026-06-29")] },
+    { id: "yesterday", label: "Yesterday", getRange: () => [new Date("2026-06-28"), new Date("2026-06-28")] },
+    { id: "today-yesterday", label: "Today and yesterday", getRange: () => [new Date("2026-06-28"), new Date("2026-06-29")] },
+    { id: "last-7-days", getRange: () => [new Date("2026-06-23"), new Date("2026-06-29")], label: "Last 7 days" },
+    { id: "last-14-days", getRange: () => [new Date("2026-06-16"), new Date("2026-06-29")], label: "Last 14 days" },
+    { id: "last-28-days", getRange: () => [new Date("2026-06-02"), new Date("2026-06-29")], label: "Last 28 days" },
+    { id: "last-30-days", getRange: () => [new Date("2026-05-31"), new Date("2026-06-29")], label: "Last 30 days" },
+    { id: "this-week", getRange: () => [new Date("2026-06-28"), new Date("2026-06-29")], label: "This week" },
+    { id: "last-week", getRange: () => [new Date("2026-06-21"), new Date("2026-06-27")], label: "Last week" },
+    { id: "this-month", getRange: () => [new Date("2026-06-01"), new Date("2026-06-29")], label: "This month" },
+    { id: "last-month", getRange: () => [new Date("2026-05-01"), new Date("2026-05-31")], label: "Last month" },
+    { id: "maximum", getRange: () => [new Date("2026-05-24"), new Date("2026-06-29")], label: "Maximum" },
+    { id: "custom", getRange: () => [tempStartDate, tempEndDate], label: "Custom" }
+  ];
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -1331,6 +1554,9 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
       }
       if (filtersRef.current && !filtersRef.current.contains(event.target)) {
         setShowFilters(false);
+      }
+      if (calendarDropdownRef.current && !calendarDropdownRef.current.contains(event.target)) {
+        setShowCalendarDropdown(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -1566,7 +1792,7 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
             </Box>
 
             {/* Transaction controls */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 1, flexWrap: "wrap", borderBottom: "1px solid #dee1e5", pb: 1, mx: -3, px: 3 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 1, flexWrap: "wrap", borderBottom: "1px solid #dee1e5", pb: 1.8, mx: -3, px: 3 }}>
               <Select
                 value={activityViewType}
                 onChange={(e) => setActivityViewType(e.target.value)}
@@ -1645,12 +1871,12 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
                     fontSize: "14px",
                     fontWeight: "400",
                     backgroundColor: "#ffffff",
-                    color: "rgba(28, 43, 51, 0.65)",
+                    color: "rgb(28, 43, 51)",
                     fontStyle: "normal",
                     lineHeight: "20px"
                   },
                   "& .MuiOutlinedInput-input::placeholder": {
-                    color: "rgba(28, 43, 51, 0.65)",
+                    color: "rgba(76, 78, 79, 1)",
                     opacity: 1,
                     fontSize: "14px",
                     fontWeight: "400",
@@ -2021,146 +2247,595 @@ function PaymentActivityView({ notifications, setNotifications, currentAccount, 
               />
 
               {/* Date range picker button */}
-              <Box sx={{
-                display: "flex", alignItems: "center", gap: "10px",
-                px: "12px", height: "36px", border: "1px solid #cbd2d9",
-                borderRadius: "4px", backgroundColor: "#ffffff", cursor: "pointer",
-                flex: "0 0 auto",
-                width: "260px",
-                "&:hover": {
-                  borderColor: "#8a8d91",
-                  backgroundColor: "rgba(0,0,0,0.02)"
-                }
-              }}>
-                <CalendarDays size={16} color="#65676B" strokeWidth={2.2} />
-                <T sx={{
-                  fontStyle: "normal",
-                  fontWeight: "600",
-                  color: "rgb(28, 43, 51)",
-                  fontSize: "15px",
-                  lineHeight: "23px",
-                  flexGrow: 1,
-                  ml: 1,
-                  whiteSpace: "nowrap"
-                }}>30 May 2026 - 5 Jun 2026</T>
-                <ArrowDropDown sx={{ color: "#000", fontSize: 28 }} />
+              <Box ref={calendarDropdownRef} sx={{ position: "relative" }}>
+                <Box
+                  onClick={() => setShowCalendarDropdown(!showCalendarDropdown)}
+                  sx={{
+                    display: "flex", alignItems: "center", gap: "8px",
+                    px: "10px", height: "36px", border: "1px solid #cbd2d9",
+                    borderRadius: "4px", backgroundColor: "#ffffff", cursor: "pointer",
+                    flexShrink: 0,
+                    "&:hover": {
+                      borderColor: "#8a8d91",
+                      backgroundColor: "rgba(0,0,0,0.02)"
+                    }
+                  }}
+                >
+                  <CalendarDays size={18} color="#1c1c1cff" />
+                  <T sx={{
+                    fontStyle: "normal",
+                    fontWeight: "500",
+                    color: "rgb(28, 43, 51)",
+                    fontSize: "14px",
+                    lineHeight: "20px",
+                    flexGrow: 1,
+                    ml: 1,
+                    whiteSpace: "nowrap"
+                  }}>{dateRange}</T>
+                  <ArrowDropDown sx={{ color: "#000", fontSize: 28 }} />
+                </Box>
+
+                {showCalendarDropdown && (
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      position: "absolute",
+                      top: "40px",
+                      right: 0,
+                      width: "800px",
+                      backgroundColor: "#ffffff",
+                      borderRadius: "8px",
+                      border: "1px solid #dee1e5",
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
+                      display: "flex",
+                      zIndex: 1000,
+                      overflow: "hidden"
+                    }}
+                  >
+                    {/* Left Panel: presets list */}
+                    <Box sx={{
+                      width: "250px",
+                      borderRight: "1px solid #dee1e5",
+                      py: "16px",
+                      px: "12px",
+                      display: "flex",
+                      flexDirection: "column",
+                      backgroundColor: "#ffffff",
+                    }}>
+                      <T sx={{ fontSize: "16px", fontWeight: "bold", color: TEXT, px: "12px", mb: "12px" }}>
+                        Recently used
+                      </T>
+                      <Box sx={{
+                        flexGrow: 1,
+                        overflowY: "auto",
+                        maxHeight: "380px",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "2px",
+                        "&::-webkit-scrollbar": {
+                          width: "8px",
+                        },
+                        "&::-webkit-scrollbar-track": {
+                          background: "transparent",
+                        },
+                        "&::-webkit-scrollbar-thumb": {
+                          background: "#c1c1c1",
+                          borderRadius: "4px",
+                        }
+                      }}>
+                        {presetsList.map((preset, index) => {
+                          const isSelected = selectedPreset === preset.label;
+                          return (
+                            <Box
+                              key={preset.id + index}
+                              onClick={() => handlePresetClick(preset)}
+                              sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "12px",
+                                py: "10px",
+                                px: "12px",
+                                cursor: "pointer",
+                                borderRadius: "6px",
+                                "&:hover": {
+                                  backgroundColor: "rgba(0,0,0,0.04)"
+                                }
+                              }}
+                            >
+                              <Box sx={{
+                                width: 20, height: 20, borderRadius: "50%",
+                                border: `2px solid ${isSelected ? "#1877f2" : "#bcc0c4"}`,
+                                backgroundColor: "#ffffff",
+                                display: "flex", alignItems: "center", justifyContent: "center",
+                                flexShrink: 0
+                              }}>
+                                {isSelected && (
+                                  <Box sx={{
+                                    width: 10, height: 10, borderRadius: "50%",
+                                    backgroundColor: "#1877f2",
+                                  }} />
+                                )}
+                              </Box>
+                              <T sx={{ fontSize: "14px", color: TEXT, fontWeight: isSelected ? 600 : 400 }}>
+                                {preset.label}
+                              </T>
+                            </Box>
+                          );
+                        })}
+                      </Box>
+                    </Box>
+
+                    {/* Right Panel: Calendar Grid & Options */}
+                    <Box sx={{
+                      flex: 1,
+                      p: "20px",
+                      display: "flex",
+                      flexDirection: "column",
+                      backgroundColor: "#ffffff"
+                    }}>
+                      {/* Top row: selectors navigation */}
+                      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: "16px", px: "8px" }}>
+                        {/* June selector */}
+                        <Box sx={{ display: "flex", alignItems: "center", gap: "24px" }}>
+                          {/* Navigation Left Arrow */}
+                          <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, borderRadius: "50%", "&:hover": { backgroundColor: "#f5f6fa" } }}>
+                            <svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M7 1L1 7L7 13" stroke="#65676B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                          </Box>
+                          <Box sx={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                            <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+                              <T sx={{ fontSize: "15px", fontWeight: "bold", color: TEXT }}>Jun</T>
+                              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ marginLeft: "6px" }}><path d="M1 1L5 5L9 1" stroke="#1c2b33" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                            </Box>
+                            <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+                              <T sx={{ fontSize: "15px", fontWeight: "bold", color: TEXT }}>2026</T>
+                              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ marginLeft: "6px" }}><path d="M1 1L5 5L9 1" stroke="#1c2b33" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                            </Box>
+                          </Box>
+                        </Box>
+
+                        {/* July selector */}
+                        <Box sx={{ display: "flex", alignItems: "center", gap: "24px" }}>
+                          <Box sx={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                            <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+                              <T sx={{ fontSize: "15px", fontWeight: "bold", color: TEXT }}>Jul</T>
+                              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ marginLeft: "6px" }}><path d="M1 1L5 5L9 1" stroke="#1c2b33" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                            </Box>
+                            <Box sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+                              <T sx={{ fontSize: "15px", fontWeight: "bold", color: TEXT }}>2026</T>
+                              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ marginLeft: "6px" }}><path d="M1 1L5 5L9 1" stroke="#1c2b33" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                            </Box>
+                          </Box>
+                          {/* Navigation Right Arrow */}
+                          <Box sx={{ cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, borderRadius: "50%", "&:hover": { backgroundColor: "#f5f6fa" } }}>
+                            <svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1L7 7L1 13" stroke="#65676B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                          </Box>
+                        </Box>
+                      </Box>
+
+                      {/* Calendar view container */}
+                      <Box sx={{ display: "flex", gap: "30px", justifyContent: "space-between" }}>
+                        {/* June grid */}
+                        <Box sx={{ flex: 1 }}>
+                          <Box sx={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", mb: "4px" }}>
+                            {renderWeekdayHeaders()}
+                          </Box>
+                          <Box sx={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", rowGap: "4px" }}>
+                            {formatJuneDays().map((date) => renderDay(date))}
+                          </Box>
+                        </Box>
+
+                        {/* July grid */}
+                        <Box sx={{ flex: 1 }}>
+                          <Box sx={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", mb: "4px" }}>
+                            {renderWeekdayHeaders()}
+                          </Box>
+                          <Box sx={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", rowGap: "4px" }}>
+                            {formatJulyDays().map((date) => renderDay(date))}
+                          </Box>
+                        </Box>
+                      </Box>
+
+                      {/* Compare toggle row */}
+                      <Box sx={{ display: "flex", alignItems: "center", gap: "8px", px: "8px", mt: "24px" }}>
+                        <Checkbox
+                          checked={compareChecked}
+                          onChange={(e) => setCompareChecked(e.target.checked)}
+                          size="small"
+                          sx={{
+                            p: 0,
+                            color: "#cbd2d9",
+                            "&.Mui-checked": {
+                              color: "#1877f2",
+                            },
+                          }}
+                        />
+                        <T sx={{ fontSize: "14px", color: TEXT, fontWeight: 500 }}>Compare</T>
+                      </Box>
+
+                      {/* Preset Select & Date inputs row */}
+                      <Box sx={{ display: "flex", alignItems: "center", gap: "12px", px: "8px", mt: "14px", mb: "20px" }}>
+                        <Box sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          border: "1px solid #cbd2d9",
+                          borderRadius: "6px",
+                          px: "12px",
+                          py: "6px",
+                          height: "38px",
+                          width: "200px",
+                          backgroundColor: "#ffffff",
+                          cursor: "default"
+                        }}>
+                          <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                            <Box sx={{ width: "16px", height: "16px", backgroundColor: "#a5cbf5", borderRadius: "3px" }} />
+                            <T sx={{ fontSize: "14px", fontWeight: 500 }}>{selectedPreset}</T>
+                          </Box>
+                          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="#65676B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                        </Box>
+
+                        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          <Box sx={{
+                            border: "1px solid #cbd2d9",
+                            borderRadius: "6px",
+                            px: "12px",
+                            py: "6px",
+                            height: "38px",
+                            width: "140px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: "#ffffff"
+                          }}>
+                            <T sx={{ fontSize: "14px", color: TEXT }}>{formatDateLong(tempStartDate)}</T>
+                          </Box>
+                          <T sx={{ color: "rgba(28,43,51,0.65)", px: "2px" }}>-</T>
+                          <Box sx={{
+                            border: "1px solid #cbd2d9",
+                            borderRadius: "6px",
+                            px: "12px",
+                            py: "6px",
+                            height: "38px",
+                            width: "140px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: "#ffffff"
+                          }}>
+                            <T sx={{ fontSize: "14px", color: TEXT }}>{formatDateLong(tempEndDate)}</T>
+                          </Box>
+                        </Box>
+                      </Box>
+
+                      {/* Footer actions row */}
+                      <Box sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        borderTop: "1px solid #e4e6eb",
+                        pt: "16px",
+                        px: "8px",
+                        mt: "auto"
+                      }}>
+                        <T sx={{ fontSize: "13px", color: "rgba(28,43,51,0.65)" }}>
+                          Dates are shown in Kolkata Time
+                        </T>
+                        <Box>
+                          <Button
+                            variant="outlined"
+                            onClick={() => setShowCalendarDropdown(false)}
+                            sx={{
+                              textTransform: "none",
+                              fontSize: "14px",
+                              fontWeight: 600,
+                              color: "rgb(28, 43, 51)",
+                              borderColor: "#cbd2d9",
+                              borderRadius: "6px",
+                              height: "36px",
+                              px: "20px",
+                              mr: "12px",
+                              backgroundColor: "#ffffff",
+                              "&:hover": {
+                                borderColor: "#8a8d91",
+                                backgroundColor: "#f5f6fa",
+                              }
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            variant="contained"
+                            onClick={() => {
+                              let displayVal = "";
+                              if (selectedPreset === "Custom") {
+                                displayVal = `${formatDateShort(tempStartDate)} - ${formatDateShort(tempEndDate)}`;
+                              } else if (selectedPreset === "Maximum") {
+                                displayVal = "Maximum";
+                              } else {
+                                const isSingleDay = tempStartDate.toDateString() === tempEndDate.toDateString();
+                                if (isSingleDay) {
+                                  displayVal = `${selectedPreset}: ${formatDateShort(tempStartDate)}`;
+                                } else {
+                                  displayVal = `${selectedPreset}: ${formatDateShort(tempStartDate)} - ${formatDateShort(tempEndDate)}`;
+                                }
+                              }
+                              setDateRange(displayVal);
+                              setShowCalendarDropdown(false);
+                            }}
+                            sx={{
+                              textTransform: "none",
+                              fontSize: "14px",
+                              fontWeight: 650,
+                              color: "#ffffff !important",
+                              backgroundColor: "#0070c9 !important",
+                              borderRadius: "6px",
+                              height: "36px",
+                              px: "24px",
+                              boxShadow: "none",
+                              "&:hover": {
+                                backgroundColor: "#005ea6 !important",
+                                boxShadow: "none"
+                              }
+                            }}
+                          >
+                            Update
+                          </Button>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Paper>
+                )}
               </Box>
             </Box>
           </>
         )}
 
         {/* Empty state message with Telescope SVG */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            py: 3,
-          }}
-        >
-          <Box sx={{ mb: 2, display: "flex", justifyContent: "center" }}>
-            <svg width="360" height="240" viewBox="0 0 640 400" fill="none">
-              <defs>
-                {/* Premium metallic gradient for the telescope tube segments */}
-                <linearGradient id="metal-gradient-body" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#d0e6ff" />
-                  <stop offset="25%" stopColor="#ffffff" />
-                  <stop offset="60%" stopColor="#a1c5e8" />
-                  <stop offset="85%" stopColor="#5d85a6" />
-                  <stop offset="100%" stopColor="#8bb6de" />
-                </linearGradient>
+        {/* <Box ... telescope SVG commented out ... /> */}
 
-                {/* Darker gradient for internal rim/recessed details */}
-                <linearGradient id="metal-gradient-dark" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#6c8aa6" />
-                  <stop offset="30%" stopColor="#a4c3e3" />
-                  <stop offset="100%" stopColor="#3b566c" />
-                </linearGradient>
-
-                {/* Glowing cyan-blue gradient for the front lens glass reflection */}
-                <linearGradient id="lens-gradient" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#ffffff" />
-                  <stop offset="30%" stopColor="#e3f4ff" />
-                  <stop offset="70%" stopColor="#82b3e8" />
-                  <stop offset="100%" stopColor="#3a7ebd" />
-                </linearGradient>
-
-                {/* Drop shadow for the overall illustration to add modern depth */}
-                <filter id="subtle-shadow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="16" stdDeviation="12" floodColor="#0066e2" floodOpacity={0.16} />
-                </filter>
-              </defs>
-
-              <g filter="url(#subtle-shadow)">
-                {/* Stationary Tripod Structure (Centered around X=320) */}
-                {/* Center leg */}
-                <line x1="320" y1="210" x2="320" y2="360" stroke="#0066e2" strokeWidth={11} strokeLinecap="round" />
-                {/* Left leg */}
-                <line x1="320" y1="210" x2="245" y2="360" stroke="#0066e2" strokeWidth={11} strokeLinecap="round" />
-                {/* Right leg */}
-                <line x1="320" y1="210" x2="395" y2="360" stroke="#0066e2" strokeWidth={11} strokeLinecap="round" />
-
-                {/* Tripod Platform */}
-                <line x1="285" y1="210" x2="355" y2="210" stroke="#0066e2" strokeWidth={10} strokeLinecap="round" />
-
-                {/* Hinge/Head Stem connecting to the cradle bottom (from Y=173 to Y=210) */}
-                <line x1="320" y1="173" x2="320" y2="210" stroke="#0066e2" strokeWidth={12} strokeLinecap="round" />
-
-                {/* Rotated Assembly: Telescope Tube AND Cradle U-shape rotate together around pivot (320, 173) */}
-                <g transform="rotate(-20 320 173)">
-                  {/* Cradle U-shape (Placed behind/underneath the tube) */}
-                  <path d="M 287,140 A 33,33 0 0,0 353,140" stroke="#0066e2" strokeWidth={10} fill="none" strokeLinecap="round" />
-
-                  {/* Hinge Pivot cap (Center of rotation) */}
-                  <circle cx="320" cy="173" r="10" fill="#0055c4" />
-
-                  {/* Eyepiece Cap (Leftmost, Segment 0) */}
-                  <path d="M 120,132 L 135,132 A 3.2,8 0 0,1 135,148 L 120,148 A 3.2,8 0 0,0 120,132 Z" fill="url(#metal-gradient-dark)" />
-
-                  {/* Segment 1 (Eyepiece connector) */}
-                  <path d="M 135,129 L 160,129 A 4.4,11 0 0,1 160,151 L 135,151 A 4.4,11 0 0,0 135,129 Z" fill="url(#metal-gradient-body)" />
-
-                  {/* Segment 2 */}
-                  <path d="M 160,125 L 190,125 A 6,15 0 0,1 190,155 L 160,155 A 6,15 0 0,0 160,125 Z" fill="url(#metal-gradient-body)" />
-
-                  {/* Segment 3 */}
-                  <path d="M 190,119 L 230,119 A 8.4,21 0 0,1 230,161 L 190,161 A 8.4,21 0 0,0 190,119 Z" fill="url(#metal-gradient-body)" />
-
-                  {/* Segment 4 (Main body) */}
-                  <path d="M 230,111 L 390,111 A 11.6,29 0 0,1 390,169 L 230,169 A 11.6,29 0 0,0 230,111 Z" fill="url(#metal-gradient-body)" />
-
-                  {/* Segment 5 (Front rim bell) */}
-                  <path d="M 390,102 L 470,102 A 15.2,38 0 0,1 470,178 L 390,178 A 15.2,38 0 0,0 390,102 Z" fill="url(#metal-gradient-body)" />
-
-                  {/* Outer Rim Ellipse for Lens Opening */}
-                  <ellipse cx="470" cy="140" rx="15.2" ry="38" fill="url(#metal-gradient-dark)" />
-
-                  {/* Glowing Front Lens Glass (Recessed slightly to the left) */}
-                  <ellipse cx="464" cy="140" rx="13.5" ry="35.5" fill="url(#lens-gradient)" />
-
-                  {/* Shiny lens highlight overlay */}
-                  <ellipse cx="461" cy="126" rx="5.5" ry="15" fill="#ffffff" opacity={0.65} transform="rotate(-10 461 126)" />
-                </g>
-
-                {/* Stationary Hinge center cap (drawn on top of the rotated pivot for overlap depth) */}
-                <circle cx="320" cy="173" r="8" fill="#0066e2" />
-              </g>
-            </svg>
-          </Box>
-
-          <Typography sx={{ fontWeight: "700", fontSize: "18px", mb: 1, color: TEXT }}>
-            No transactions
-          </Typography>
-
-          <Typography
-            align="center"
-            sx={{ maxWidth: 800, fontSize: "14px", fontWeight: "400", color: MUTED, mb: 3, color: "rgb(28, 43, 51)" }}
+        {/* ── Download row ── */}
+        <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center", pt: "10px", pb: "15px", borderBottom: "1px solid #dee1e5", mb: "20px" }}>
+          <Button
+            variant="outlined"
+            endIcon={<ArrowDropDown sx={{ fontSize: "26px !important", color: "rgb(28,43,51)" }} />}
+            sx={{
+              textTransform: "none",
+              fontSize: "14px",
+              fontWeight: "500",
+              color: "rgb(28, 43, 51)",
+              borderColor: "#cbd2d9",
+              borderRadius: "4px",
+              height: "36px",
+              px: "14px",
+              gap: "2px",
+              backgroundColor: "#ffffff",
+              boxShadow: "none",
+              "&:hover": {
+                borderColor: "#8a8d91",
+                backgroundColor: "rgba(0,0,0,0.02)",
+                boxShadow: "none",
+              },
+            }}
           >
-            You have no transactions during this period. Update the date range or remove filters to expand your search.
-          </Typography>
+            Download
+          </Button>
         </Box>
+
+        {/* ── Transactions Table ── */}
+        {(() => {
+          const transactions = TRANSACTIONS_DATA.slice(0, visibleCount);
+
+          const colStyle = {
+            fontFamily: FONT,
+            fontSize: "13px",
+            fontWeight: 700,
+            color: "rgb(28, 43, 51)",
+            lineHeight: "16px",
+            pb: "16px",
+            pt: "6px",
+            borderBottom: "1px solid #dee1e5",
+          };
+
+          const cellStyle = {
+            fontFamily: FONT,
+            fontSize: "13px",
+            fontWeight: 400,
+            color: "rgb(28, 43, 51)",
+            lineHeight: "18px",
+            py: "18px",
+            borderBottom: "1px solid #d8dbdfff",
+            verticalAlign: "middle",
+          };
+
+          return (
+            <Box sx={{ width: "100%", overflowX: "auto" }}>
+              <Box component="table" sx={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed" }}>
+                <Box component="thead">
+                  <Box component="tr">
+                    <Box component="th" sx={{ ...colStyle, width: "17%", textAlign: "left", pl: "0px" }}>
+                      <T sx={{ fontFamily: FONT, fontSize: "15px", fontWeight: 700, color: "rgb(28, 43, 51)" }}>Transaction ID</T>
+                    </Box>
+                    <Box component="th" sx={{ ...colStyle, width: "16%", textAlign: "left" }}>
+                      <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                        <T sx={{ fontFamily: FONT, fontSize: "15px", fontWeight: 700, color: "rgb(28, 43, 51)" }}>Date</T>
+                        <svg viewBox="0 0 14 14" width="13" height="13"><circle cx="7" cy="7" r="7" fill="rgb(40,57,67)" /><circle cx="7" cy="4.5" r="0.9" fill="#fff" /><rect x="6.1" y="6.5" width="1.8" height="4.5" rx="0.5" fill="#fff" /></svg>
+                      </Box>
+                    </Box>
+                    <Box component="th" sx={{ ...colStyle, width: "13%", textAlign: "left" }}>
+                      <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                        <T sx={{ fontFamily: FONT, fontSize: "15px", fontWeight: 700, color: "rgb(28, 43, 51)" }}>Amount</T>
+                        <svg viewBox="0 0 14 14" width="13" height="13"><circle cx="7" cy="7" r="7" fill="rgb(40,57,67)" /><circle cx="7" cy="4.5" r="0.9" fill="#fff" /><rect x="6.1" y="6.5" width="1.8" height="4.5" rx="0.5" fill="#fff" /></svg>
+                      </Box>
+                    </Box>
+                    <Box component="th" sx={{ ...colStyle, width: "18%", textAlign: "left" }}>
+                      <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                        <T sx={{ fontFamily: FONT, fontSize: "15px", fontWeight: 700, color: "rgb(28, 43, 51)" }}>Payment method</T>
+                        <svg viewBox="0 0 14 14" width="13" height="13"><circle cx="7" cy="7" r="7" fill="rgb(40,57,67)" /><circle cx="7" cy="4.5" r="0.9" fill="#fff" /><rect x="6.1" y="6.5" width="1.8" height="4.5" rx="0.5" fill="#fff" /></svg>
+                      </Box>
+                    </Box>
+                    <Box component="th" sx={{ ...colStyle, width: "13%", textAlign: "left" }}>
+                      <T sx={{ fontFamily: FONT, fontSize: "15px", fontWeight: 700, color: "rgb(28, 43, 51)" }}>Payment status</T>
+                    </Box>
+                    <Box component="th" sx={{ ...colStyle, width: "14%", textAlign: "left" }}>
+                      <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                        <T sx={{ fontFamily: FONT, fontSize: "15px", fontWeight: 700, color: "rgb(28, 43, 51)" }}>VAT invoice ID</T>
+                        <svg viewBox="0 0 14 14" width="13" height="13"><circle cx="7" cy="7" r="7" fill="rgb(40,57,67)" /><circle cx="7" cy="4.5" r="0.9" fill="#fff" /><rect x="6.1" y="6.5" width="1.8" height="4.5" rx="0.5" fill="#fff" /></svg>
+                      </Box>
+                    </Box>
+                    <Box component="th" sx={{ ...colStyle, width: "9%", textAlign: "center" }}>
+                      <T sx={{ fontFamily: FONT, fontSize: "15px", fontWeight: 700, color: "rgb(28, 43, 51)" }}>Action</T>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box component="tbody">
+                  {transactions.map((tx, idx) => (
+                    <Box component="tr" key={idx}>
+                      {/* Transaction ID */}
+                      <Box component="td" sx={{ ...cellStyle, pl: "0px", pr: "12px" }}>
+                        <T sx={{
+                          fontFamily: FONT,
+                          fontSize: "14px",
+                          fontWeight: 400,
+                          color: "#0a78be",
+                          lineHeight: "18px",
+                          cursor: "pointer",
+                          wordBreak: "break-all",
+                          "&:hover": { textDecoration: "underline" }
+                        }}>
+                          {tx.id.split("-").slice(0, 1)[0]}-<br />{tx.id.split("-").slice(1).join("-")}
+                        </T>
+                      </Box>
+
+                      {/* Date */}
+                      <Box component="td" sx={{ ...cellStyle, pr: "12px" }}>
+                        <T sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 400, color: "rgba(43, 48, 51, 0.9)", lineHeight: "18px" }}>
+                          {tx.date}
+                        </T>
+                      </Box>
+
+                      {/* Amount */}
+                      <Box component="td" sx={{ ...cellStyle, pr: "12px" }}>
+                        <T sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 400, color: "rgba(43, 48, 51, 0.9)", lineHeight: "18px" }}>
+                          {tx.amount}
+                        </T>
+                      </Box>
+
+                      {/* Payment Method */}
+                      <Box component="td" sx={{ ...cellStyle, pr: "12px" }}>
+                        <Box sx={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                          {tx.method === "prepaid" && (
+                            <Box component="img" src={AvailableFundsIcon} sx={{ width: "28px", height: "26px", objectFit: "contain", flexShrink: 0 }} />
+                          )}
+                          <T sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 400, color: "rgba(43, 48, 51, 0.9)", lineHeight: "18px" }}>
+                            {tx.methodLabel}
+                          </T>
+                        </Box>
+                      </Box>
+
+                      {/* Payment Status */}
+                      <Box component="td" sx={{ ...cellStyle, pr: "12px" }}>
+                        <Box sx={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          px: "8px",
+                          py: "2px",
+                          borderRadius: "12px",
+                          border: tx.status === "Paid"
+                            ? "1px solid #c3e6cb"
+                            : "1px solid #bee3f8",
+                          backgroundColor: tx.status === "Paid" ? "#f0fff4" : "#ebf8ff",
+                        }}>
+                          <T sx={{
+                            fontFamily: FONT,
+                            fontSize: "12px",
+                            fontWeight: 700,
+                            color: "rgb(39, 103, 73)",
+                            lineHeight: "16px",
+                            whiteSpace: "nowrap",
+                          }}>
+                            {tx.status}
+                          </T>
+                        </Box>
+                      </Box>
+
+                      {/* VAT Invoice ID */}
+                      <Box component="td" sx={{ ...cellStyle, pr: "12px" }}>
+                        {tx.vatId ? (() => {
+                          const lastDash = tx.vatId.lastIndexOf("-");
+                          const prefix = tx.vatId.slice(0, lastDash + 1);
+                          const suffix = tx.vatId.slice(lastDash + 1);
+                          return (
+                            <T sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 400, color: "rgba(43, 48, 51, 0.9)", lineHeight: "18px" }}>
+                              {prefix}<br />{suffix}
+                            </T>
+                          );
+                        })() : (
+                          <T sx={{ fontFamily: FONT, fontSize: "14px", fontWeight: 400, color: "rgba(43, 48, 51, 0.9)", lineHeight: "18px" }}>—</T>
+                        )}
+                      </Box>
+
+                      {/* Action */}
+                      <Box component="td" sx={{ ...cellStyle, textAlign: "center" }}>
+                        <Box sx={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: "44px",
+                          height: "38px",
+                          border: "1px solid #c8cdd2",
+                          borderRadius: "6px",
+                          cursor: "pointer",
+                          color: "rgba(120, 123, 124, 1)",
+                          backgroundColor: "#ffffff",
+                          "&:hover": { backgroundColor: "#f5f6fa", borderColor: "#8a8d91" }
+                        }}>
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                          </svg>
+                        </Box>
+                      </Box>
+                    </Box>
+                  ))}
+                </Box>
+
+              </Box>
+            </Box>
+          );
+        })()}
+        {/* ── See more ── */}
+        {visibleCount < TRANSACTIONS_DATA.length && (
+          <Box sx={{ display: "flex", justifyContent: "center", pt: "24px", pb: "16px" }}>
+            <Button
+              variant="outlined"
+              onClick={() => setVisibleCount((prev) => prev + 10)}
+              sx={{
+                textTransform: "none",
+                fontSize: "15px",
+                fontWeight: 400,
+                color: "rgb(28, 43, 51)",
+                borderColor: "#cbd2d9",
+                borderRadius: "6px",
+                height: "36px",
+                px: "20px",
+                backgroundColor: "#ffffff",
+                boxShadow: "none",
+                fontFamily: FONT,
+                "&:hover": {
+                  borderColor: "#8a8d91",
+                  backgroundColor: "rgba(0,0,0,0.02)",
+                  boxShadow: "none",
+                },
+              }}
+            >
+              See more
+            </Button>
+          </Box>
+        )}
+
       </Paper>
+
     </Box>
   );
 }
@@ -2374,6 +3049,13 @@ export default function BillingPayments() {
     { name: "Ashwayana Reality Groups", id: "988692073881733" }
   ];
 
+  useEffect(() => {
+    const el = document.getElementById("app-main-content");
+    if (el) {
+      el.scrollTop = 0;
+    }
+  }, [activeItem]);
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{
@@ -2396,6 +3078,7 @@ export default function BillingPayments() {
               currentAccount={currentAccount}
               setCurrentAccount={setCurrentAccount}
               accounts={accounts}
+              setActiveItem={setActiveItem}
             />
           ) : (
             <PaymentActivityView

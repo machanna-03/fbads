@@ -6,9 +6,16 @@ import BillingPayments from "./components/BillingPayments";
 import Campaigns from "./components/Campaigns";
 
 function App() {
-  const [activeTab, setActiveTab] = useState("campaigns");
+  const [activeTab, setActiveTab] = useState(() => {
+    return sessionStorage.getItem("activeTab") || "campaigns";
+  });
   const scrollRef = useRef(null);
   const scrollTimer = useRef(null);
+
+  // Persist active tab across refreshes within the same session
+  useEffect(() => {
+    sessionStorage.setItem("activeTab", activeTab);
+  }, [activeTab]);
 
   useEffect(() => {
     const defaultUrl = "/adsmanager/manage/campaigns?act=1144652500847915&date=2026-06-21_2026-06-22%2Cyesterday&insights_date=2026-06-21_2026-06-22%2Cyesterday&nav_source=no_referrer&treenav=true&selected_campaign_ids=1202461195576847362";
@@ -59,6 +66,7 @@ function App() {
         <Box
           ref={scrollRef}
           onScroll={handleScroll}
+          id="app-main-content"
           sx={{
             flex: 1,
             overflow: "auto",
